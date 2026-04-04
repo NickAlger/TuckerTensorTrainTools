@@ -1,0 +1,476 @@
+# Authors: Nick Alger and Blake Christierson
+# Copyright: MIT License (2026)
+# https://github.com/NickAlger/TuckerTensorTrainTools
+import numpy as np
+import typing as typ
+from t3tools.tucker_tensor_train import *
+from t3tools.t3_orthogonalization import *
+
+try:
+    import jax.numpy as jnp
+except:
+    print('jax import failed in tucker_tensor_train. Defaulting to numpy.')
+    jnp = np
+
+NDArray = typ.Union[np.ndarray, jnp.ndarray]
+
+__all__ = [
+    't3_svd',
+    'tucker_svd_dense',
+    'tt_svd_dense',
+    't3_svd_dense',
+]
+
+
+###############################
+########    T3-SVD    #########
+###############################
+
+def t3_svd(
+        x: TuckerTensorTrain,
+        min_tt_ranks:       typ.Sequence[int] = None, # len=d+1
+        min_tucker_ranks:   typ.Sequence[int] = None,  # len=d
+        max_tt_ranks:       typ.Sequence[int] = None, # len=d+1
+        max_tucker_ranks:   typ.Sequence[int] = None, # len=d
+        rtol: float = None,
+        atol: float = None,
+        use_jax: bool = False,
+
+) -> typ.Tuple[
+    TuckerTensorTrain, # new_x
+    typ.Tuple[NDArray,...], # basis singular values, len=d
+    typ.Tuple[NDArray,...], # tt singular values, len=d+1
+]:
+    '''Compute (truncated) T3-SVD of TuckerTensorTrain.
+
+    Parameters
+    ----------
+    x: TuckerTensorTrain
+        The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
+    min_tucker_ranks: typ.Sequence[int]
+        Minimum Tucker ranks for truncation.
+    min_tt_ranks: typ.Sequence[int]
+        Minimum TT-ranks for truncation.
+    max_tucker_ranks: typ.Sequence[int]
+        Maximum Tucker ranks for truncation.
+    max_tt_ranks: typ.Sequence[int]
+        Maximum TT-ranks for truncation.
+    rtol: float
+        Relative tolerance for truncation.
+    atol: float
+        Absolute tolerance for truncation.
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    NDArray
+        New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
+    typ.Tuple[NDArray,...]
+        Singular values associated with edges between basis cores and TT-cores
+    typ.Tuple[NDArray,...]
+        Singular values associated with edges between adjacent TT-cores
+
+    See Also
+    --------
+    left_svd_3tensor
+    right_svd_3tensor
+    outer_svd_3tensor
+    up_svd_ith_basis_core
+    left_svd_ith_tt_core
+    right_svd_ith_tt_core
+    up_svd_ith_tt_core
+    down_svd_ith_tt_core
+    truncated_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> basis_cores_x = (randn(4,6), randn(5,7), randn(6,8))
+    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> x = (basis_cores_x, tt_cores_x)
+    >>> x2, ss_basis, ss_tt = t3_svd(x)
+    >>> x_dense = t3_to_dense(x)
+    >>> x2_dense = t3_to_dense(x2)
+    >>> print(np.linalg.norm(x_dense - x2_dense))
+        7.556835759880194e-13
+    >>> x_dense = t3_to_dense(x)
+    >>> ss_tt0 = np.linalg.svd(x_dense.reshape((1, 6*7*8)))[1]
+    >>> print(ss_tt0); print(ss_tt[0])
+        [405.41453572]
+        [405.41453572]
+    >>> ss_tt1 = np.linalg.svd(x_dense.reshape((6, 7*8)))[1]
+    >>> print(ss_tt1); print(ss_tt[1])
+        [3.26096778e+02 2.34056249e+02 5.69166861e+01 2.52531568e-14 1.72986412e-14 8.25218909e-15]
+        [326.0967784  234.05624908  56.91668613]
+    >>> ss_tt2 = np.linalg.svd(x_dense.reshape((6*7, 8)))[1]
+    >>> print(ss_tt2); print(ss_tt[2])
+        [3.92785730e+02 1.00400775e+02 3.88846558e-14 1.37176914e-14 5.89995607e-15 4.96667173e-15 3.77344519e-15 3.12383125e-15]
+        [392.78573046 100.40077549]
+    >>> ss_tt3 = np.linalg.svd(x_dense.reshape((6*7*8,1)))[1]
+    >>> print(ss_tt3); print(ss_tt[3])
+        [405.41453572]
+        [405.41453572]
+    >>> ss_basis0 = np.linalg.svd(x_dense.transpose([0,1,2]).reshape((6,7*8)))[1]
+    >>> print(ss_basis0); print(ss_basis[0])
+        [3.26096778e+02 2.34056249e+02 5.69166861e+01 2.52531568e-14 1.72986412e-14 8.25218909e-15]
+        [326.0967784  234.05624908  56.91668613]
+    >>> ss_basis1 = np.linalg.svd(x_dense.transpose([1,0,2]).reshape((7,6*8)))[1]
+    >>> print(ss_basis1); print(ss_basis[1])
+        [3.19638822e+02 2.37070453e+02 6.46637749e+01 4.21190167e+01 5.84413285e+00 2.08773511e-14 1.15080732e-14]
+        [319.63882212 237.07045349  64.66377495  42.1190167    5.84413285]
+    >>> ss_basis2 = np.linalg.svd(x_dense.transpose([2,0,1]).reshape((8,6*7)))[1]
+    >>> print(ss_basis2); print(ss_basis[2])
+        [3.92785730e+02 1.00400775e+02 5.17611232e-14 1.35674292e-14 7.94410140e-15 7.05351536e-15 5.31534353e-15 2.69976806e-15]
+        [392.78573046 100.40077549]
+
+    >>> B0 = randn(35,40) @ np.diag(1.0 / np.arange(1, 41)**2)
+    >>> B1 = randn(45,50) @ np.diag(1.0 / np.arange(1, 51)**2)
+    >>> B2 = randn(55,60) @ np.diag(1.0 / np.arange(1, 61)**2)
+    >>> basis_cores_x = (B0, B1, B2)
+    >>> tt_cores_x = (randn(1,35,30), randn(30,45,40), randn(40,55,1))
+    >>> x = (basis_cores_x, tt_cores_x)
+    >>> x2, ss_basis, ss_tt = t3_svd(x, rtol=1e-2)
+    >>> print(t3_structure(x))
+        ((40, 50, 60), (35, 45, 55), (1, 30, 40, 1))
+    >>> print(t3_structure(x2))
+        ((40, 50, 60), (6, 6, 5), (1, 6, 5, 1))
+    >>> x_dense = t3_to_dense(x)
+    >>> x2_dense = t3_to_dense(x2)
+    >>> relerr_num = np.linalg.norm(x_dense - x2_dense)
+    >>> relerr_den = np.linalg.norm(x_dense)
+    >>> print(relerr_num / relerr_den) # Should be around or slightly less than 3*rtol = 3e-3
+        0.013078458673911168
+
+    >>> basis_cores_x = (randn(10,14), randn(11,15), randn(12,16))
+    >>> tt_cores_x = (randn(1,10,8), randn(8,11,9), randn(9,12,1))
+    >>> x = (basis_cores_x, tt_cores_x)
+    >>> x2, ss_basis, ss_tt = t3_svd(x, max_tucker_ranks=(3,3,3), max_tt_ranks=(1,2,2,1))
+    >>> print(t3_structure(x))
+        ((14, 15, 16), (10, 11, 12), (1, 8, 9, 1))
+    >>> print(t3_structure(x2))
+        ((14, 15, 16), (3, 3, 2), (1, 2, 2, 1))
+    '''
+    xnp = jnp if use_jax else np
+
+    basis_cores, tt_cores = x
+
+    num_cores = len(tt_cores)
+
+    # Orthogonalize basis matrices
+    for ii in range(num_cores):
+        x, _ = up_svd_ith_basis_core(ii, x, use_jax=use_jax)
+
+    # Right orthogonalize
+    for ii in range(num_cores-1, 0, -1): # num_cores-1, num_cores-2, ..., 1
+        x, _ = right_svd_ith_tt_core(ii, x, use_jax=use_jax)
+
+    G0 = x[1][0]
+    _, ss_first, _ = right_svd_3tensor(G0, use_jax=use_jax)
+
+    # Sweep left to right computing SVDS
+    all_ss_basis = []
+    all_ss_tt = [ss_first]
+    for ii in range(num_cores):
+        min_rank = min_tucker_ranks[ii] if min_tucker_ranks is not None else None
+        max_rank = max_tucker_ranks[ii] if max_tucker_ranks is not None else None
+        # SVD inbetween tt core and basis core
+        x, ss_basis = up_svd_ith_tt_core(
+            ii, x, min_rank, max_rank, rtol, atol, use_jax,
+        )
+        all_ss_basis.append(ss_basis)
+
+        if ii < num_cores-1:
+            min_rank = min_tt_ranks[ii+1] if min_tt_ranks is not None else None
+            max_rank = max_tt_ranks[ii+1] if max_tt_ranks is not None else None
+            # SVD inbetween ith tt core and (i+1)th tt core
+            x, ss_tt = left_svd_ith_tt_core(
+                ii, x, min_rank, max_rank, rtol, atol, use_jax,
+            )
+        else:
+            Gf = x[1][-1]
+            _, ss_tt, _ = left_svd_3tensor(Gf, use_jax=use_jax)
+        all_ss_tt.append(ss_tt)
+
+    return x, tuple(all_ss_basis), tuple(all_ss_tt)
+
+
+#
+
+def tucker_svd_dense(
+        T: NDArray, # shape=(N1, N2, .., Nd)
+        min_ranks:  typ.Sequence[int] = None, # len=d
+        max_ranks:  typ.Sequence[int] = None,  # len=d
+        rtol: float = None,
+        atol: float = None,
+        use_jax: bool = False,
+) -> typ.Tuple[
+    typ.Tuple[
+        typ.Tuple[NDArray,...], # Tucker bases, ith_elm_shape=(ni, Ni)
+        NDArray, # Tucker core, shape=(n1,n2,...,nd)
+    ],
+    typ.Tuple[NDArray,...], # singular values of matricizations
+]:
+    '''Compute Tucker decomposition and matricization singular values for dense tensor.
+
+    Parameters
+    ----------
+    T: NDArray
+        The dense tensor. shape=(N1, ..., Nd)
+    min_ranks: typ.Sequence[int]
+        Minimum Tucker ranks for truncation. len=d
+    max_ranks: typ.Sequence[int]
+        Maximum Tucker ranks for truncation. len=d
+    rtol: float
+        Relative tolerance for truncation.
+    atol: float
+        Absolute tolerance for truncation.
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    typ.Tuple[typ.Tuple[NDArray,...],NDArray]
+        Tucker decomposition (tucker_bases, tucker_core). tucker_bases[ii].shape=(ni,Ni). tucker_core.shape=(n1,...,nd)
+    typ.Tuple[NDArray,...]
+        Singular values of matricizations
+
+    See Also
+    --------
+    truncated_svd
+    tt_svd_dense
+    t3_svd_dense
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> T0 = np.random.randn(40, 50, 60)
+    >>> c0 = 1.0 / np.arange(1, 41)**2
+    >>> c1 = 1.0 / np.arange(1, 51)**2
+    >>> c2 = 1.0 / np.arange(1, 61)**2
+    >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2)
+    >>> (bases, core), ss = tucker_svd_dense(T, rtol=1e-2)
+    >>> print(core.shape)
+        (3, 4, 3)
+    >>> T2 = jnp.einsum('abc, ai,bj,ck->ijk', core, bases[0], bases[1], bases[2])
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-2
+        0.016764601091053873
+    >>> (bases, core), ss = tucker_svd_dense(T, rtol=1e-3)
+    >>> print(core.shape)
+        (9, 9, 9)
+    >>> T2 = jnp.einsum('abc, ai,bj,ck->ijk', core, bases[0], bases[1], bases[2])
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
+        0.002418671417862558
+    >>> (bases, core), ss = tucker_svd_dense(T, rtol=1e-4)
+    >>> print(core.shape)
+        (20, 21, 21)
+    >>> T2 = jnp.einsum('abc, ai,bj,ck->ijk', core, bases[0], bases[1], bases[2])
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-4
+        0.0003418353245534034
+    '''
+    xnp = jnp if use_jax else np
+
+    bases = []
+    singular_values_of_matricizations = []
+    C = T
+    for ii in range(len(T.shape)):
+        C_swap = C.swapaxes(ii,0)
+        old_shape_swap = C_swap.shape
+
+        min_rank = None if min_ranks is None else min_ranks[ii]
+        max_rank = None if max_ranks is None else max_ranks[ii]
+
+        C_swap_mat = C_swap.reshape((old_shape_swap[0], -1))
+        U, ss, Vt = truncated_svd(C_swap_mat, min_rank, max_rank, rtol, atol, use_jax)
+        rM_new = len(ss)
+
+        singular_values_of_matricizations.append(ss)
+        bases.append(U.T)
+        C_swap = (ss.reshape((-1,1)) * Vt).reshape((rM_new,) + old_shape_swap[1:])
+        C = C_swap.swapaxes(0, ii)
+
+    return (tuple(bases), C), tuple(singular_values_of_matricizations)
+
+
+def tt_svd_dense(
+        T: NDArray,
+        min_ranks:  typ.Sequence[int] = None, # len=d+1
+        max_ranks:  typ.Sequence[int] = None,  # len=d+1
+        rtol: float = None,
+        atol: float = None,
+        use_jax: bool = False,
+) -> typ.Tuple[
+    typ.Tuple[NDArray,...], # tt_cores
+    typ.Tuple[NDArray,...], # singular values of unfoldings
+]:
+    '''Compute tensor train (TT) decomposition and unfolding singular values for dense tensor.
+
+    Parameters
+    ----------
+    T: NDArray
+        The dense tensor. shape=(N1, ..., Nd)
+    min_ranks: typ.Sequence[int]
+        Minimum TT-ranks for truncation. len=d+1. e.g., (1,3,3,3,1)
+    max_ranks: typ.Sequence[int]
+        Maximum TT-ranks for truncation. len=d+1. e.g., (1,5,5,5,1)
+    rtol: float
+        Relative tolerance for truncation.
+    atol: float
+        Absolute tolerance for truncation.
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    typ.Tuple[NDArray,...]
+        TT cores. len=d. elm_shape=(ri, ni, r(i+1))
+    typ.Tuple[NDArray,...]
+        Singular values of unfoldings. len=d+1. elm_shape=(ri,)
+
+    See Also
+    --------
+    truncated_svd
+    tucker_svd_dense
+    t3_svd_dense
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> T0 = np.random.randn(40, 50, 60)
+    >>> c0 = 1.0 / np.arange(1, 41)**2
+    >>> c1 = 1.0 / np.arange(1, 51)**2
+    >>> c2 = 1.0 / np.arange(1, 61)**2
+    >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2)
+    >>> cores, ss = tt_svd_dense(T, rtol=1e-2)
+    >>> print([G.shape for G in cores])
+        [(1, 40, 6), (6, 50, 7), (7, 60, 1)]
+    >>> T2 = jnp.einsum('aib,bjc,ckd->ijk', cores[0], cores[1], cores[2])
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-2
+        0.013056156368977757
+    >>> cores, ss = tt_svd_dense(T, rtol=1e-3)
+    >>> print([G.shape for G in cores])
+        [(1, 40, 13), (13, 50, 13), (13, 60, 1)]
+    >>> T2 = jnp.einsum('aib,bjc,ckd->ijk', cores[0], cores[1], cores[2])
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
+        0.0023999063535883633
+    >>> cores, ss = tt_svd_dense(T, rtol=1e-4)
+    >>> print([G.shape for G in cores])
+        [(1, 40, 30), (30, 50, 30), (30, 60, 1)]
+    >>> T2 = jnp.einsum('aib,bjc,ckd->ijk', cores[0], cores[1], cores[2])
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-4
+        0.0002850622316036925
+    '''
+    nn = T.shape
+
+    X = T.reshape((1,) + T.shape)
+    singular_values_of_unfoldings = []
+    cores = []
+    for ii in range(len(nn)-1):
+        rL = X.shape[0]
+
+        min_rank = None if min_ranks is None else min_ranks[ii+1]
+        max_rank = None if max_ranks is None else max_ranks[ii+1]
+
+        U, ss, Vt = truncated_svd(X.reshape((rL * nn[ii], -1)), min_rank, max_rank, rtol, atol, use_jax)
+        rR = len(ss)
+
+        singular_values_of_unfoldings.append(ss)
+        cores.append(U.reshape((rL, nn[ii], rR)))
+        X = ss.reshape((-1,1)) * Vt
+    cores.append(X.reshape(X.shape + (1,)))
+
+    return tuple(cores), tuple(singular_values_of_unfoldings)
+
+
+def t3_svd_dense(
+        T: NDArray, # shape=(N1, N2, .., Nd)
+        min_tucker_ranks:  typ.Sequence[int] = None, # len=d
+        max_tucker_ranks:  typ.Sequence[int] = None,  # len=d
+        min_tt_ranks:  typ.Sequence[int] = None, # len=d+1
+        max_tt_ranks:  typ.Sequence[int] = None,  # len=d+1
+        rtol: float = None,
+        atol: float = None,
+        use_jax: bool = False,
+) -> typ.Tuple[
+    TuckerTensorTrain, # new_x
+    typ.Tuple[NDArray,...], # basis singular values, len=k
+    typ.Tuple[NDArray,...], # tt singular values, len=k-1
+]:
+    '''Compute TuckerTensorTrain and edge singular values for dense tensor.
+
+    Parameters
+    ----------
+    T: NDArray
+        The dense tensor. shape=(N1, ..., Nd)
+    min_tucker_ranks: typ.Sequence[int]
+        Minimum Tucker ranks for truncation. len=d. e.g., (3,3,3)
+    max_tucker_ranks: typ.Sequence[int]
+        Maximum Tucker ranks for truncation. len=d. e.g., (5,5,5)
+    min_tt_ranks: typ.Sequence[int]
+        Minimum TT-ranks for truncation. len=d+1. e.g., (1,3,3,3,1)
+    max_tt_ranks: typ.Sequence[int]
+        Maximum TT-ranks for truncation. len=d+1. e.g., (1,5,5,5,1)
+    rtol: float
+        Relative tolerance for truncation.
+    atol: float
+        Absolute tolerance for truncation.
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    TuckerTensorTrain
+        Tucker tensor train approxiamtion of T
+    typ.Tuple[NDArray,...]
+        Singular values of matricizations. len=d. elm_shape=(ni,)
+    typ.Tuple[NDArray,...]
+        Singular values of unfoldings. len=d+1. elm_shape=(ri,)
+
+    See Also
+    --------
+    truncated_svd
+    tucker_svd_dense
+    tt_svd_dense
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> T0 = np.random.randn(40, 50, 60)
+    >>> c0 = 1.0 / np.arange(1, 41)**2
+    >>> c1 = 1.0 / np.arange(1, 51)**2
+    >>> c2 = 1.0 / np.arange(1, 61)**2
+    >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2)
+    >>> x, ss_tucker, ss_tt = t3_svd_dense(T, rtol=1e-2)
+    >>> print(t3_structure(x))
+        ((40, 50, 60), (5, 5, 3), (1, 5, 3, 1))
+    >>> T2 = t3_to_dense(x)
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-2
+        0.018856713575257946
+    >>> x, ss_tucker, ss_tt = t3_svd_dense(T, rtol=1e-3)
+    >>> print(t3_structure(x))
+        ((40, 50, 60), (12, 11, 12), (1, 12, 12, 1))
+    >>> T2 = t3_to_dense(x)
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
+        0.0025147026955504846
+    >>> x, ss_tucker, ss_tt = t3_svd_dense(T, rtol=1e-4)
+    >>> print(t3_structure(x))
+        ((40, 50, 60), (26, 26, 27), (1, 26, 27, 1))
+    >>> T2 = t3_to_dense(x)
+    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-4
+        0.00034874423325066196
+    '''
+    (basis_cores, tucker_core), ss_tucker = tucker_svd_dense(T, min_tucker_ranks, max_tucker_ranks, rtol, atol, use_jax)
+    tt_cores, ss_tt = tt_svd_dense(tucker_core, min_tt_ranks, max_tt_ranks, rtol, atol, use_jax)
+    return (basis_cores, tt_cores), ss_tucker, ss_tt
+
