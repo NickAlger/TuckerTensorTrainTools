@@ -27,9 +27,9 @@ __all__ = [
     't3_svd_dense',
 ]
 
-#########################################################################
-########    Orthogonalization, T3-SVD, and related functions    #########
-#########################################################################
+###############################################
+########    SVD of core unfoldings    #########
+###############################################
 
 def truncated_svd(
         A: NDArray, # shape=(N,M)
@@ -388,6 +388,10 @@ def outer_svd_3tensor(
     return U_i_x_j, ss_x, Vt_x_a
 
 
+##########################################
+########    Orthogonalization    #########
+##########################################
+
 def up_svd_ith_basis_core(
         ii: int, # which base core to orthogonalize
         x: TuckerTensorTrain,
@@ -693,7 +697,7 @@ def up_svd_ith_tt_core(
     See Also
     --------
     truncated_svd
-    left_svd_3tensor
+    outer_svd_3tensor
     up_svd_ith_basis_core
     left_svd_ith_tt_core
     right_svd_ith_tt_core
@@ -776,7 +780,7 @@ def down_svd_ith_tt_core(
     See Also
     --------
     truncated_svd
-    left_svd_3tensor
+    outer_svd_3tensor
     up_svd_ith_basis_core
     left_svd_ith_tt_core
     right_svd_ith_tt_core
@@ -858,6 +862,14 @@ def orthogonalize_relative_to_ith_basis_core(
     new_x: NDArray
         New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith basis core.
 
+    See Also
+    --------
+    up_svd_ith_basis_core
+    left_svd_ith_tt_core
+    right_svd_ith_tt_core
+    up_svd_ith_tt_core
+    down_svd_ith_tt_core
+
     Examples
     --------
     >>> from numpy.random import randn
@@ -924,6 +936,14 @@ def orthogonalize_relative_to_ith_tt_core(
     use_jax: bool
         If True, use jax operations. Otherwise, numpy. Default: False
 
+    See Also
+    --------
+    up_svd_ith_basis_core
+    left_svd_ith_tt_core
+    right_svd_ith_tt_core
+    up_svd_ith_tt_core
+    down_svd_ith_tt_core
+
     Returns
     -------
     new_x: NDArray
@@ -965,6 +985,10 @@ def orthogonalize_relative_to_ith_tt_core(
     new_x = up_svd_ith_basis_core(ii, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
     return new_x
 
+
+###############################
+########    T3-SVD    #########
+###############################
 
 def t3_svd(
         x: TuckerTensorTrain,
@@ -1010,6 +1034,18 @@ def t3_svd(
         Singular values associated with edges between basis cores and TT-cores
     typ.Tuple[NDArray,...]
         Singular values associated with edges between adjacent TT-cores
+
+    See Also
+    --------
+    left_svd_3tensor
+    right_svd_3tensor
+    outer_svd_3tensor
+    up_svd_ith_basis_core
+    left_svd_ith_tt_core
+    right_svd_ith_tt_core
+    up_svd_ith_tt_core
+    down_svd_ith_tt_core
+    truncated_svd
 
     Examples
     --------
@@ -1079,7 +1115,6 @@ def t3_svd(
         ((14, 15, 16), (10, 11, 12), (1, 8, 9, 1))
     >>> print(t3_structure(x2))
         ((14, 15, 16), (3, 3, 2), (1, 2, 2, 1))
-
     '''
     xnp = jnp if use_jax else np
 
@@ -1169,6 +1204,43 @@ def tucker_svd_dense(
 
     return (tuple(bases), C), tuple(singular_values_of_unfoldings)
 
+
+def tt_svd_dense(
+        T: jnp.ndarray,
+        max_mid_ranks: typ.Sequence[int] = None, # len=k-1, i.e., Correct: (r1, ..., r_{k-1}), Incorrect: (1,r1, ..., r_{k-1},1)
+        rtol: float = None,
+        atol: float = None,
+) -> typ.Tuple[
+    typ.Tuple[jnp.ndarray,...], # tt_cores
+    typ.Tuple[jnp.ndarray,...], # singular values of unfoldings
+]:
+    nn = T.shape
+    rtol = 0.0 if rtol is None else rtol
+    atol = 0.0 if atol is None else atol
+
+    X = T.reshape((1,) + T.shape)
+    singular_values_of_unfoldings = []
+    cores = []
+    for ii in range(len(nn)-1):
+        rL = X.shape[0]
+        U, ss, Vt = jnp.linalg.svd(X.reshape((rL * nn[ii], -1)), full_matrices=False)
+
+        if max_mid_ranks is not None:
+            ss = ss[:max_mid_ranks[ii]]
+
+        tol = jnp.maximum(ss[0] * rtol, atol)
+
+        rR = jnp.sum(ss >= tol)
+        U = U[:, :rR]
+        ss = ss[:rR]
+        Vt = Vt[:rR, :]
+
+        singular_values_of_unfoldings.append(ss)
+        cores.append(U.reshape((rL, nn[ii], rR)))
+        X = ss.reshape((-1,1)) * Vt
+    cores.append(X.reshape(X.shape + (1,)))
+
+    return tuple(cores), tuple(singular_values_of_unfoldings)
 
 def t3_svd_dense(
         T: jnp.ndarray, # shape=(N1, N2, .., Nd)
