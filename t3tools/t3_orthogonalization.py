@@ -15,12 +15,8 @@ except:
 NDArray = typ.Union[np.ndarray, jnp.ndarray]
 
 __all__ = [
-    'T3Orthogonals',
-    't3_svd',
-    'truncated_svd',
-    'left_svd_3tensor',
-    'right_svd_3tensor',
-    'outer_svd_3tensor',
+    'T3Base',
+    'T3Variation',
     'up_svd_ith_basis_core',
     'left_svd_ith_tt_core',
     'right_svd_ith_tt_core',
@@ -30,12 +26,133 @@ __all__ = [
     'orthogonalize_relative_to_ith_tt_core',
 ]
 
-T3Orthogonals = typ.Tuple[
-    typ.Sequence[NDArray],  # orthogonal_basis_cores. B_xo B_yo = I_xy    B.shape = (n, N)
-    typ.Sequence[NDArray],  # left_orthogonal_tt_cores. P_iax P_iay = I_xy, P.shape = (rL, n, rR)
-    typ.Sequence[NDArray],  # right_orthogonal_tt_cores. Q_xaj Q_yaj = I_xy  Q.shape = (rL, n, rR)
-    typ.Sequence[NDArray],  # outer_orthogonal_tt_cores. R_ixj R_iyj = I_xy  R.shape = (rL, n, rR)
+T3Base = typ.Tuple[
+    typ.Sequence[NDArray],  # base_basis_cores. B_xo B_yo = I_xy    B.shape = (n, N)
+    typ.Sequence[NDArray],  # base_left_tt_cores. P_iax P_iay = I_xy, P.shape = (rL, n, rR)
+    typ.Sequence[NDArray],  # base_right_tt_cores. Q_xaj Q_yaj = I_xy  Q.shape = (rL, n, rR)
+    typ.Sequence[NDArray],  # base_outer_tt_cores. R_ixj R_iyj = I_xy  R.shape = (rL, n, rR)
 ]
+
+T3Variation = typ.Tuple[
+    typ.Sequence[NDArray],  # variation_basis_cores.
+    typ.Sequence[NDArray],  # variation_tt_cores.
+]
+
+
+def t3_check_base(
+        orth_cores: T3Base,
+) -> None:
+    basis_cores, left_tt_cores, right_tt_cores, outer_tt_cores = orth_cores
+
+    num_cores = len(basis_cores)
+    all_num_cores = [len(basis_cores), len(left_tt_cores), len(right_tt_cores), len(outer_tt_cores)]
+    if all_num_cores != [num_cores]*4:
+        raise RuntimeError(
+            'Orthogonals have different numbers of cores. These should all be equal:\n'
+            + '[len(basis_cores), len(left_tt_cores), len(right_tt_cores), len(outer_tt_cores)]=\n'
+            + str(all_num_cores)
+        )
+
+    # Check that basis_cores are matrices
+    for ii, B in enumerate(basis_cores):
+        if len(B.shape) != 2:
+            raise RuntimeError(
+                'basis_core is not a matrix:\n'
+                + 'basis_cores['+str(ii) + '].shape=' + str(B.shape)
+            )
+
+    # Check that outer_tt_cores are 3-tensors with leading and trailing 1 dims
+    for ii, G in enumerate(outer_tt_cores):
+        if len(G.shape) != 3:
+            raise RuntimeError(
+                'outer_tt_core is not a 3-tensor:\n'
+                + 'outer_tt_cores['+str(ii) + '].shape=' + str(G.shape)
+            )
+
+    if outer_tt_cores[0].shape[0] != 1:
+        raise RuntimeError(
+            'First outer_tt_core must have shape (1, . , .).\n'
+            + 'outer_tt_cores[0].shape=' + str(outer_tt_cores[0].shape)
+        )
+
+    if outer_tt_cores[-1].shape[2] != 1:
+        raise RuntimeError(
+            'Last outer_tt_core must have shape ( . , . , 1).\n'
+            + 'outer_tt_cores[-1].shape=' + str(outer_tt_cores[-1].shape)
+        )
+
+    # Check that left_tt_cores are 3-tensors with leading and trailing 1 dims
+    for ii, G in enumerate(left_tt_cores):
+        if len(G.shape) != 3:
+            raise RuntimeError(
+                'left_tt_core is not a 3-tensor:\n'
+                + 'left_tt_cores['+str(ii) + '].shape=' + str(G.shape)
+            )
+
+    if left_tt_cores[0].shape[0] != 1:
+        raise RuntimeError(
+            'First left_tt_core must have shape (1, . , .).\n'
+            + 'left_tt_cores[0].shape=' + str(left_tt_cores[0].shape)
+        )
+
+    if left_tt_cores[-1].shape[2] != 1:
+        raise RuntimeError(
+            'Last left_tt_core must have shape ( . , . , 1).\n'
+            + 'left_tt_cores[-1].shape=' + str(left_tt_cores[-1].shape)
+        )
+
+    # Check that right_tt_cores are 3-tensors with leading and trailing 1 dims
+    for ii, G in enumerate(right_tt_cores):
+        if len(G.shape) != 3:
+            raise RuntimeError(
+                'right_tt_core is not a 3-tensor:\n'
+                + 'right_tt_cores['+str(ii) + '].shape=' + str(G.shape)
+            )
+
+    if right_tt_cores[0].shape[0] != 1:
+        raise RuntimeError(
+            'First right_tt_core must have shape (1, . , .).\n'
+            + 'right_tt_cores[0].shape=' + str(right_tt_cores[0].shape)
+        )
+
+    if right_tt_cores[-1].shape[2] != 1:
+        raise RuntimeError(
+            'Last right_tt_core must have shape ( . , . , 1).\n'
+            + 'right_tt_cores[-1].shape=' + str(right_tt_cores[-1].shape)
+        )
+
+    # Check outer-left consistency
+    for ii in range(1, num_cores):
+        GO = outer_tt_cores[ii]
+        GL = left_tt_cores[ii-1]
+        if GO.shape[0] != GL.shape[2]:
+            raise RuntimeError(
+                'Inconsistency in outer_tt_core and left_tt_core shapes:\n'
+                + 'outer_tt_cores['+str(ii)+'].shape=' + str(GO.shape) + '\n'
+                + 'left_tt_cores['+str(ii-1)+'].shape=' + str(GL.shape)
+            )
+
+    # Check outer-right consistency
+    for ii in range(0, num_cores-1):
+        GO = outer_tt_cores[ii]
+        GR = right_tt_cores[ii+1]
+        if GO.shape[2] != GR.shape[0]:
+            raise RuntimeError(
+                'Inconsistency in outer_tt_core and right_tt_core shapes:\n'
+                + 'outer_tt_cores['+str(ii)+'].shape=' + str(GO.shape) + '\n'
+                + 'right_tt_cores['+str(ii+11)+'].shape=' + str(GR.shape)
+            )
+
+
+def t3_check_nonorthogonals_fit(
+        orth_cores: T3Orthogonals,
+        nonorth_cores: T3NonOrthogonals,
+) -> None:
+    orth_basis_cores, left_orth_tt_cores, right_orth_tt_cores, outer_orth_tt_cores = orth_cores
+    nonorth_basis_cores, nonorth_tt_cores = nonorth_cores
+
+
+
 
 
 ##########################################
@@ -643,52 +760,53 @@ def orthogonalize_relative_to_ith_tt_core(
     return new_x
 
 
-# def t3_orthogonal_representations(
-#         x: TuckerTensorTrain,
-#         use_jax: bool = False,
-# ) -> typ.Tuple[
-#     TuckerTensorTrain, # non-orthogonal cores
-#     T3Orthogonals, # orthogonalizations of x
-# ]:
-#     xnp = jnp if use_jax else np
-#
-#     basis_cores, tt_cores = x
-#
-#     num_cores = len(tt_cores)
-#
-#     # Orthogonalize basis matrices
-#     for ii in range(num_cores):
-#         x = up_svd_ith_basis_core(ii, x, use_jax=use_jax)[0]
-#
-#     # Right orthogonalize
-#     for ii in range(num_cores-1, 0, -1): # num_cores-1, num_cores-2, ..., 1
-#         x = right_svd_ith_tt_core(ii, x, use_jax=use_jax)[0]
-#
-#     non_orthogonal_basis_cores = []
-#     non_orthogonal_tt_cores = []
-#
-#     orthogonal_basis_cores = []
-#     left_orthogonal_tt_cores = []
-#     right_orthogonal_tt_cores = []
-#     outer_orthogonal_tt_cores = []
-#     # Sweep left to right
-#     for ii in range(num_cores):
-#         # SVD inbetween tt core and basis core
-#         x, ss_basis = up_svd_ith_tt_core(
-#             ii, x, use_jax=use_jax,
-#         )
-#         all_ss_basis.append(ss_basis)
-#
-#         if ii < num_cores-1:
-#             # SVD inbetween ith tt core and (i+1)th tt core
-#             x, ss_tt = left_svd_ith_tt_core(
-#                 ii, x, use_jax=use_jax,
-#             )
-#         else:
-#             Gf = x[1][-1]
-#             _, ss_tt, _ = left_svd_3tensor(Gf, use_jax=use_jax)
-#         all_ss_tt.append(ss_tt)
-#
-#     return x, tuple(all_ss_basis), tuple(all_ss_tt)
+def t3_orthogonals(
+        x: TuckerTensorTrain,
+        use_jax: bool = False,
+) -> typ.Tuple[
+    TuckerTensorTrain, # non-orthogonal cores
+    T3Orthogonals, # orthogonalizations of x
+]:
+    t3_check(x)
+
+    xnp = jnp if use_jax else np
+
+    basis_cores, tt_cores = x
+    num_cores = len(tt_cores)
+
+    # Orthogonalize basis matrices
+    for ii in range(num_cores):
+        x = up_svd_ith_basis_core(ii, x, use_jax=use_jax)[0]
+    orthogonal_basis_cores = tuple([B.copy() for B in x[0]])
+
+    # Right orthogonalize
+    for ii in range(num_cores-1, 0, -1): # num_cores-1, num_cores-2, ..., 1
+        x = right_svd_ith_tt_core(ii, x, use_jax=use_jax)[0]
+    right_orthogonal_tt_cores = tuple([G.copy() for G in x[1]])
+
+    non_orthogonal_basis_cores = []
+    non_orthogonal_tt_cores = []
+
+    left_orthogonal_tt_cores = []
+    outer_orthogonal_tt_cores = []
+    # Sweep left to right
+    for ii in range(num_cores):
+        # SVD inbetween tt core and basis core
+        x, ss_basis = up_svd_ith_tt_core(
+            ii, x, use_jax=use_jax,
+        )
+        all_ss_basis.append(ss_basis)
+
+        if ii < num_cores-1:
+            # SVD inbetween ith tt core and (i+1)th tt core
+            x, ss_tt = left_svd_ith_tt_core(
+                ii, x, use_jax=use_jax,
+            )
+        else:
+            Gf = x[1][-1]
+            _, ss_tt, _ = left_svd_3tensor(Gf, use_jax=use_jax)
+        all_ss_tt.append(ss_tt)
+
+    return x, tuple(all_ss_basis), tuple(all_ss_tt)
 
 
