@@ -1940,6 +1940,156 @@ def down_svd_ith_tt_core(
     return (tuple(new_basis_cores), tuple(new_tt_cores)), ss_x
 
 
+def orthogonalize_relative_to_ith_basis_core(
+        ii: int,
+        x: TuckerTensorTrain,
+        min_rank: int = None,
+        max_rank: int = None,
+        rtol: float = None,
+        atol: float = None,
+        use_jax: bool = False,
+) -> TuckerTensorTrain:
+    '''Orthogonalize all cores in the TuckerTensorTrain except for the ith basis core.
+
+    Orthogonal is done relative to the ith basis core:
+        - ith basis core is not orthogonalized
+        - All other basis cores are orthogonalized.
+        - TT-cores to the left are left orthogonalized.
+        - TT-core directly above is outer orthogonalized.
+        - TT-cores to the right are right orthogonalized.
+
+    Parameters
+    ----------
+    ii: int
+        index of basis core that is not orthogonalized
+    x: TuckerTensorTrain
+        The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
+    min_rank: int
+        Minimum rank for truncation.
+    min_rank: int
+        Maximum rank for truncation.
+    rtol: float
+        Relative tolerance for truncation.
+    atol: float
+        Absolute tolerance for truncation.
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    new_x: NDArray
+        New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith basis core.
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> x = (basis_cores_x, tt_cores_x)
+    >>> ind = 1
+    >>> x2 = orthogonalize_relative_to_ith_basis_core(ind, x)
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
+        8.800032152216517e-13
+    >>> ((B0, B1, B2), (G0, G1, G2)) = x2
+    >>> X = jnp.einsum('xi,axb,byc,czd,zk->iyk', B0, G0, G1, G2, B2)
+    >>> rank = X.shape[1]
+    >>> print(np.linalg.norm(jnp.einsum('iyk,iwk->yw', X, X) - np.eye(rank)))
+        1.7116160385376214e-15
+    '''
+    shape, tucker_ranks, tt_ranks = t3_structure(x)
+
+    new_x = x
+    for jj in range(ii):
+        new_x = down_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = up_svd_ith_basis_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = left_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+
+    for jj in range(len(shape)-1, ii, -1):
+        new_x = down_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = up_svd_ith_basis_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = right_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+
+    new_x = down_svd_ith_tt_core(ii, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+    return new_x
+
+
+def orthogonalize_relative_to_ith_tt_core(
+        ii: int,
+        x: TuckerTensorTrain,
+        min_rank: int = None,
+        max_rank: int = None,
+        rtol: float = None,
+        atol: float = None,
+        use_jax: bool = False,
+) -> TuckerTensorTrain:
+    '''Orthogonalize all cores in the TuckerTensorTrain except for the ith TT-core.
+
+    Orthogonal is done relative to the ith TT-core:
+        - All basis cores are orthogonalized.
+        - TT-cores to the left are left orthogonalized.
+        - ith TT-core is not orthogonalized.
+        - TT-cores to the right are right orthogonalized.
+
+    Parameters
+    ----------
+    ii: int
+        index of TT-core that is not orthogonalized
+    x: TuckerTensorTrain
+        The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
+    min_rank: int
+        Minimum rank for truncation.
+    min_rank: int
+        Maximum rank for truncation.
+    rtol: float
+        Relative tolerance for truncation.
+    atol: float
+        Absolute tolerance for truncation.
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    new_x: NDArray
+        New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith TT-core.
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> x = (basis_cores_x, tt_cores_x)
+    >>> x2 = orthogonalize_relative_to_ith_tt_core(1, x)
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
+        8.800032152216517e-13
+    >>> ((B0, B1, B2), (G0, G1, G2)) = x2
+    >>> XL = np.einsum('axb,xi -> aib', G0, B0)
+    >>> print(np.linalg.norm(np.einsum('aib,aic->bc', XL, XL) - np.eye(G1.shape[0])))
+        9.820411604510197e-16
+    >>> print(np.linalg.norm(np.einsum('xi,yi->xy', B1, B1) - np.eye(G1.shape[1])))
+        2.1875310121178e-15
+    >>> XR = np.einsum('axb,xi->aib', G2, B2)
+    >>> print(np.linalg.norm(np.einsum('aib,cib->ac', XR, XR) - np.eye(G1.shape[2])))
+        1.180550381921849e-15
+    '''
+    shape, tucker_ranks, tt_ranks = t3_structure(x)
+
+    new_x = x
+    for jj in range(ii):
+        new_x = down_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = up_svd_ith_basis_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = left_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+
+    for jj in range(len(shape)-1, ii, -1):
+        new_x = down_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = up_svd_ith_basis_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+        new_x = right_svd_ith_tt_core(jj, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+
+    new_x = up_svd_ith_basis_core(ii, new_x, min_rank, max_rank, rtol, atol, use_jax)[0]
+    return new_x
+
+
 def t3_svd(
         x: TuckerTensorTrain,
         max_tt_ranks:       typ.Sequence[int] = None, # len=k-1, i.e., Correct: (r1, ..., r_{k-1}), Incorrect: (1,r1, ..., r_{k-1},1)
