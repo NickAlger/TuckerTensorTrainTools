@@ -1156,34 +1156,115 @@ def t3_entry(
 #########################################################################
 
 def left_svd_3tensor(
-        G0_i_a_j: jnp.ndarray, # shape=(ni, na, nj)
+        G0_i_a_j: NDArray, # shape=(ni, na, nj)
         min_rank: int = None, # 1 <= min_rank <= max_rank <= minimum(ni*na, nj)
         max_rank: int = None, # 1 <= min_rank <= max_rank <= minimum(ni*na, nj)
         rtol: float = None, # removes singular values satisfying sigma < maximum(atol, rtol*sigma1)
         atol: float = None, # removes singular values satisfying sigma < maximum(atol, rtol*sigma1)
+        use_jax: bool = False,
 ) -> typ.Tuple[
-    jnp.ndarray, # U_i_a_x, shape=(ni, na, nx)
-    jnp.ndarray, # ss_x,    shape=(nx,)
-    jnp.ndarray, # Vt_x_j,  shape=(nx, nj)
+    NDArray, # U_i_a_x, shape=(ni, na, nx)
+    NDArray, # ss_x,    shape=(nx,)
+    NDArray, # Vt_x_j,  shape=(nx, nj)
 ]:
+    '''Compute (truncated) singular value decomposition of 3-tensor left unfolding.
+
+    First two indices of the tensor are grouped for the SVD.
+
+    G0_i_a_j = einsum('iax,x,xj->ixj', U_i_a_x, ss_x, Vt_x_j).
+    Equality may be approximate if truncation is used.
+
+    Parameters
+    ----------
+    G0_i_a_j: NDArray
+        3-tensor. shape=(ni, na, nj)
+    min_rank: int
+        Minimum rank for truncation. Should have 1 <= min_rank <= max_rank <= minimum(ni*na, nj).
+    min_rank: int
+        Maximum rank for truncation. Should have 1 <= min_rank <= max_rank <= minimum(ni*na, nj).
+    rtol: float
+        Relative tolerance for truncation. Remove singular values satisfying sigma < maximum(atol, rtol*sigma1).
+    atol: float
+        Absolute tolerance for truncation. Remove singular values satisfying sigma < maximum(atol, rtol*sigma1).
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    U_i_a_x: NDArray
+        Left singular vectors, reshaped into 3-tensor. shape=(ni, na, nx).
+        einsum('iax,iay->xy', U_i_a_x, U_i_a_x) = identity matrix
+    ss_x: NDArray
+        Singular values. Non-negative. shape=(nx,).
+    Vt_x_j: NDArray
+        Right singular vectors. shape=(nx, nj)
+        einsum('xj,yj->xy', Vt_x_j, Vt_x_j) = identity matrix
+
+    Raises
+    ------
+    RuntimeError
+        Error raised if the provided indices in index are inconsistent with each other or the Tucker tensor train x.
+
+    See Also
+    --------
+    right_svd_3tensor
+    outer_svd_3tensor
+    left_svd_ith_tt_core
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> G_i_a_j = np.random.randn(5,7,6)
+    >>> U_i_a_x, ss_x, Vt_x_j = left_svd_3tensor(G_i_a_j)
+    >>> G_i_a_j2 = np.einsum('iax,x,xj->iaj', U_i_a_x, ss_x, Vt_x_j)
+    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2))
+        1.8290510387826402e-14
+    >>> rank = len(ss_x)
+    >>> print(np.linalg.norm(np.einsum('iax,iay->xy', U_i_a_x, U_i_a_x) - np.eye(rank)))
+        1.6194412284045956e-15
+    >>> print(np.linalg.norm(np.einsum('xj,yj->xy', Vt_x_j, Vt_x_j) - np.eye(rank)))
+        1.4738004835812172e-15
+
+    >>> G_i_a_j = np.random.randn(10,15,50) @ np.diag(1.0 / np.arange(1,51)**2) # Create tensor with spectral decay
+    >>> U_i_a_x, ss_x, Vt_x_j = left_svd_3tensor(G_i_a_j, rtol=1e-2)
+    >>> G_i_a_j2 = np.einsum('iax,x,xj->iaj', U_i_a_x, ss_x, Vt_x_j)
+    >>> truncated_rank = len(ss_x)
+    >>> print(truncated_rank)
+        9
+    >>> relerr_num = np.linalg.norm((G_i_a_j - G_i_a_j2).reshape((10*15,50)), 2) # Check error in induced 2-norm
+    >>> relerr_den = np.linalg.norm(G_i_a_j.reshape((10*15,50)), 2)
+    >>> print(relerr_num / relerr_den) # should be just less than rtol=1e-2
+        0.009866510933829224
+
+    >>> G_i_a_j = np.random.randn(10,15,50) @ np.diag(1.0 / np.arange(1,51)**2) # Create tensor with spectral decay
+    >>> U_i_a_x, ss_x, Vt_x_j = left_svd_3tensor(G_i_a_j, atol=1e-2)
+    >>> G_i_a_j2 = np.einsum('iax,x,xj->iaj', U_i_a_x, ss_x, Vt_x_j)
+    >>> truncated_rank = len(ss_x)
+    >>> print(truncated_rank)
+        33
+    >>> err = np.linalg.norm((G_i_a_j - G_i_a_j2).reshape((10*15,50)), 2)  # Check error in induced 2-norm
+    >>> print(err) # should be just less than atol=1e-2
+        0.009828573354343331
+    '''
+    xnp = jnp if use_jax else np
+
     rtol1 = 0.0 if rtol is None else rtol
     atol1 = 0.0 if atol is None else atol
 
     ni, na, nj = G0_i_a_j.shape
     G0_ia_j = G0_i_a_j.reshape((ni*na, nj))
 
-    U_ia_y, ss_y, Vt_y_j = jnp.linalg.svd(G0_ia_j, full_matrices=False)
+    U_ia_y, ss_y, Vt_y_j = xnp.linalg.svd(G0_ia_j, full_matrices=False)
 
-    tol = jnp.maximum(ss_y[0] * rtol1, atol1)
+    tol = xnp.maximum(ss_y[0] * rtol1, atol1)
 
-    if forced_rank is not None:
-        nx = forced_rank
-    elif rtol is None and atol is None:
-        nx = len(ss_y)
-    else:
-        nx = jnp.sum(ss_y >= tol)
-        if max_rank is not None:
-            nx = jnp.minimum(nx, max_rank)
+    min_rank = 1 if min_rank is None else None
+    max_rank = xnp.minimum(ni*na, nj) if max_rank is None else None
+
+    num_significant_sigmas = xnp.sum(ss_y >= tol)
+    nx = xnp.maximum(xnp.minimum(num_significant_sigmas, max_rank), min_rank)
 
     U_ia_x = U_ia_y[:, :nx]
     ss_x = ss_y[:nx]
@@ -1195,36 +1276,160 @@ def left_svd_3tensor(
 
 
 def right_svd_3tensor(
-        G0_i_a_j: jnp.ndarray, # shape=(ni, na, nj)
-        max_rank: int = None,
-        rtol: float = None,
-        atol: float = None,
-        forced_rank: int = None,
+        G0_i_a_j: NDArray, # shape=(ni, na, nj)
+        min_rank: int = None, # 1 <= min_rank <= max_rank <= minimum(ni*na, nj)
+        max_rank: int = None, # 1 <= min_rank <= max_rank <= minimum(ni*na, nj)
+        rtol: float = None, # removes singular values satisfying sigma < maximum(atol, rtol*sigma1)
+        atol: float = None, # removes singular values satisfying sigma < maximum(atol, rtol*sigma1)
+        use_jax: bool = False,
 ) -> typ.Tuple[
-    jnp.ndarray, # U_i_x,       shape=(ni, nx)
-    jnp.ndarray, # ss_x,        shape=(nx,)
-    jnp.ndarray, # Vt_x_a_j,    shape=(nx, na, nj)
+    NDArray, # U_i_x,       shape=(ni, nx)
+    NDArray, # ss_x,        shape=(nx,)
+    NDArray, # Vt_x_a_j,    shape=(nx, na, nj)
 ]:
+    '''Compute (truncated) singular value decomposition of 3-tensor right unfolding.
+
+    Last two indices of the tensor are grouped for the SVD.
+
+    G0_i_a_j = einsum('iax,x,xj->ixj', U_i_x, ss_x, Vt_x_a_j).
+    Equality may be approximate if truncation is used.
+
+    Parameters
+    ----------
+    G0_i_a_j: NDArray
+        3-tensor. shape=(ni, na, nj)
+    min_rank: int
+        Minimum rank for truncation. Should have 1 <= min_rank <= max_rank <= minimum(ni*na, nj).
+    min_rank: int
+        Maximum rank for truncation. Should have 1 <= min_rank <= max_rank <= minimum(ni*na, nj).
+    rtol: float
+        Relative tolerance for truncation. Remove singular values satisfying sigma < maximum(atol, rtol*sigma1).
+    atol: float
+        Absolute tolerance for truncation. Remove singular values satisfying sigma < maximum(atol, rtol*sigma1).
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    U_i_x: NDArray
+        Left singular vectors. shape=(ni, nx).
+        einsum('ix,iy->xy', U_i_x, U_i_x) = identity matrix
+    ss_x: NDArray
+        Singular values. Non-negative. shape=(nx,).
+    Vt_x_a_j: NDArray
+        Right singular vectors, reshaped into 3-tensor. shape=(nx, na, nj)
+        einsum('xaj,yaj->xy', Vt_x_a_j, Vt_x_a_j) = identity matrix
+
+    Raises
+    ------
+    RuntimeError
+        Error raised if the provided indices in index are inconsistent with each other or the Tucker tensor train x.
+
+    See Also
+    --------
+    left_svd_3tensor
+    outer_svd_3tensor
+    right_svd_ith_tt_core
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> G_i_a_j = np.random.randn(5,7,6)
+    >>> U_i_x, ss_x, Vt_x_a_j = right_svd_3tensor(G_i_a_j)
+    >>> G_i_a_j2 = np.einsum('ix,x,xaj->iaj', U_i_x, ss_x, Vt_x_a_j)
+    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2))
+        1.2503321403334437e-14
+    >>> rank = len(ss_x)
+    >>> print(np.linalg.norm(np.einsum('ix,iy->xy', U_i_x, U_i_x) - np.eye(rank)))
+        1.6591938592301729e-15
+    >>> print(np.linalg.norm(np.einsum('xaj,yaj->xy', Vt_x_a_j, Vt_x_a_j) - np.eye(rank)))
+        1.9466202162000267e-15
+    '''
     G0_j_a_i = G0_i_a_j.swapaxes(0, 2)
-    Vt_j_a_x, ss_x, U_x_i = left_svd_3tensor(G0_j_a_i, max_rank, rtol, atol, forced_rank)
+    Vt_j_a_x, ss_x, U_x_i = left_svd_3tensor(G0_j_a_i, min_rank, max_rank, rtol, atol, use_jax)
     Vt_x_a_j = Vt_j_a_x.swapaxes(0, 2)
     U_i_x = U_x_i.swapaxes(0,1)
     return U_i_x, ss_x, Vt_x_a_j
 
 
 def outer_svd_3tensor(
-        G0_i_a_j: jnp.ndarray, # shape=(ni, na, nj)
-        max_rank: int = None,
-        rtol: float = None,
-        atol: float = None,
-        forced_rank: int = None,
+        G0_i_a_j: NDArray, # shape=(ni, na, nj)
+        min_rank: int = None, # 1 <= min_rank <= max_rank <= minimum(ni*na, nj)
+        max_rank: int = None, # 1 <= min_rank <= max_rank <= minimum(ni*na, nj)
+        rtol: float = None, # removes singular values satisfying sigma < maximum(atol, rtol*sigma1)
+        atol: float = None, # removes singular values satisfying sigma < maximum(atol, rtol*sigma1)
+        use_jax: bool = False,
 ) -> typ.Tuple[
-    jnp.ndarray, # U_i_x_j, shape=(ni, nx, nj),
-    jnp.ndarray, # ss_x,    shape=(nx,)
-    jnp.ndarray, # Vt_x_a,  shape=(nx, na)
+    NDArray, # U_i_x_j, shape=(ni, nx, nj),
+    NDArray, # ss_x,    shape=(nx,)
+    NDArray, # Vt_x_a,  shape=(nx, na)
 ]:
+    '''Compute (truncated) singular value decomposition of 3-tensor outer unfolding.
+
+    First and last indices of the tensor are grouped to form rows for the SVD.
+    Middle index forms columns.
+
+    G0_i_a_j = einsum('iax,x,xj->ixj', U_i_x_j, ss_x, Vt_x_a).
+    Equality may be approximate if truncation is used.
+
+    Parameters
+    ----------
+    G0_i_a_j: NDArray
+        3-tensor. shape=(ni, na, nj)
+    min_rank: int
+        Minimum rank for truncation. Should have 1 <= min_rank <= max_rank <= minimum(ni*na, nj).
+    min_rank: int
+        Maximum rank for truncation. Should have 1 <= min_rank <= max_rank <= minimum(ni*na, nj).
+    rtol: float
+        Relative tolerance for truncation. Remove singular values satisfying sigma < maximum(atol, rtol*sigma1).
+    atol: float
+        Absolute tolerance for truncation. Remove singular values satisfying sigma < maximum(atol, rtol*sigma1).
+    use_jax: bool
+        If True, use jax operations. Otherwise, numpy. Default: False
+
+    Returns
+    -------
+    U_i_x_j: NDArray
+        Left singular vectors. shape=(ni, nx, nj).
+        einsum('ixj,iyj->xy', U_i_x_j, U_i_x_j) = identity matrix
+    ss_x: NDArray
+        Singular values. Non-negative. shape=(nx,).
+    Vt_x_a: NDArray
+        Right singular vectors. shape=(nx, na)
+        einsum('xa,ya->xy', Vt_x_a, Vt_x_a) = identity matrix
+
+    Raises
+    ------
+    RuntimeError
+        Error raised if the provided indices in index are inconsistent with each other or the Tucker tensor train x.
+
+    See Also
+    --------
+    left_svd_3tensor
+    right_svd_3tensor
+    up_svd_ith_tt_core
+    down_svd_ith_tt_core
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> G_i_a_j = np.random.randn(5,7,6)
+    >>> U_i_x_j, ss_x, Vt_x_a = outer_svd_3tensor(G_i_a_j)
+    >>> G_i_a_j2 = np.einsum('ixj,x,xa->iaj', U_i_x_j, ss_x, Vt_x_a)
+    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2))
+        1.4102138928233928e-14
+    >>> rank = len(ss_x)
+    >>> print(np.linalg.norm(np.einsum('ixj,iyj->xy', U_i_x_j, U_i_x_j) - np.eye(rank)))
+        3.3426764835898436e-15
+    >>> print(np.linalg.norm(np.einsum('xa,ya->xy', Vt_x_a, Vt_x_a) - np.eye(rank)))
+        1.8969691003092744e-15
+    '''
     G0_i_j_a = G0_i_a_j.swapaxes(1, 2)
-    U_i_j_x, ss_x, Vt_x_a = left_svd_3tensor(G0_i_j_a, max_rank, rtol, atol, forced_rank)
+    U_i_j_x, ss_x, Vt_x_a = left_svd_3tensor(G0_i_j_a, min_rank, max_rank, rtol, atol, use_jax)
     U_i_x_j = U_i_j_x.swapaxes(1, 2)
     return U_i_x_j, ss_x, Vt_x_a
 
