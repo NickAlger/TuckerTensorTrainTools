@@ -18,7 +18,7 @@ __all__ = [
     'T3Variation',
     't3_check_base',
     't3_check_variation',
-    't3_base_hole_shapes',
+    't3base_hole_shapes',
     't3_check_base_variation_fit',
     'bv_to_t3',
 ]
@@ -316,7 +316,7 @@ def t3_check_variation(
             )
 
 
-def t3_base_hole_shapes(
+def t3base_hole_shapes(
         base: T3Base,
 ) -> typ.Tuple[
     typ.Tuple[int,...], # variation_basis_shapes. len=d. elm_len=2
@@ -369,7 +369,7 @@ def t3_base_hole_shapes(
     >>> right_tt_cores = (randn(1,10,4), randn(4,11,5), randn(5,12,1))
     >>> outer_tt_cores = (randn(1,9,4), randn(2,8,5), randn(3,7,1))
     >>> base = (basis_cores, left_tt_cores, right_tt_cores, outer_tt_cores)
-    >>> (var_basis_shapes, var_tt_shapes) = t3_base_hole_shapes(base)
+    >>> (var_basis_shapes, var_tt_shapes) = t3base_hole_shapes(base)
     >>> print(var_basis_shapes)
         ((9, 14), (8, 15), (7, 16))
     >>> print(var_tt_shapes)
@@ -429,7 +429,7 @@ def t3_check_base_variation_fit(
     var_basis_shapes = tuple([B.shape for B in var_basis_cores])
     var_tt_shapes = tuple([G.shape for G in var_tt_cores])
 
-    hole_basis_shapes, hole_tt_shapes = t3_base_hole_shapes(base)
+    hole_basis_shapes, hole_tt_shapes = t3base_hole_shapes(base)
 
     if var_basis_shapes != hole_basis_shapes:
         raise RuntimeError(
