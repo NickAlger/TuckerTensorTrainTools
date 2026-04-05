@@ -474,7 +474,7 @@ def project_t3_onto_tangent_space(
     See Also
     --------
     T3Tangent
-    t3_oblique_projection
+    t3_oblique_gauge_projection
     t3_orthogonal_gauge_projection
 
     Examples
@@ -662,7 +662,7 @@ def t3tangent_randn(
     Returns
     -------
     T3Tangent
-        Random tangent vector
+        Random tangent vector. gauged.
     use_jax: bool
         If True, return jax arrays, if False return numpy. Should update this to use pure jax, rather than converting numpy->jax.
 
@@ -920,8 +920,8 @@ def t3tangent_sub(
 
 
 def t3tangent_dot_t3tangent(
-        x: T3Tangent,
-        y: T3Tangent,
+        gauged_x: T3Tangent,
+        gauged_y: T3Tangent,
         use_jax: bool = False,
 ):
     """Compute Hilbert-Schmidt inner product (dot product in ambient space) of T3Tangents, (x,y)_HS
@@ -929,9 +929,9 @@ def t3tangent_dot_t3tangent(
     Parameters
     ----------
     x: T3Tangent
-        First tangent vector
+        First tangent vector. Must be gauged! If not, use t3_oblique_gauge_projection(x)
     y: T3Tangent
-        Second tangent vector
+        Second tangent vector. Must be gauged! If not, use t3_oblique_gauge_projection(y)
 
     Returns
     -------
@@ -946,6 +946,8 @@ def t3tangent_dot_t3tangent(
     See Also
     --------
     T3Tangent
+    t3_oblique_gauge_projection
+    t3_orthogonal_gauge_projection
     t3tangent_scale
     t3tangent_add
     t3tangent_neg
@@ -968,21 +970,45 @@ def t3tangent_dot_t3tangent(
     >>> x_dot_y2 = np.sum(x_dense * y_dense)
     >>> print(np.abs(x_dot_y - x_dot_y2))
         1.2434497875801753e-14
+        
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x_basis_vars = tuple([randn(*B.shape) for B in vars0[0]])
+    >>> x_tt_vars = tuple([randn(*G.shape) for G in vars0[1]])
+    >>> x = (base, (x_basis_vars, x_tt_vars))
+    >>> y_basis_vars = tuple([randn(*B.shape) for B in vars0[0]])
+    >>> y_tt_vars = tuple([randn(*G.shape) for G in vars0[1]])
+    >>> y = (base, (y_basis_vars, y_tt_vars))
+    >>> bad_x_dot_y = t3tangent_dot_t3tangent(x, y) # x and y are ungauged, so this will not give the right answer
+    >>> x_dense = t3tangent_to_dense(x)
+    >>> y_dense = t3tangent_to_dense(y)
+    >>> x_dot_y2 = np.sum(x_dense * y_dense)
+    >>> print(np.abs(bad_x_dot_y - x_dot_y2))
+        5.609998509008447
+    >>> x_gauged = t3_oblique_gauge_projection(x) # make them gauged and try again
+    >>> y_gauged = t3_oblique_gauge_projection(y)
+    >>> x_dot_y = t3tangent_dot_t3tangent(x_gauged, y_gauged)
+    >>> print(np.abs(x_dot_y - x_dot_y2))
+        1.5987211554602254e-14
     """
     xnp = jnp if use_jax else np
 
-    t3_check_base_variation_fit(*x)
-    t3_check_base_variation_fit(*y)
+    t3_check_base_variation_fit(*gauged_x)
+    t3_check_base_variation_fit(*gauged_y)
 
-    x_base = x[0]
-    y_base = y[0]
+    x_base = gauged_x[0]
+    y_base = gauged_y[0]
     if x_base != y_base:
         raise RuntimeError(
             'Attempted to dot T3Tangent vectors with different bases.'
         )
 
-    x_basis_vars, x_tt_vars = x[1]
-    y_basis_vars, y_tt_vars = y[1]
+    x_basis_vars, x_tt_vars = gauged_x[1]
+    y_basis_vars, y_tt_vars = gauged_y[1]
 
     t1 = xnp.sum([np.sum(Bx*By) for Bx, By in zip(x_basis_vars, y_basis_vars)])
     t2 = xnp.sum([np.sum(Gx*Gy) for Gx, Gy in zip(x_tt_vars, y_tt_vars)])
@@ -991,7 +1017,7 @@ def t3tangent_dot_t3tangent(
 
 
 def t3tangent_norm(
-        x: T3Tangent,
+        gauged_x: T3Tangent,
         use_jax: bool = False,
 ):
     """Compute Hilbert-Schmidt (Frobenius) norm (in ambient space) of T3Tangent, ||x||_HS.
@@ -999,7 +1025,7 @@ def t3tangent_norm(
     Parameters
     ----------
     x: T3Tangent
-        Tangent vector to compute the norm of.
+        Tangent vector to compute the norm of. Must be gauged! If not, use t3_oblique_gauge_projection(x)
 
     Returns
     -------
@@ -1014,6 +1040,7 @@ def t3tangent_norm(
     See Also
     --------
     T3Tangent
+    
     t3tangent_scale
     t3tangent_add
     t3tangent_neg
@@ -1036,7 +1063,7 @@ def t3tangent_norm(
         3.552713678800501e-15
     """
     xnp = jnp if use_jax else np
-    return xnp.sqrt(t3tangent_dot_t3tangent(x, x, use_jax=use_jax))
+    return xnp.sqrt(t3tangent_dot_t3tangent(gauged_x, gauged_x, use_jax=use_jax))
 
 
 
