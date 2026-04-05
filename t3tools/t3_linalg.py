@@ -83,29 +83,21 @@ def t3_add(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
-    >>> basis_cores_y = (randn(5,14), randn(6,15), randn(7,16))
-    >>> tt_cores_y = (randn(1,5,4), randn(4,6,3), randn(3,7,1))
-    >>> y = (basis_cores_y, tt_cores_y)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
+    >>> y = t3_corewise_randn(((14,15,16), (3,7,2), (1,5,6,1)))
     >>> z = t3_add(x, y)
-    >>> print(t3_structure(x))
-        ((14, 15, 16), (4, 5, 6), (1, 3, 2, 1))
-    >>> print(t3_structure(y))
-        ((14, 15, 16), (5, 6, 7), (1, 4, 3, 1))
     >>> print(t3_structure(z))
-        ((14, 15, 16), (9, 11, 13), (1, 7, 5, 1))
+    ((14, 15, 16), (7, 12, 8), (1, 8, 8, 1))
     >>> print(np.linalg.norm(t3_to_dense(x) + t3_to_dense(y) - t3_to_dense(z)))
-        6.524094086845177e-13
+    6.524094086845177e-13
     """
     t3_check(x)
     t3_check(y)
 
-    x_shape = t3_shape(x)
-    y_shape = t3_shape(y)
+    x_shape = t3_structure(x)[0]
+    y_shape = t3_structure(y)[0]
     if x_shape != y_shape:
         raise RuntimeError(
             'Attempted to add TuckerTensorTrains x+y with inconsistent shapes.'
@@ -193,15 +185,13 @@ def t3_scale(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores, tt_cores)
-    >>> s = randn()
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
+    >>> s = 3.2
     >>> z = t3_scale(x, s)
     >>> print(np.linalg.norm(s*t3_to_dense(x) - t3_to_dense(z)))
-        1.6268482531988893e-13
+    1.6268482531988893e-13
     """
     t3_check(x)
 
@@ -245,15 +235,12 @@ def t3_neg(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores, tt_cores)
-    >>> s = randn()
-    >>> z = t3_neg(x)
-    >>> print(-np.linalg.norm(t3_to_dense(x) - t3_to_dense(z)))
-        0.0
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
+    >>> neg_x = t3_neg(x)
+    >>> print(np.linalg.norm(t3_to_dense(x) + t3_to_dense(neg_x)))
+    0.0
     """
     return t3_scale(x, -1.0)
 
@@ -295,23 +282,15 @@ def t3_sub(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
-    >>> basis_cores_y = (randn(5,14), randn(6,15), randn(7,16))
-    >>> tt_cores_y = (randn(1,5,4), randn(4,6,3), randn(3,7,1))
-    >>> y = (basis_cores_y, tt_cores_y)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
+    >>> y = t3_corewise_randn(((14,15,16), (3,7,2), (1,5,6,1)))
     >>> z = t3_sub(x, y)
-    >>> print(t3_structure(x))
-        ((14, 15, 16), (4, 5, 6), (1, 3, 2, 1))
-    >>> print(t3_structure(y))
-        ((14, 15, 16), (5, 6, 7), (1, 4, 3, 1))
     >>> print(t3_structure(z))
-        ((14, 15, 16), (9, 11, 13), (1, 7, 5, 1))
+    ((14, 15, 16), (7, 12, 8), (1, 8, 8, 1))
     >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(y) - t3_to_dense(z)))
-        3.5875705233607603e-13
+    3.5875705233607603e-13
     """
     return t3_add(x, t3_neg(y), use_jax=use_jax)
 
@@ -356,26 +335,22 @@ def t3_dot_t3(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
-    >>> basis_cores_y = (randn(5,14), randn(6,15), randn(7,16))
-    >>> tt_cores_y = (randn(1,5,4), randn(4,6,3), randn(3,7,1))
-    >>> y = (basis_cores_y, tt_cores_y)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
+    >>> y = t3_corewise_randn(((14,15,16), (3,7,2), (1,5,6,1)))
     >>> x_dot_y = t3_dot_t3(x, y)
     >>> x_dot_y2 = np.sum(t3_to_dense(x) * t3_to_dense(y))
     >>> print(np.linalg.norm(x_dot_y - x_dot_y2))
-        8.731149137020111e-11
+    8.731149137020111e-11
     """
     t3_check(x)
     t3_check(y)
 
     xnp = jnp if use_jax else np
 
-    x_shape = t3_shape(x)
-    y_shape = t3_shape(y)
+    x_shape = t3_structure(x)[0]
+    y_shape = t3_structure(y)[0]
     if x_shape != y_shape:
         raise RuntimeError(
             'Attempted to dot TuckerTensorTrains (x,y)_HS with inconsistent shapes.'
@@ -431,14 +406,12 @@ def t3_norm(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> norm_x = t3_norm(x)
     >>> print(np.abs(norm_x - np.linalg.norm(t3_to_dense(x))))
-        1.3642420526593924e-12
+    1.3642420526593924e-12
     """
     t3_check(x)
     xnp = jnp if use_jax else np

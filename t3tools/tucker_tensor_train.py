@@ -66,7 +66,7 @@ Structure:
 Examples
 --------
 >>> import numpy as np
->>> from t3tools.tucker_tensor_train import *
+>>> from t3tools import *
 >>> basis_cores = [np.ones((4,14)),np.ones((5,15)),np.ones((6,16))]
 >>> tt_cores = [np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1))]
 >>> x = (basis_cores, tt_cores) # TuckerTensorTrain, all cores filled with ones
@@ -149,7 +149,7 @@ def t3_structure(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)), np.ones((6,16)))
     >>> tt_cores = (np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -194,14 +194,14 @@ def t3_check(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = [np.ones((4,14)),np.ones((5,15)),np.ones((6,16))]
     >>> tt_cores = [np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1))]
     >>> x = (basis_cores, tt_cores)
     >>> t3_check(x) # Nothing happens because T3 is consistent
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)))
     >>> tt_cores = (np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -210,7 +210,7 @@ def t3_check(
     2 = len(basis_cores) != len(tt_cores) = 3
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)), np.ones((6,16)))
     >>> tt_cores = (np.ones((4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -219,7 +219,7 @@ def t3_check(
     tt_cores[0] is not a 3-tensor. shape=(4, 3)
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)), np.ones((6,16)))
     >>> tt_cores = (np.ones((9,4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -228,7 +228,7 @@ def t3_check(
     First TT rank is not one. tt_ranks = (9, 3, 2, 1)
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)), np.ones((6,16)))
     >>> tt_cores = (np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,9)))
     >>> x = (basis_cores, tt_cores)
@@ -237,7 +237,7 @@ def t3_check(
     Last TT rank is not one. tt_ranks = (1, 3, 2, 9)
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)), np.ones((6,16)))
     >>> tt_cores = (np.ones((1,4,9)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -246,7 +246,7 @@ def t3_check(
     (1, 3, 2, 1) = left_tt_ranks != right_tt_ranks = (1, 9, 2, 1)
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15,3)), np.ones((6,16)))
     >>> tt_cores = (np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -255,7 +255,7 @@ def t3_check(
     basis_cores[1] is not a matrix. shape=(5, 15, 3)
 
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> basis_cores = (np.ones((4,14)), np.ones((5,15)), np.ones((9,16)))
     >>> tt_cores = (np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
     >>> x = (basis_cores, tt_cores)
@@ -344,7 +344,7 @@ def t3_to_dense(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> x = t3_corewise_randn(((14,15,16),(4,5,6),(1,3,2,1))) # make TuckerTensorTrain
     >>> x_dense = t3_to_dense(x) # Convert TuckerTensorTrain to dense tensor
     >>> ((B0,B1,B2), (G0,G1,G2)) = x
@@ -392,7 +392,7 @@ def t3_reverse(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1))) # Make TuckerTensorTrain
     >>> print(t3_structure(x))
     ((14, 15, 16), (4, 5, 6), (1, 3, 2, 1))
@@ -439,7 +439,7 @@ def t3_zeros(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> shape = (14, 15, 16)
     >>> tucker_ranks = (4, 5, 6)
     >>> tt_ranks = (1, 3, 2, 1)
@@ -484,7 +484,7 @@ def t3_corewise_randn(
 
     Examples
     --------
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> shape = (14, 15, 16)
     >>> tucker_ranks = (4, 5, 6)
     >>> tt_ranks = (1, 3, 2, 1)
@@ -534,7 +534,7 @@ def t3_save(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> fname = 't3_file'
     >>> t3_save(fname, x) # Save to file 't3_file.npz'
@@ -592,7 +592,7 @@ def t3_load(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> fname = 't3_file'
     >>> t3_save(fname, x) # Save to file 't3_file.npz'
@@ -671,7 +671,7 @@ def t3_apply(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> vecs = [np.random.randn(14), np.random.randn(15), np.random.randn(16)]
     >>> result = t3_apply(x, vecs) # <-- contract x with vecs in all indices
@@ -778,7 +778,7 @@ def t3_entry(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools import *
     >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> index = [9, 4, 7]
     >>> result = t3_entry(x, index)
