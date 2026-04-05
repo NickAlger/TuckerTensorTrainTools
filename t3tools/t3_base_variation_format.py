@@ -21,6 +21,7 @@ __all__ = [
     't3_check_variation',
     't3_base_hole_shapes',
     't3_check_base_variation_fit',
+    'bv_to_t3',
 ]
 
 
@@ -39,24 +40,24 @@ Tuple containing base cores for base-variation representation of TuckerTensorTra
 
 Often, one works with TuckerTensorTrains of the following forms::
 
-    1 -- GL0 -- X1 -- GR2 -- GR3 -- 1
-         |      |     |      |
-         B0     B1    B2     B3
-         |      |     |      |
+    1 -- L0 -- H1 -- R2 -- R3 -- 1
+         |     |     |     |
+         U0    U1    U2    U3
+         |     |     |     |
 
-    1 -- GL0 -- GL1 -- GO2 -- GR3 -- 1
-         |      |      |      |
-         B0     B1     Y2     B3
-         |      |      |      |
+    1 -- L0 -- L1 -- O2 -- R3 -- 1
+         |     |     |     |
+         U0    U1    V2    U3
+         |     |     |     |
 
 The "basis cores" are:
-    - basis_cores       = (B0, B1, B2, B3)
-    - left_tt_cores     = (GL0, GL1, GL2, GL3)
-    - right_tt_cores    = (GR0, GR1, GR2, GR3)
-    - outer_tt_cores    = (GO0, GO1, GO2, GO3)
+    - basis_cores       = (U0, U1, U2, U3)
+    - left_tt_cores     = (L0, L1, L2, L3)
+    - right_tt_cores    = (R0, R1, R2, R3)
+    - outer_tt_cores    = (O0, O1, O2, O3)
 The "variation cores" are:
-    - basis_variations  = (Y0, Y1, Y2, Y3)
-    - tt_variations     = (X0, X1, X2, X3)
+    - basis_variations  = (V0, V1, V2, V3)
+    - tt_variations     = (H0, H1, H2, H3)
 
 See Also
 --------
@@ -107,22 +108,22 @@ def t3_check_base(
 
     Contractions of the following forms must make sense::
 
-        1 -- GL0 -- ( ) -- GR2 -- GR3 -- 1
-             |      |      |      |
-             B0     B1     B2     B3
-             |      |      |      |
+        1 -- L0 -- ( ) -- R2 -- R3 -- 1
+             |     |      |     |
+             U0    U1     U2    U3
+             |     |      |     |
 
-        1 -- GL0 -- GL1 -- GO2 -- GR3 -- 1
-             |      |      |     |
-             B0     B1     ( )   B3
-             |      |      |     |
+        1 -- L0 -- L1 -- O2 -- R3 -- 1
+             |     |     |     |
+             U0    U1    ( )   U3
+             |     |     |     |
 
 
     Here:
-        - basis_cores       = (B0, B1, B2, B3)
-        - left_tt_cores     = (GL0, GL1, GL2, GL3)
-        - right_tt_cores    = (GR0, GR1, GR2, GR3)
-        - outer_tt_cores    = (GO0, GO1, GO2, GO3)
+        - basis_cores       = (U0, U1, U2, U3)
+        - left_tt_cores     = (L0, L1, L2, L3)
+        - right_tt_cores    = (R0, R1, R2, R3)
+        - outer_tt_cores    = (O0, O1, O2, O3)
 
     Raises
     ------
@@ -326,21 +327,21 @@ def t3_base_hole_shapes(
 
     Shapes of the "holes" in the following tensor diagrams::
 
-        1 -- GL0 -- ( ) -- GR2 -- GR3 -- 1
+        1 -- L0 -- ( ) -- R2 -- R3 -- 1
              |      |      |      |
-             B0     B1     B2     B3
+             U0     U1     U2     U3
              |      |      |      |
 
-        1 -- GL0 -- GL1 -- GO2 -- GR3 -- 1
-             |      |      |     |
-             B0     B1     ( )   B3
-             |      |      |     |
+        1 -- L0 -- L1 -- O2 -- R3 -- 1
+             |     |     |     |
+             U0    U1    ( )   U3
+             |     |     |     |
 
     Here:
-        - basis_cores       = (B0, B1, B2, B3)
-        - left_tt_cores     = (GL0, GL1, GL2, GL3)
-        - right_tt_cores    = (GR0, GR1, GR2, GR3)
-        - outer_tt_cores    = (GO0, GO1, GO2, GO3)
+        - basis_cores       = (U0, U1, U2, U3)
+        - left_tt_cores     = (L0, L1, L2, L3)
+        - right_tt_cores    = (R0, R1, R2, R3)
+        - outer_tt_cores    = (O0, O1, O2, O3)
 
     Parameters
     ----------
@@ -444,4 +445,100 @@ def t3_check_base_variation_fit(
             + 'var_tt_shapes=' + str(var_tt_shapes) + '\n'
             + 'hole_tt_shapes=' + str(hole_tt_shapes) + '\n'
         )
+
+
+def bv_to_t3(
+        replacement_ind: int,
+        replace_tt: bool, # If True, replace TT-core. If False, replace basis_core.
+        base: T3Base,
+        variation: T3Variation,
+) -> TuckerTensorTrain:
+    '''Convert basis-variation representation to TuckerTensorTrain.
+
+    If replacement_ind=1, replace_tt=True::
+
+        1 -- L0 -- H1 -- R2 -- R3 -- 1
+             |     |     |     |
+             U0    U1    U2    U3
+             |     |     |     |
+
+    If replacement_ind=2, replace_tt=False::
+
+        1 -- L0 -- L1 -- O2 -- R3 -- 1
+             |     |     |     |
+             U0    U1    V2    U3
+             |     |     |     |
+
+    Parameters
+    ----------
+    replacement_ind: int
+        Index of core to replace. 0 <= replacement_ind < num_cores
+    replace_tt: bool
+        Indicates whether to replace a TT-core (True) or a basis core (False)
+    base: T3Base
+        Base cores
+    variation: T3Variation
+        Variation cores
+
+    Raises
+    ------
+    RuntimeError
+        - Error raised if the base is internally inconsistent
+        - Error raised if the variation is internally incorrect
+        - Error raised if the base and variation do not fit with each other
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.tucker_tensor_train import *
+    >>> from t3tools.t3_base_variation_format import *
+    >>> (U0,U1,U2) = (randn(10, 14), randn(11, 15), randn(12, 16))
+    >>> (L0,L1,L2) = (randn(1, 10, 2), randn(2, 11, 3), randn(3, 12, 1))
+    >>> (R0,R1,R2) = (randn(1, 10, 4), randn(4, 11, 5), randn(5, 12, 1))
+    >>> (O0,O1,O2) = (randn(1, 9, 4), randn(2, 8, 5), randn(3, 7, 1))
+    >>> base = ((U0,U1,U2), (L0,L1,L2), (R0,R1,R2), (O0,O1,O2))
+    >>> (V0,V1,V2) = (randn(9,14), randn(8,15), randn(7,16))
+    >>> (H0,H1,H2) = (randn(1,10,4), randn(2,11,5), randn(3,12,1))
+    >>> variation = ((V0,V1,V2), (H0,H1,H2))
+    >>> ((B0, B1, B2), (G0, G1, G2)) = bv_to_t3(1, True, base, variation) # replace index-1 TT-core
+    >>> print(((B0,B1,B2), (G0,G1,G2)) == ((U0,U1,U2), (L0,H1,R2)))
+        True
+    >>> ((B0, B1, B2), (G0, G1, G2)) = bv_to_t3(1, False, base, variation) # replace index-1 basis core
+    >>> print(((B0,B1,B2), (G0,G1,G2)) == ((U0,V1,U2), (L0,O1,R2)))
+        True
+    '''
+    t3_check_base(base)
+    t3_check_variation(variation)
+
+    basis_cores, left_tt_cores, right_tt_cores, outer_tt_cores = base
+    basis_vars, tt_vars = variation
+
+    if replace_tt:
+        x_basis_cores = basis_cores
+        x_tt_cores = (
+                tuple(left_tt_cores[:replacement_ind]) +
+                (tt_vars[replacement_ind],) +
+                tuple(right_tt_cores[replacement_ind+1:])
+        )
+    else:
+        x_basis_cores = (
+            tuple(basis_cores[:replacement_ind]) +
+            (basis_vars[replacement_ind],) +
+            tuple(basis_cores[replacement_ind+1:])
+        )
+        x_tt_cores = (
+                tuple(left_tt_cores[:replacement_ind]) +
+                (outer_tt_cores[replacement_ind],) +
+                tuple(right_tt_cores[replacement_ind+1:])
+        )
+
+    return (x_basis_cores, x_tt_cores)
+
+
+
+
+
+
+
+
 

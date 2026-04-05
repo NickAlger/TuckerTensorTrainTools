@@ -26,6 +26,7 @@ __all__ = [
     'down_svd_ith_tt_core',
     'orthogonalize_relative_to_ith_basis_core',
     'orthogonalize_relative_to_ith_tt_core',
+    't3_orthogonal_representations',
 ]
 
 
