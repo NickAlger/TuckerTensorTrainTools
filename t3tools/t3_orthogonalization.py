@@ -6,7 +6,7 @@ import typing as typ
 
 from fontTools.ttLib.woff2 import base128Size
 
-from t3tools.linalg import *
+from t3tools.dense_linalg import *
 from t3tools.tucker_tensor_train import *
 from t3tools.t3_base_variation_format import *
 

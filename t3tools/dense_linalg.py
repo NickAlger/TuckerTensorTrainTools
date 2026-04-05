@@ -76,40 +76,39 @@ def truncated_svd(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> import numpy as np
+    >>> from t3tools import *
     >>> A = np.random.randn(55,70)
     >>> U, ss, Vt = truncated_svd(A)
     >>> A2 = np.einsum('ix,x,xj->ij', U, ss, Vt)
     >>> print(np.linalg.norm(A - A2))
-        1.0428742517412705e-13
+    1.0428742517412705e-13
     >>> rank = len(ss)
     >>> print(np.linalg.norm(U.T @ U - np.eye(rank)))
-        1.1907994177245428e-14
+    1.1907994177245428e-14
     >>> print(np.linalg.norm(Vt @ Vt.T - np.eye(rank)))
-        1.1027751835566194e-14
+    1.1027751835566194e-14
 
+    >>> import numpy as np
+    >>> from t3tools import *
     >>> A = np.random.randn(55, 70) @ np.diag(1.0 / np.arange(1,71)**2) # Create matrix with spectral decay
-    >>> U, ss, Vt = truncated_svd(A, rtol=1e-2)
+    >>> U, ss, Vt = truncated_svd(A, rtol=1e-2) # Truncated SVD with relative tolerance 1e-2
     >>> A2 = np.einsum('ix,x,xj->ij', U, ss, Vt)
     >>> truncated_rank = len(ss)
     >>> print(truncated_rank)
-        10
+    10
     >>> relerr_num = np.linalg.norm(A - A2, 2) # Check error in induced 2-norm
     >>> relerr_den = np.linalg.norm(A, 2)
     >>> print(relerr_num / relerr_den) # should be just less than rtol=1e-2
-        0.008530627920514714
-
-    >>> A = np.random.randn(55, 70) @ np.diag(1.0 / np.arange(1,71)**2) # Create matrix with spectral decay
-    >>> U, ss, Vt = truncated_svd(A, atol=1e-2)
+    0.008530627920514714
+    >>> U, ss, Vt = truncated_svd(A, atol=1e-2) # Truncated SVD with absolute tolerance 1e-2
     >>> A2 = np.einsum('ix,x,xj->ij', U, ss, Vt)
     >>> truncated_rank = len(ss)
     >>> print(truncated_rank)
-        24
+    24
     >>> err = np.linalg.norm(A - A2, 2)  # Check error in induced 2-norm
     >>> print(err) # should be just less than atol=1e-2
-        0.00882416786402483
+    0.00882416786402483
     '''
     xnp = jnp if use_jax else np
 
@@ -198,19 +197,18 @@ def left_svd_3tensor(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> import numpy as np
+    >>> from t3tools import *
     >>> G_i_a_j = np.random.randn(5,7,6)
     >>> U_i_a_x, ss_x, Vt_x_j = left_svd_3tensor(G_i_a_j)
     >>> G_i_a_j2 = np.einsum('iax,x,xj->iaj', U_i_a_x, ss_x, Vt_x_j)
-    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2))
-        1.8290510387826402e-14
+    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2)) # SVD exact to numerical precision
+    1.8290510387826402e-14
     >>> rank = len(ss_x)
-    >>> print(np.linalg.norm(np.einsum('iax,iay->xy', U_i_a_x, U_i_a_x) - np.eye(rank)))
-        1.6194412284045956e-15
-    >>> print(np.linalg.norm(np.einsum('xj,yj->xy', Vt_x_j, Vt_x_j) - np.eye(rank)))
-        1.4738004835812172e-15
+    >>> print(np.linalg.norm(np.einsum('iax,iay->xy', U_i_a_x, U_i_a_x) - np.eye(rank))) # U is left-orthogonal
+    1.6194412284045956e-15
+    >>> print(np.linalg.norm(np.einsum('xj,yj->xy', Vt_x_j, Vt_x_j) - np.eye(rank))) # V is orthogonal
+    1.4738004835812172e-15
     '''
     ni, na, nj = G0_i_a_j.shape
     G0_ia_j = G0_i_a_j.reshape((ni*na, nj))
@@ -282,19 +280,18 @@ def right_svd_3tensor(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> import numpy as np
+    >>> from t3tools import *
     >>> G_i_a_j = np.random.randn(5,7,6)
     >>> U_i_x, ss_x, Vt_x_a_j = right_svd_3tensor(G_i_a_j)
     >>> G_i_a_j2 = np.einsum('ix,x,xaj->iaj', U_i_x, ss_x, Vt_x_a_j)
-    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2))
-        1.2503321403334437e-14
+    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2)) # SVD exact to numerical precision
+    1.2503321403334437e-14
     >>> rank = len(ss_x)
-    >>> print(np.linalg.norm(np.einsum('ix,iy->xy', U_i_x, U_i_x) - np.eye(rank)))
-        1.6591938592301729e-15
-    >>> print(np.linalg.norm(np.einsum('xaj,yaj->xy', Vt_x_a_j, Vt_x_a_j) - np.eye(rank)))
-        1.9466202162000267e-15
+    >>> print(np.linalg.norm(np.einsum('ix,iy->xy', U_i_x, U_i_x) - np.eye(rank))) # U is orthogonal
+    1.6591938592301729e-15
+    >>> print(np.linalg.norm(np.einsum('xaj,yaj->xy', Vt_x_a_j, Vt_x_a_j) - np.eye(rank))) # Vt is right-orthogonal
+    1.9466202162000267e-15
     '''
     G0_j_a_i = G0_i_a_j.swapaxes(0, 2)
     Vt_j_a_x, ss_x, U_x_i = left_svd_3tensor(G0_j_a_i, min_rank, max_rank, rtol, atol, use_jax)
@@ -365,19 +362,18 @@ def outer_svd_3tensor(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization_and_svd import *
+    >>> import numpy as np
+    >>> from t3tools import *
     >>> G_i_a_j = np.random.randn(5,7,6)
     >>> U_i_x_j, ss_x, Vt_x_a = outer_svd_3tensor(G_i_a_j)
     >>> G_i_a_j2 = np.einsum('ixj,x,xa->iaj', U_i_x_j, ss_x, Vt_x_a)
-    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2))
-        1.4102138928233928e-14
+    >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2)) # SVD exact to numerical precision
+    1.4102138928233928e-14
     >>> rank = len(ss_x)
-    >>> print(np.linalg.norm(np.einsum('ixj,iyj->xy', U_i_x_j, U_i_x_j) - np.eye(rank)))
-        3.3426764835898436e-15
-    >>> print(np.linalg.norm(np.einsum('xa,ya->xy', Vt_x_a, Vt_x_a) - np.eye(rank)))
-        1.8969691003092744e-15
+    >>> print(np.linalg.norm(np.einsum('ixj,iyj->xy', U_i_x_j, U_i_x_j) - np.eye(rank))) # U is outer-orthogonal
+    3.3426764835898436e-15
+    >>> print(np.linalg.norm(np.einsum('xa,ya->xy', Vt_x_a, Vt_x_a) - np.eye(rank))) # Vt is orthogonal
+    1.8969691003092744e-15
     '''
     G0_i_j_a = G0_i_a_j.swapaxes(1, 2)
     U_i_j_x, ss_x, Vt_x_a = left_svd_3tensor(G0_i_j_a, min_rank, max_rank, rtol, atol, use_jax)
