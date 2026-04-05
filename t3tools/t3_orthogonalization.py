@@ -86,21 +86,18 @@ def up_svd_ith_basis_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> ind = 1
     >>> x2, ss = up_svd_ith_basis_core(ind, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
-        5.772851635866132e-13
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
+    5.772851635866132e-13
     >>> basis_cores2, tt_cores2 = x2
     >>> rank = len(ss)
     >>> B = basis_cores2[ind]
-    >>> print(np.linalg.norm(B @ B.T - np.eye(rank)))
-        8.456498415401757e-16
+    >>> print(np.linalg.norm(B @ B.T - np.eye(rank))) # basis core is orthogonal
+    8.456498415401757e-16
     '''
     xnp = jnp if use_jax else np
 
@@ -180,20 +177,16 @@ def left_svd_ith_tt_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> ind = 1
     >>> x2, ss = left_svd_ith_tt_core(ind, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
         5.186463661974644e-13
     >>> basis_cores2, tt_cores2 = x2
-    >>> rank = len(ss)
     >>> G = tt_cores2[ind]
-    >>> print(np.linalg.norm(jnp.einsum('iaj,iak->jk', G, G) - np.eye(rank)))
+    >>> print(np.linalg.norm(np.einsum('iaj,iak->jk', G, G) - np.eye(G.shape[2]))) # TT-core is left-orthogonal
         4.453244025338311e-16
     '''
     xnp = jnp if use_jax else np
@@ -266,20 +259,16 @@ def right_svd_ith_tt_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> ind = 1
     >>> x2, ss = right_svd_ith_tt_core(ind, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
         5.304678679078675e-13
     >>> basis_cores2, tt_cores2 = x2
-    >>> rank = len(ss)
     >>> G = tt_cores2[ind]
-    >>> print(np.linalg.norm(jnp.einsum('iaj,kaj->ik', G, G) - np.eye(rank)))
+    >>> print(np.linalg.norm(np.einsum('iaj,kaj->ik', G, G) - np.eye(G.shape[0]))) # TT-core is right orthogonal
         4.207841813173725e-16
     '''
     xnp = jnp if use_jax else np
@@ -351,15 +340,12 @@ def up_svd_ith_tt_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> x2, ss = up_svd_ith_tt_core(1, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
-        1.002901486286745e-12
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
+    1.002901486286745e-12
     '''
     xnp = jnp if use_jax else np
 
@@ -435,21 +421,17 @@ def down_svd_ith_tt_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> ind = 1
     >>> x2, ss = down_svd_ith_tt_core(ind, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
-        4.367311712704942e-12
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
+    4.367311712704942e-12
     >>> basis_cores2, tt_cores2 = x2
-    >>> rank = len(ss)
     >>> G = tt_cores2[ind]
-    >>> print(np.linalg.norm(jnp.einsum('iaj,ibj->ab', G, G) - np.eye(rank)))
-        1.0643458053135608e-15
+    >>> print(np.linalg.norm(np.einsum('iaj,ibj->ab', G, G) - np.eye(G.shape[1]))) # TT-core is outer orthogonal
+    1.0643458053135608e-15
     '''
     basis_cores, tt_cores = x
 
@@ -519,19 +501,16 @@ def orthogonalize_relative_to_ith_basis_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> x2 = orthogonalize_relative_to_ith_basis_core(1, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
-        8.800032152216517e-13
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
+    8.800032152216517e-13
     >>> ((B0, B1, B2), (G0, G1, G2)) = x2
-    >>> X = jnp.einsum('xi,axb,byc,czd,zk->iyk', B0, G0, G1, G2, B2) # Contraction of everything except B1
-    >>> print(np.linalg.norm(jnp.einsum('iyk,iwk->yw', X, X) - np.eye(B1.shape[0])))
-        1.7116160385376214e-15
+    >>> X = np.einsum('xi,axb,byc,czd,zk->iyk', B0, G0, G1, G2, B2) # Contraction of everything except B1
+    >>> print(np.linalg.norm(np.einsum('iyk,iwk->yw', X, X) - np.eye(B1.shape[0]))) # Complement of B1 is orthogonal
+    1.7116160385376214e-15
     '''
     shape, tucker_ranks, tt_ranks = t3_structure(x)
 
@@ -599,24 +578,21 @@ def orthogonalize_relative_to_ith_tt_core(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_orthogonalization import *
-    >>> basis_cores_x = (randn(4,14), randn(5,15), randn(6,16))
-    >>> tt_cores_x = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
-    >>> x = (basis_cores_x, tt_cores_x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
     >>> x2 = orthogonalize_relative_to_ith_tt_core(1, x)
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
-        8.800032152216517e-13
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Tensor unchanged
+    8.800032152216517e-13
     >>> ((B0, B1, B2), (G0, G1, G2)) = x2
     >>> XL = np.einsum('axb,xi -> aib', G0, B0) # Everything to the left of G1
-    >>> print(np.linalg.norm(np.einsum('aib,aic->bc', XL, XL) - np.eye(G1.shape[0])))
-        9.820411604510197e-16
-    >>> print(np.linalg.norm(np.einsum('xi,yi->xy', B1, B1) - np.eye(G1.shape[1]))) # Everything below G1
-        2.1875310121178e-15
+    >>> print(np.linalg.norm(np.einsum('aib,aic->bc', XL, XL) - np.eye(G1.shape[0]))) # Left subtree is left orthogonal
+    9.820411604510197e-16
+    >>> print(np.linalg.norm(np.einsum('xi,yi->xy', B1, B1) - np.eye(G1.shape[1]))) # Core below G1 is up orthogonal
+    2.1875310121178e-15
     >>> XR = np.einsum('axb,xi->aib', G2, B2) # Everything to the right of G1
-    >>> print(np.linalg.norm(np.einsum('aib,cib->ac', XR, XR) - np.eye(G1.shape[2])))
-        1.180550381921849e-15
+    >>> print(np.linalg.norm(np.einsum('aib,cib->ac', XR, XR) - np.eye(G1.shape[2]))) # Right subtree is right orthogonal
+    1.180550381921849e-15
     '''
     shape, tucker_ranks, tt_ranks = t3_structure(x)
 
@@ -696,13 +672,10 @@ def t3_orthogonal_representations(
 
     Examples
     --------
-    >>> from numpy.random import randn
-    >>> from t3tools.tucker_tensor_train import *
-    >>> from t3tools.t3_base_variation_format import *
-    >>> x_basis_cores = (randn(4, 14), randn(5, 15), randn(6, 16))
-    >>> x_tt_cores = (randn(1, 4, 2), randn(2, 5, 3), randn(3, 6, 1))
-    >>> x = (x_basis_cores, x_tt_cores)
-    >>> base, variation = t3_orthogonal_representations(x)
+    >>> import numpy as np
+    >>> from t3tools import *
+    >>> x = t3_corewise_randn(((14,15,16), (4,5,6), (1,3,2,1)))
+    >>> base, variation = t3_orthogonal_representations(x) # Compute orthogonal representations
     >>> basis_cores, left_tt_cores, right_tt_cores, outer_tt_cores = base
     >>> basis_vars, tt_vars = variation
     >>> (U0,U1,U2) = basis_cores
@@ -711,20 +684,20 @@ def t3_orthogonal_representations(
     >>> (O0,O1,O2) = outer_tt_cores
     >>> (V0,V1,V2) = basis_vars
     >>> (H0,H1,H2) = tt_vars
-    >>> x2 = ((U0,U1,U2), (L0,H1,R2)) # representation with TT-core variation
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2)))
-        4.978421562425667e-12
-    >>> x3 = ((U0,V1,U2), (L0,O1,R2)) # representation with basis core variation
-    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x3)))
-        5.4355175448533146e-12
+    >>> x2 = ((U0,U1,U2), (L0,H1,R2)) # representation with TT-core variation in index 1
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x2))) # Still represents origional tensor
+    4.978421562425667e-12
+    >>> x3 = ((U0,V1,U2), (L0,O1,R2)) # representation with basis core variation in index 1
+    >>> print(np.linalg.norm(t3_to_dense(x) - t3_to_dense(x3))) # Still represents origional tensor
+    5.4355175448533146e-12
     >>> print(np.linalg.norm(U1 @ U1.T - np.eye(U1.shape[0]))) # U: orthogonal
-        1.1915111872574236e-15
+    1.1915111872574236e-15
     >>> print(np.linalg.norm(np.einsum('iaj,iak->jk', L1, L1) - np.eye(L1.shape[2]))) # L: left orthogonal
-        9.733823879665448e-16
+    9.733823879665448e-16
     >>> print(np.linalg.norm(np.einsum('iaj,kaj->ik', R1, R1) - np.eye(R1.shape[0]))) # R: right orthogonal
-        8.027553546330097e-16
+    8.027553546330097e-16
     >>> print(np.linalg.norm(np.einsum('iaj,ibj->ab', O1, O1) - np.eye(O1.shape[1]))) # O: outer orthogonal
-        1.3870474292323159e-15
+    1.3870474292323159e-15
     '''
     t3_check(x)
 
