@@ -17,6 +17,24 @@ except:
 NDArray = typ.Union[np.ndarray, jnp.ndarray]
 
 
+__all__ = [
+    'T3Tangent',
+    't3tangent_to_dense',
+    't3tangent_to_t3',
+    't3_orthogonal_gauge_projection',
+    't3_oblique_gauge_projection',
+    'project_t3_onto_tangent_space',
+    't3tangent_randn',
+    't3tangent_scale',
+    't3tangent_add',
+    't3tangent_neg',
+    't3tangent_sub',
+    't3tangent_dot_t3tangent',
+    't3tangent_norm',
+    't3_retract',
+]
+
+
 ####################################################################
 ###########    Fixed rank TuckerTensorTrain manifold   #############
 ####################################################################
@@ -49,6 +67,18 @@ Implements the representation of a tangent vector as a sum of the following form
         - basis_variations  = (V0,...,Vd)
         - tt_variations     = (H0,...,Hd)
 
+Examples
+--------
+>>> from numpy.random import randn
+>>> from t3tools.t3_manifold import *
+>>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+>>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+>>> p = (basis_cores, tt_cores)
+>>> base, _ = t3_orthogonal_representations(p)
+>>> other_basis_cores = (randn(7,14), randn(4,15), randn(8,16)) # same shape, different ranks
+>>> other_tt_cores = (randn(1,7,5), randn(5,4,4), randn(4,8,1))
+>>> x = (other_basis_cores, other_tt_cores)
+>>> proj_x = project_t3_onto_tangent_space(x, base)
 """
 
 def t3tangent_to_dense(
@@ -65,10 +95,8 @@ def t3tangent_to_dense(
     >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
     >>> p = (basis_cores, tt_cores)
     >>> base, vars0 = t3_orthogonal_representations(p)
-    >>> v_basis = tuple([randn(*B.shape) for B in vars0[0]])
-    >>> v_tt = tuple([randn(*G.shape) for G in vars0[1]])
-    >>> v = (v_basis, v_tt)
-    >>> x = (base, v)
+    >>> x = t3tangent_randn(base)
+    >>> v = x[1]
     >>> v_dense = t3tangent_to_dense(x)
     >>> ((U0,U1,U2), (L0,L1,L2), (R0,R1,R2), (O0,O1,O2)) = base
     >>> ((V0,V1,V2), (H0,H1,H2)) = v
@@ -156,10 +184,7 @@ def t3tangent_to_t3(
     >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
     >>> p = (basis_cores, tt_cores)
     >>> base, vars0 = t3_orthogonal_representations(p)
-    >>> v_basis = tuple([randn(*B.shape) for B in vars0[0]])
-    >>> v_tt = tuple([randn(*G.shape) for G in vars0[1]])
-    >>> v = (v_basis, v_tt)
-    >>> x = (base, v)
+    >>> x = t3tangent_randn(base)
     >>> v_t3 = t3tangent_to_t3(x) # tangent vector only (attached at zero)
     >>> v_dense = t3_to_dense(v_t3)
     >>> v_dense2 = t3tangent_to_dense(x)
@@ -269,12 +294,8 @@ def t3_orthogonal_gauge_projection(
     >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
     >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
     >>> p = (basis_cores, tt_cores)
-    # >>> base, vars0 = t3_orthogonal_representations(t3_svd(p)[0])
     >>> base, vars0 = t3_orthogonal_representations(p)
-    >>> v_basis = tuple([randn(*B.shape) for B in vars0[0]])
-    >>> v_tt = tuple([randn(*G.shape) for G in vars0[1]])
-    >>> v = (v_basis, v_tt)
-    >>> x = (base, v)
+    >>> x = t3tangent_randn(base)
     >>> projected_x = t3_orthogonal_gauge_projection(x)
     >>> (U0,U1,U2), (L0,L1,L2), _, _ = base
     >>> ((V0,V1,V2), (H0,H1,H2)) = projected_x[1]
@@ -342,10 +363,7 @@ def t3_oblique_gauge_projection(
     >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
     >>> p = (basis_cores, tt_cores)
     >>> base, vars0 = t3_orthogonal_representations(p)
-    >>> v_basis = tuple([randn(*B.shape) for B in vars0[0]])
-    >>> v_tt = tuple([randn(*G.shape) for G in vars0[1]])
-    >>> v = (v_basis, v_tt)
-    >>> x = (base, v)
+    >>> x = t3tangent_randn(base)
     >>> projected_x = t3_oblique_gauge_projection(x)
     >>> x_dense = t3tangent_to_dense(x)
     >>> proj_x_dense = t3tangent_to_dense(projected_x)
@@ -402,6 +420,460 @@ def t3_oblique_gauge_projection(
     new_vars = tuple(basis_vars), tuple(tt_vars)
     new_x = (base, new_vars)
     return new_x
+
+
+def tt_reverse(cores):
+    return tuple([G.swapaxes(0, 2) for G in cores[::-1]])
+
+
+def tt_zipper_left_to_right(
+        coresA: typ.Sequence[NDArray],
+        coresB: typ.Sequence[NDArray],
+        use_jax: bool = False,
+) -> typ.Tuple[NDArray, ...]:  # zipper_matrices. len=num_cores+1
+    xnp = jnp if use_jax else np
+
+    zipper_matrices = [xnp.array([[1.0]])]
+    for GA, GB in zip(coresA, coresB):
+        Z_prev = zipper_matrices[-1]
+        Z = xnp.einsum('ij,iak,jal->kl', Z_prev, GA, GB)
+        zipper_matrices.append(Z)
+    return tuple(zipper_matrices)
+
+
+def tt_zipper_right_to_left(
+        coresA: typ.Sequence[NDArray],
+        coresB: typ.Sequence[NDArray],
+        use_jax: bool = False,
+) -> typ.Tuple[NDArray, ...]:  # zipper_matrices. len=num_cores+1
+    return tt_zipper_left_to_right(tt_reverse(coresA), tt_reverse(coresB), use_jax=use_jax)[::-1]
+
+
+def project_t3_onto_tangent_space(
+        x: TuckerTensorTrain, # Tucker tensor train to be projected
+        orthogonal_base: T3Base, # Orthogonal representations of base point
+        use_jax: bool = False,
+) -> T3Tangent:
+    """Projects TuckerTensorTrain onto tangent space to the manifold of fixed rank TuckerTensorTrains.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        Tangent vector to project
+    orthogonal_base: T3Base
+        Orthogonal representations of base point on manifold where tangent space is attached
+    use_jax: bool
+        If True, use jax operations, if False use numpy.
+
+    Returns
+    -------
+    T3Tangent
+        Projection of x onto the tangent space. Satisfies the gauge condition.
+
+    See Also
+    --------
+    T3Tangent
+    t3_oblique_projection
+    t3_orthogonal_gauge_projection
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, _ = t3_orthogonal_representations(p)
+    >>> other_basis_cores = (randn(7,14), randn(4,15), randn(8,16)) # same shape, different ranks
+    >>> other_tt_cores = (randn(1,7,5), randn(5,4,4), randn(4,8,1))
+    >>> x = (other_basis_cores, other_tt_cores)
+    >>> proj_x = project_t3_onto_tangent_space(x, base)
+    >>> P = t3_to_dense(p)
+    >>> X = t3_to_dense(x)
+    >>> proj_X = t3tangent_to_dense(proj_x)
+    >>> print(np.sum((X - proj_X) * (proj_X - P)) / np.sum(X)) # Check that x was projected orthogonally
+        3.351282624686308e-11
+    """
+    xnp = jnp if use_jax else np
+
+    t3_check(x)
+    t3_check_base(orthogonal_base)
+
+    basis_cores, left_tt_cores, right_tt_cores, outer_tt_cores = orthogonal_base
+    other_basis_cores, other_tt_cores = x
+
+    base_shape = tuple([B.shape[1] for B in basis_cores])
+    other_shape = tuple([B.shape[1] for B in other_basis_cores])
+    if base_shape != other_shape:
+        raise RuntimeError(
+            'Attempted to retract TuckerTensorTrain with wrong shape onto tangent space.\n'
+            + str(base_shape) + ' = base_shape != other_shape = ' + str(other_shape)
+        )
+
+    other_tt_cores2 = []
+    for G_other, B_other, B in zip(other_tt_cores, other_basis_cores, basis_cores):
+        G_other2 = xnp.einsum('aib,ix->axb', G_other, B_other @ B.T)
+        other_tt_cores2.append(G_other2)
+
+    zipper_left2right = tt_zipper_left_to_right(other_tt_cores2, left_tt_cores, use_jax=use_jax)[:-1]
+    zipper_right2left = tt_zipper_right_to_left(other_tt_cores2, right_tt_cores, use_jax=use_jax)[1:]
+
+    ungauged_tt_variations = []
+    ungauged_basis_variations = []
+    for ZL_ax, ZR_by, G_aib, B_io, R0_xjy, B0_jo in zip(
+            zipper_left2right, zipper_right2left,
+            other_tt_cores, other_basis_cores,
+            outer_tt_cores, basis_cores,
+    ):
+        X_xiy = xnp.einsum('ax,aib,by->xiy', ZL_ax, G_aib, ZR_by)
+        dG_xjy = xnp.einsum('xiy,ij->xjy', X_xiy, B_io @ B0_jo.T)
+        M_ij = xnp.einsum('xiy,xjy->ij', X_xiy, R0_xjy)
+        dB_jo = xnp.einsum('ij,io->jo', M_ij, B_io)
+
+        ungauged_tt_variations.append(dG_xjy)
+        ungauged_basis_variations.append(dB_jo)
+
+    ungauged_u = (orthogonal_base, (ungauged_basis_variations, ungauged_tt_variations))
+    gauged_u = t3_orthogonal_gauge_projection(ungauged_u)
+    return gauged_u
+
+
+def t3_retract(
+        x: T3Tangent,
+        use_jax: bool = False,
+) -> TuckerTensorTrain: # retracted Tucker tensor train
+    """Retract Tucker tensor train tangent vector to manifold.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        Tangent vector to project
+    orthogonal_base: T3Base
+        Orthogonal representations of base point on manifold where tangent space is attached
+    use_jax: bool
+        If True, use jax operations, if False use numpy.
+
+    Returns
+    -------
+    T3Tangent
+        Projection of x onto the tangent space. Satisfies the gauge condition.
+
+    See Also
+    --------
+    T3Tangent
+    t3_svd
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x = t3tangent_randn(base)
+    >>> ret_x = t3_retract(x)
+    >>> print(np.linalg.norm(t3_to_dense(ret_x) - t3tangent_to_dense(x, include_shift=True)))
+        0.12395762641282583
+    >>> x2 = t3tangent_scale(x, 1e-3) # make the tangent vector shorter for smaller retraction
+    >>> ret_x2 = t3_retract(x2)
+    >>> print(np.linalg.norm(t3_to_dense(ret_x2) - t3tangent_to_dense(x2, include_shift=True)))
+        1.256998583616651e-07
+    """
+    t3_check_base_variation_fit(*x)
+
+    basis_cores, left_tt_cores, _, _ = x[0]
+    _, base_tucker_ranks, base_tt_ranks = t3_structure((basis_cores, left_tt_cores))
+
+    x_t3 = t3tangent_to_t3(x, include_shift=True)
+    retracted_x_t3, _, _ = t3_svd(
+        x_t3,
+        max_tt_ranks = base_tt_ranks,
+        max_tucker_ranks = base_tucker_ranks,
+        use_jax=use_jax,
+    )
+    return retracted_x_t3
+
+
+def t3tangent_randn(
+        orthogonal_base: T3Base, # orthogonal base
+) -> T3Tangent:
+    """Draw a random T3Tangent from a uniform normal disribution on the tangent space.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        Tangent vector to project
+    orthogonal_base: T3Base
+        Orthogonal representations of base point on manifold where tangent space is attached
+    use_jax: bool
+        If True, use jax operations, if False use numpy.
+
+    Returns
+    -------
+    T3Tangent
+        Projection of x onto the tangent space. Satisfies the gauge condition.
+
+    See Also
+    --------
+    T3Tangent
+    t3_orthogonal_representations
+    t3_orthogonal_gauge_projection
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x = t3tangent_randn(base)
+    """
+    t3_check_base(orthogonal_base)
+
+    var_basis_shapes, var_tt_shapes = t3_base_hole_shapes(orthogonal_base)
+
+    basis_vars0 = tuple([np.random.randn(*s) for s in var_basis_shapes])
+    tt_vars0 = tuple([np.random.randn(*s) for s in var_tt_shapes])
+
+    x0 = (orthogonal_base, (basis_vars0, tt_vars0))
+    x = t3_orthogonal_gauge_projection(x0)
+    return x
+
+
+####################################################################
+##################    T3Tangent linear algebra   ###################
+####################################################################
+
+def t3tangent_scale(
+        x: T3Tangent,
+        s, # scalar
+) -> T3Tangent:
+    """Scale T3Tangent.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        Tangent vector to scale
+    s: scalar
+        Scaling factor
+
+    Returns
+    -------
+    T3Tangent
+        Scaled T3Tangent, s*x.
+
+    See Also
+    --------
+    T3Tangent
+    t3tangent_add
+    t3tangent_sub
+    t3tangent_neg
+    t3tangent_dot_t3tangent
+    t3tangent_norm
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x = t3tangent_randn(base)
+    >>> s = randn()
+    >>> sx = t3tangent_scale(x, s)
+    >>> dense_sx = t3tangent_to_dense(sx)
+    >>> dense_x = t3tangent_to_dense(x)
+    >>> print(np.linalg.norm(dense_sx - s*dense_x))
+        2.370617783938243e-15
+    """
+    t3_check_base_variation_fit(*x)
+
+    base, vars = x
+    basis_vars, tt_vars = list(vars)
+    new_basis_vars = tuple([s*B for B in basis_vars])
+    new_tt_vars = tuple([s*G for G in tt_vars])
+
+    new_x = (base, (new_basis_vars, new_tt_vars))
+    return new_x
+
+
+def t3tangent_add(
+        x: T3Tangent,
+        y: T3Tangent,
+) -> T3Tangent:
+    """Add T3Tangents, (x, y) -> x+y.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        First tangent vector summand
+    y: T3Tangent
+        Second tangent vector summand
+
+    Returns
+    -------
+    T3Tangent
+        Sum of tangent vectors, x+y
+
+    Raises
+    ------
+    RuntimeError
+        Error raised if either T3Tangent is inconsistent, or if x and y have different bases.
+
+    See Also
+    --------
+    T3Tangent
+    t3tangent_scale
+    t3tangent_sub
+    t3tangent_neg
+    t3tangent_dot_t3tangent
+    t3tangent_norm
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x = t3tangent_randn(base)
+    >>> y = t3tangent_randn(base)
+    >>> x_plus_y = t3tangent_add(x, y)
+    >>> x_dense = t3tangent_to_dense(x)
+    >>> y_dense = t3tangent_to_dense(y)
+    >>> x_plus_y_dense = t3tangent_to_dense(x_plus_y)
+    >>> print(np.linalg.norm(x_dense + y_dense - x_plus_y_dense))
+        4.667707616068206e-15
+    """
+    t3_check_base_variation_fit(*x)
+    t3_check_base_variation_fit(*y)
+
+    x_base = x[0]
+    y_base = y[0]
+    if x_base != y_base:
+        raise RuntimeError(
+            'Attempted to add T3Tangent vectors with different bases.'
+        )
+
+    x_basis_vars, x_tt_vars = x[1]
+    y_basis_vars, y_tt_vars = y[1]
+
+    x_plus_y_basis_vars = tuple([Bx + By for Bx, By in zip(x_basis_vars, y_basis_vars)])
+    x_plus_y_tt_vars = tuple([Gx + Gy for Gx, Gy in zip(x_tt_vars, y_tt_vars)])
+
+    x_plus_y = (x_base, (x_plus_y_basis_vars, x_plus_y_tt_vars))
+    return x_plus_y
+
+
+def t3tangent_neg(
+        x: T3Tangent,
+) -> T3Tangent:
+    """Negative of T3Tangent, x -> -x.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        input tangent vector
+
+    Returns
+    -------
+    T3Tangent
+        Negative of x, i.e., -x.
+
+    See Also
+    --------
+    T3Tangent
+    t3tangent_add
+    t3tangent_sub
+    t3tangent_scale
+    t3tangent_dot_t3tangent
+    t3tangent_norm
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x = t3tangent_randn(base)
+    >>> neg_x = t3tangent_neg(x)
+    >>> dense_neg_x = t3tangent_to_dense(neg_x)
+    >>> dense_x = t3tangent_to_dense(x)
+    >>> print(np.linalg.norm(dense_neg_x + dense_x))
+        0.0
+    """
+    return t3tangent_scale(x, -1.0)
+
+
+def t3tangent_sub(
+        x: T3Tangent,
+        y: T3Tangent,
+) -> T3Tangent:
+    """Subtract T3Tangents, (x,y) -> x-y.
+
+    Parameters
+    ----------
+    x: T3Tangent
+        First tangent vector summand
+    y: T3Tangent
+        Second tangent vector summand
+
+    Returns
+    -------
+    T3Tangent
+        Difference of tangent vectors, x-y
+
+    Raises
+    ------
+    RuntimeError
+        Error raised if either T3Tangent is inconsistent, or if x and y have different bases.
+
+    See Also
+    --------
+    T3Tangent
+    t3tangent_scale
+    t3tangent_add
+    t3tangent_neg
+    t3tangent_dot_t3tangent
+    t3tangent_norm
+
+    Examples
+    --------
+    >>> from numpy.random import randn
+    >>> from t3tools.t3_manifold import *
+    >>> basis_cores = (randn(4,14), randn(5,15), randn(6,16))
+    >>> tt_cores = (randn(1,4,3), randn(3,5,2), randn(2,6,1))
+    >>> p = (basis_cores, tt_cores)
+    >>> base, vars0 = t3_orthogonal_representations(p)
+    >>> x = t3tangent_randn(base)
+    >>> y = t3tangent_randn(base)
+    >>> x_minus_y = t3tangent_sub(x, y)
+    >>> x_dense = t3tangent_to_dense(x)
+    >>> y_dense = t3tangent_to_dense(y)
+    >>> x_minus_y_dense = t3tangent_to_dense(x_minus_y)
+    >>> print(np.linalg.norm(x_dense - y_dense - x_minus_y_dense))
+        4.714955371344249e-15
+    """
+    return t3tangent_add(x, t3tangent_scale(y, -1.0))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
