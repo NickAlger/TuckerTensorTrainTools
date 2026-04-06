@@ -772,7 +772,9 @@ def t3_apply(
             + '[len(v.shape) for v in vecs]=' + str([len(v.shape) for v in vecs])
         )
 
+    vectorized = True
     if vecs_dims[0] == 1:
+        vectorized = False
         vecs = [v.reshape((1,-1)) for v in vecs]
 
     num_applies = vecs[0].shape[0]
@@ -797,7 +799,7 @@ def t3_apply(
         mu_na = mu_nb
 
     result = mu_na.reshape((num_applies,))
-    if num_applies == 1:
+    if not vectorized:
         result = result[0]
 
     return result
@@ -893,7 +895,9 @@ def t3_entry(
             + str(str(len(shape)) + ' = num tensor indices != num provided indices = ' + str(len(index)))
         )
 
+    vectorized = True
     if isinstance(index[0], int):
+        vectorized = False
         index = [[ind] for ind in index]
     else:
         index = [list(ind) for ind in index]
@@ -913,7 +917,7 @@ def t3_entry(
         mu_na = mu_nb
 
     result = mu_na.reshape((num_entries,))
-    if num_entries == 1:
+    if not vectorized:
         result = result[0]
 
     return result

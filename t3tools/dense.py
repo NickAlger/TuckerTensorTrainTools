@@ -20,6 +20,8 @@ __all__ = [
     #
     'tucker_svd_dense',
     'tt_svd_dense',
+    #
+    'dense_probes',
 ]
 
 
@@ -80,9 +82,9 @@ def truncated_svd(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> A = np.random.randn(55,70)
-    >>> U, ss, Vt = truncated_svd(A)
+    >>> U, ss, Vt = dense.truncated_svd(A)
     >>> A2 = np.einsum('ix,x,xj->ij', U, ss, Vt)
     >>> print(np.linalg.norm(A - A2))
     1.0428742517412705e-13
@@ -93,9 +95,9 @@ def truncated_svd(
     1.1027751835566194e-14
 
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> A = np.random.randn(55, 70) @ np.diag(1.0 / np.arange(1,71)**2) # Create matrix with spectral decay
-    >>> U, ss, Vt = truncated_svd(A, rtol=1e-2) # Truncated SVD with relative tolerance 1e-2
+    >>> U, ss, Vt = dense.truncated_svd(A, rtol=1e-2) # Truncated SVD with relative tolerance 1e-2
     >>> A2 = np.einsum('ix,x,xj->ij', U, ss, Vt)
     >>> truncated_rank = len(ss)
     >>> print(truncated_rank)
@@ -104,7 +106,7 @@ def truncated_svd(
     >>> relerr_den = np.linalg.norm(A, 2)
     >>> print(relerr_num / relerr_den) # should be just less than rtol=1e-2
     0.008530627920514714
-    >>> U, ss, Vt = truncated_svd(A, atol=1e-2) # Truncated SVD with absolute tolerance 1e-2
+    >>> U, ss, Vt = dense.truncated_svd(A, atol=1e-2) # Truncated SVD with absolute tolerance 1e-2
     >>> A2 = np.einsum('ix,x,xj->ij', U, ss, Vt)
     >>> truncated_rank = len(ss)
     >>> print(truncated_rank)
@@ -201,9 +203,9 @@ def left_svd_3tensor(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> G_i_a_j = np.random.randn(5,7,6)
-    >>> U_i_a_x, ss_x, Vt_x_j = left_svd_3tensor(G_i_a_j)
+    >>> U_i_a_x, ss_x, Vt_x_j = dense.left_svd_3tensor(G_i_a_j)
     >>> G_i_a_j2 = np.einsum('iax,x,xj->iaj', U_i_a_x, ss_x, Vt_x_j)
     >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2)) # SVD exact to numerical precision
     1.8290510387826402e-14
@@ -284,9 +286,9 @@ def right_svd_3tensor(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> G_i_a_j = np.random.randn(5,7,6)
-    >>> U_i_x, ss_x, Vt_x_a_j = right_svd_3tensor(G_i_a_j)
+    >>> U_i_x, ss_x, Vt_x_a_j = dense.right_svd_3tensor(G_i_a_j)
     >>> G_i_a_j2 = np.einsum('ix,x,xaj->iaj', U_i_x, ss_x, Vt_x_a_j)
     >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2)) # SVD exact to numerical precision
     1.2503321403334437e-14
@@ -366,9 +368,9 @@ def outer_svd_3tensor(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> G_i_a_j = np.random.randn(5,7,6)
-    >>> U_i_x_j, ss_x, Vt_x_a = outer_svd_3tensor(G_i_a_j)
+    >>> U_i_x_j, ss_x, Vt_x_a = dense.outer_svd_3tensor(G_i_a_j)
     >>> G_i_a_j2 = np.einsum('ixj,x,xa->iaj', U_i_x_j, ss_x, Vt_x_a)
     >>> print(np.linalg.norm(G_i_a_j - G_i_a_j2)) # SVD exact to numerical precision
     1.4102138928233928e-14
@@ -436,13 +438,13 @@ def tucker_svd_dense(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> T0 = np.random.randn(40, 50, 60)
     >>> c0 = 1.0 / np.arange(1, 41)**2
     >>> c1 = 1.0 / np.arange(1, 51)**2
     >>> c2 = 1.0 / np.arange(1, 61)**2
     >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2) # Preconditioned random tensor
-    >>> (bases, core), ss = tucker_svd_dense(T, rtol=1e-3) # Truncate Tucker SVD to reduce rank
+    >>> (bases, core), ss = dense.tucker_svd_dense(T, rtol=1e-3) # Truncate Tucker SVD to reduce rank
     >>> print(core.shape)
     (9, 9, 9)
     >>> T2 = np.einsum('abc, ai,bj,ck->ijk', core, bases[0], bases[1], bases[2])
@@ -518,13 +520,13 @@ def tt_svd_dense(
     Examples
     --------
     >>> import numpy as np
-    >>> from t3tools import *
+    >>> import t3tools.dense as dense
     >>> T0 = np.random.randn(40, 50, 60)
     >>> c0 = 1.0 / np.arange(1, 41)**2
     >>> c1 = 1.0 / np.arange(1, 51)**2
     >>> c2 = 1.0 / np.arange(1, 61)**2
     >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2) # Preconditioned random tensor
-    >>> cores, ss = tt_svd_dense(T, rtol=1e-3) # Truncate TT-SVD to reduce rank
+    >>> cores, ss = dense.tt_svd_dense(T, rtol=1e-3) # Truncate TT-SVD to reduce rank
     >>> print([G.shape for G in cores])
     [(1, 40, 13), (13, 50, 13), (13, 60, 1)]
     >>> T2 = np.einsum('aib,bjc,ckd->ijk', cores[0], cores[1], cores[2])
@@ -552,3 +554,126 @@ def tt_svd_dense(
 
     return tuple(cores), tuple(singular_values_of_unfoldings)
 
+
+###############################################
+##########    Probe dense tensor    ###########
+###############################################
+
+def dense_probes(
+        T:          NDArray,
+        vectors:    typ.Sequence[NDArray],
+        use_jax: bool = False,
+) -> typ.Tuple[NDArray]:
+    """Probe a dense tensor.
+
+    Parameters
+    ----------
+    T: NDArray
+        Tensor to be probed. shape=(N1,...,Nd)
+    vectors: typ.Sequence[NDArray]
+        Probing input vectors.
+        len=d.
+        elm_shape=(Ni,) or elm_shape=(num_probes, Ni)
+    use_jax: bool
+        Whether to use jax for numerical operations (default: False)
+
+    Returns
+    -------
+    typ.Tuple[NDArray]
+        Probes.
+        len=d.
+        elm_shape=(Ni,) or elm_shape=(num_probes, Ni)
+
+    Examples
+    --------
+
+    Probe with one set of vectors:
+
+    >>> import numpy as np
+    >>> import t3tools.dense as dense
+    >>> T = np.random.randn(10,11,12)
+    >>> u0 = np.random.randn(10)
+    >>> u1 = np.random.randn(11)
+    >>> u2 = np.random.randn(12)
+    >>> yy = dense.dense_probes(T, (u0,u1,u2))
+    >>> y0 = np.einsum('ijk,j,k', T, u1, u2)
+    >>> y1 = np.einsum('ijk,i,k', T, u0, u2)
+    >>> y2 = np.einsum('ijk,i,j', T, u0, u1)
+    >>> print(np.linalg.norm(yy[0] - y0))
+    2.0928808318295785e-14
+    >>> print(np.linalg.norm(yy[1] - y1))
+    1.0841599276764049e-14
+    >>> print(np.linalg.norm(yy[2] - y2))
+    1.2970142174948615e-14
+
+    Probe with two sets of vectors:
+
+    >>> import numpy as np
+    >>> import t3tools.dense as dense
+    >>> T = np.random.randn(10,11,12)
+    >>> u0, v0 = np.random.randn(10), np.random.randn(10)
+    >>> u1, v1 = np.random.randn(11), np.random.randn(11)
+    >>> u2, v2 = np.random.randn(12), np.random.randn(12)
+    >>> uuu = [np.vstack([u0,v0]), np.vstack([u1,v1]), np.vstack([u2,v2])]
+    >>> yyy = dense.dense_probes(T, uuu)
+    >>> yy_u = dense.dense_probes(T, (u0,u1,u2))
+    >>> yy_v = dense.dense_probes(T, (v0,v1,v2))
+    >>> print(np.linalg.norm(yy_u[0] - yyy[0][0,:]))
+    0.0
+    >>> print(np.linalg.norm(yy_u[1] - yyy[1][0,:]))
+    0.0
+    >>> print(np.linalg.norm(yy_u[2] - yyy[2][0,:]))
+    0.0
+    >>> print(np.linalg.norm(yy_v[0] - yyy[0][1,:]))
+    0.0
+    >>> print(np.linalg.norm(yy_v[1] - yyy[1][1,:]))
+    0.0
+    >>> print(np.linalg.norm(yy_v[2] - yyy[2][1,:]))
+    0.0
+    """
+    xnp = jnp if use_jax else np
+
+    num_cores = len(T.shape)
+    assert(len(vectors) == num_cores)
+    if len(vectors[0].shape) == 1:
+        vectorized=False
+        for ii in range(num_cores):
+            assert (len(vectors[ii].shape) == 1)
+    elif len(vectors[0].shape) == 2:
+        vectorized=True
+        for ii in range(num_cores):
+            assert (len(vectors[ii].shape) == 2)
+    else:
+        raise RuntimeError(
+            'Wrong vectors[ii] shape in dense_probes. Should be vector or matrix.\n'
+            + 'vectors[0].shape=' + str(vectors[0].shape)
+        )
+
+    vectors = list(vectors)
+    if vectorized == False:
+        for ii in range(num_cores):
+            vectors[ii] = vectors[ii].reshape((1,-1))
+
+    vector_lengths = tuple([x.shape[1] for x in vectors])
+    assert(vector_lengths == T.shape)
+
+    probes = []
+    for ii in range(num_cores):
+        Ai = T
+        for jj in range(ii):
+            if jj == 0:
+                Ai = xnp.einsum('pi,i...->p...', vectors[jj], Ai)
+            else:
+                Ai = xnp.einsum('pi,pi...->p...', vectors[jj], Ai)
+
+        for jj in range(num_cores-1, ii, -1):
+            if ii==0 and jj==num_cores-1:
+                Ai = xnp.einsum('pi,...i->p...', vectors[jj], Ai)
+            else:
+                Ai = xnp.einsum('pi,p...i->p...', vectors[jj], Ai)
+        probes.append(Ai)
+
+    if not vectorized:
+        probes = [Ai.reshape(-1) for Ai in probes]
+
+    return tuple(probes)
