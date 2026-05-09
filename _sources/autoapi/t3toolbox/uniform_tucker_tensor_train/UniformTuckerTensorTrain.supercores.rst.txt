@@ -1,0 +1,4 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.supercores
+=========================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.supercores() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray]

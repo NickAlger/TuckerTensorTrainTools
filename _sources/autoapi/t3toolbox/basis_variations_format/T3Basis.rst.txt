@@ -1,6 +1,24 @@
 t3toolbox.basis_variations_format.T3Basis
 =========================================
 
+.. toctree::
+   :hidden:
+
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.d
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.shape
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.up_ranks
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.down_ranks
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.left_ranks
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.right_ranks
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.stack_shape
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.structure
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.variation_shapes
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.data
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.validate
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.__post_init__
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.unstack
+   /autoapi/t3toolbox/basis_variations_format/T3Basis.stack
+
 .. py:class:: t3toolbox.basis_variations_format.T3Basis
 
    Basis for basis-variations representation of TuckerTensorTrains
@@ -108,131 +126,24 @@ t3toolbox.basis_variations_format.T3Basis
    .. py:attribute:: right_tt_cores
       :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
 
+Methods
+-------
 
-   .. py:method:: d() -> int
+.. autoapisummary::
 
-
-   .. py:method:: shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: up_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: down_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: left_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: right_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: stack_shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: structure() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], t3toolbox.backend.common.typ.Tuple[int, Ellipsis], t3toolbox.backend.common.typ.Tuple[int, Ellipsis], t3toolbox.backend.common.typ.Tuple[int, Ellipsis], t3toolbox.backend.common.typ.Tuple[int, Ellipsis], t3toolbox.backend.common.typ.Tuple[int, Ellipsis]]
-
-
-   .. py:method:: variation_shapes() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis]]
-
-      T3Variations shapes that fit with this T3Basis.
-
-      Shapes of the "holes" in the following tensor diagrams::
-
-          1 -- L0 -- ( ) -- R2 -- R3 -- 1
-               |      |      |      |
-               U0     U1     U2     U3
-               |      |      |      |
-
-          1 -- L0 -- L1 -- O2 -- R3 -- 1
-               |     |     |     |
-               U0    U1    ( )   U3
-               |     |     |     |
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.basis_variations_format as bvf
-      >>> ss = (2,3) # not included in variation_shapes.
-      >>> up_tucker_cores = (np.ones(ss+(10, 14)), np.ones(ss+(11, 15)), np.ones(ss+(12, 16)))
-      >>> down_tt_cores = (np.ones(ss+(1, 9, 4)), np.ones(ss+(2, 8, 5)), np.ones(ss+(3, 7, 1)))
-      >>> left_tt_cores = (np.ones(ss+(1, 10, 2)), np.ones(ss+(2, 11, 3)), np.ones(ss+(3,12,5)))
-      >>> right_tt_cores = (np.ones(ss+(2, 10, 4)), np.ones(ss+(4, 11, 5)), np.ones(ss+(5, 12, 1)))
-      >>> basis = bvf.T3Basis(up_tucker_cores, down_tt_cores, left_tt_cores, right_tt_cores)
-      >>> print(basis.variation_shapes)
-      (((9, 14), (8, 15), (7, 16)), ((1, 10, 4), (2, 11, 5), (3, 12, 1)))
-
-
-
-   .. py:method:: data() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
-
-
-   .. py:method:: validate() -> None
-
-      Check rank and shape consistency of Tucker tensor train basis (`T3Basis`).
-
-      :param x:
-      :type x: T3Basis
-
-      :raises ValueError: Error raised if the cores of the T3Basis have inconsistent shapes.
-
-      .. seealso:: :py:obj:`T3Basis`, :py:obj:`T3Variations`
-
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: unstack()
-
-      Unstack into an array-like tree.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.basis_variations_format as bvf
-      >>> import t3toolbox.corewise as cw
-      >>> randnstar = lambda x: np.random.randn(*x)
-      >>> ss = (2,3) # not included in variation_shapes.
-      >>> up_tucker_cores = (randnstar(ss+(10, 14)), randnstar(ss+(11, 15)), randnstar(ss+(12, 16)))
-      >>> down_tt_cores = (randnstar(ss+(1, 9, 4)), randnstar(ss+(2, 8, 5)),randnstar(ss+(3, 7, 1)))
-      >>> left_tt_cores = (randnstar(ss+(1, 10, 2)), randnstar(ss+(2, 11, 3)), randnstar(ss+(3,12,5)))
-      >>> right_tt_cores = (randnstar(ss+(2, 10, 4)), randnstar(ss+(4, 11, 5)), randnstar(ss+(5, 12, 1)))
-      >>> basis = bvf.T3Basis(up_tucker_cores, down_tt_cores, left_tt_cores, right_tt_cores)
-      >>> S = basis.unstack()
-      >>> ii, jj = 1, 2
-      >>> Sij = S[ii][jj]
-      >>> utk_ij = tuple(x[ii,jj,:,:] for x in up_tucker_cores)
-      >>> dtt_ij = tuple(x[ii,jj,:,:,:] for x in down_tt_cores)
-      >>> ltt_ij = tuple(x[ii,jj,:,:,:] for x in left_tt_cores)
-      >>> rtt_ij = tuple(x[ii,jj,:,:,:] for x in right_tt_cores)
-      >>> basis_ij = bvf.T3Basis(utk_ij, dtt_ij, ltt_ij, rtt_ij)
-      >>> print(cw.corewise_norm(cw.corewise_sub(basis_ij.data, Sij.data)))
-      0.0
-
-
-
-   .. py:method:: stack(xx, use_jax: bool = False)
-      :staticmethod:
-
-
-      Stack array-like tree of T3Basis into a single T3Basis.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.basis_variations_format as bvf
-      >>> import t3toolbox.corewise as cw
-      >>> randnstar = lambda x: np.random.randn(*x)
-      >>> ss = (2,3) # not included in variation_shapes.
-      >>> up_tucker_cores = (randnstar(ss+(10, 14)), randnstar(ss+(11, 15)), randnstar(ss+(12, 16)))
-      >>> down_tt_cores = (randnstar(ss+(1, 9, 4)), randnstar(ss+(2, 8, 5)),randnstar(ss+(3, 7, 1)))
-      >>> left_tt_cores = (randnstar(ss+(1, 10, 2)), randnstar(ss+(2, 11, 3)), randnstar(ss+(3,12,5)))
-      >>> right_tt_cores = (randnstar(ss+(2, 10, 4)), randnstar(ss+(4, 11, 5)), randnstar(ss+(5, 12, 1)))
-      >>> x = bvf.T3Basis(up_tucker_cores, down_tt_cores, left_tt_cores, right_tt_cores)
-      >>> xx = x.unstack()
-      >>> x2 = bvf.T3Basis.stack(xx)
-      >>> print(cw.corewise_norm(cw.corewise_sub(x.data, x2.data)))
-      0.0
+   t3toolbox.basis_variations_format.T3Basis.d
+   t3toolbox.basis_variations_format.T3Basis.shape
+   t3toolbox.basis_variations_format.T3Basis.up_ranks
+   t3toolbox.basis_variations_format.T3Basis.down_ranks
+   t3toolbox.basis_variations_format.T3Basis.left_ranks
+   t3toolbox.basis_variations_format.T3Basis.right_ranks
+   t3toolbox.basis_variations_format.T3Basis.stack_shape
+   t3toolbox.basis_variations_format.T3Basis.structure
+   t3toolbox.basis_variations_format.T3Basis.variation_shapes
+   t3toolbox.basis_variations_format.T3Basis.data
+   t3toolbox.basis_variations_format.T3Basis.validate
+   t3toolbox.basis_variations_format.T3Basis.__post_init__
+   t3toolbox.basis_variations_format.T3Basis.unstack
+   t3toolbox.basis_variations_format.T3Basis.stack
 
 

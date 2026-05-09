@@ -1,0 +1,52 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__
+=======================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__(other)
+
+   Add Tucker tensor trains x and y, yielding a Tucker tensor train x+y with summed ranks.
+
+   Addition is defined with respect to the dense N0 x ... x N(d-1) tensors that
+   are *represented* by the Tucker tensor trains.
+
+   For corewise addition, see :func:`t3toolbox.corewise.corewise_add`
+
+   T3 + T3 -> T3
+   T3 + dense -> dense
+   T3 + scalar -> T3
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (1,3,2,1))
+   >>> y = t3.TuckerTensorTrain.randn((14,15,16), (3,7,2), (1,5,6,1))
+   >>> z = x + y
+   >>> print(np.linalg.norm(x.to_dense() + y.to_dense() - z.to_dense()))
+   6.524094086845177e-13
+   >>> print(z.structure)
+   ((14, 15, 16), (7, 12, 8), (1, 8, 8, 1), ())
+
+   Adding T3 + dense
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (1,3,2,1))
+   >>> y = np.random.randn(14,15,16)
+   >>> z = x + y
+   >>> print(np.linalg.norm(x.to_dense() + y - z))
+   0.0
+   >>> print(type(z))
+   <class 'numpy.ndarray'>
+
+   Adding T3 + scalar
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (1,3,2,1))
+   >>> s = 3.5
+   >>> z = x + s
+   >>> print(np.linalg.norm(x.to_dense() + s - z.to_dense()))
+   0.0
+   >>> print(z.structure)
+   ((14, 15, 16), (5, 6, 7), (2, 4, 3, 2), ())
+

@@ -1,0 +1,8 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.validate
+========================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.validate()
+
+   Check internal consistency of the Tucker tensor train.
+
+

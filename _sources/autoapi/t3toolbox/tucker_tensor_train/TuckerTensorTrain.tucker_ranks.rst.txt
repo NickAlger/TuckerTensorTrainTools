@@ -1,0 +1,17 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks
+============================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks() -> Tuple[int, Ellipsis]
+
+   Tucker ranks. tucker_ranks=(n0,...,n(d-1))
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> tucker_cores = (np.zeros((4,14)), np.zeros((5,15)), np.zeros((6,16)))
+   >>> tt_cores = (np.zeros((1,4,3)), np.zeros((3,5,2)), np.zeros((2,6,1)))
+   >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with zeros
+   >>> print(x.tucker_ranks)
+   (4, 5, 6)
+

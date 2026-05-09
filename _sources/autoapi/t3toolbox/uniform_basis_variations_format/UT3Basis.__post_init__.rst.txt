@@ -1,0 +1,4 @@
+t3toolbox.uniform_basis_variations_format.UT3Basis.__post_init__
+================================================================
+
+.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.__post_init__()

@@ -1,0 +1,19 @@
+t3toolbox.basis_variations_format.T3Variations.variation_shapes
+===============================================================
+
+.. py:method:: t3toolbox.basis_variations_format.T3Variations.variation_shapes() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis]]
+
+   T3Variations shapes that fit with this T3Basis.
+
+   Shapes of the "holes" in the following tensor diagrams::
+
+       1 -- L0 -- ( ) -- R2 -- R3 -- 1
+            |      |      |      |
+            U0     U1     U2     U3
+            |      |      |      |
+
+       1 -- L0 -- L1 -- O2 -- R3 -- 1
+            |     |     |     |
+            U0    U1    ( )   U3
+            |     |     |     |
+

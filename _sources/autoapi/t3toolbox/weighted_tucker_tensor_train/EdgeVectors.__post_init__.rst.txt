@@ -1,0 +1,4 @@
+t3toolbox.weighted_tucker_tensor_train.EdgeVectors.__post_init__
+================================================================
+
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.__post_init__()

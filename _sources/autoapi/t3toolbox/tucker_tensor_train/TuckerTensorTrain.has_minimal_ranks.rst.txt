@@ -1,0 +1,33 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks
+=================================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks() -> bool
+
+   True if this Tucker tensor train's ranks equal the minimal ranks, False otherwise.
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,99,6,7), (1,4,9,7,1))
+   >>> print(x.has_minimal_ranks) # Tucker rank too big
+   False
+   >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,99,9,7,1))
+   >>> print(x.has_minimal_ranks) # TT rank too big
+   False
+   >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,4,9,7,1))
+   >>> print(x.has_minimal_ranks)
+   True
+
+   Make ranks minimal with t3svd:
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,99,9,7,1))
+   >>> print(x.has_minimal_ranks)
+   False
+   >>> print(x.minimal_ranks)
+   >>> x2 = x.t3svd()[0]
+   >>> print(x2.has_minimal_ranks)
+   True
+

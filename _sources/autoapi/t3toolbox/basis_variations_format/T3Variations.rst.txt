@@ -1,6 +1,19 @@
 t3toolbox.basis_variations_format.T3Variations
 ==============================================
 
+.. toctree::
+   :hidden:
+
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.d
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.shape
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.stack_shape
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.variation_shapes
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.data
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.validate
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.__post_init__
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.unstack
+   /autoapi/t3toolbox/basis_variations_format/T3Variations.stack
+
 .. py:class:: t3toolbox.basis_variations_format.T3Variations
 
    Tuple containing variation cores for basis-variation representations of TuckerTensorTrains.
@@ -39,99 +52,19 @@ t3toolbox.basis_variations_format.T3Variations
    .. py:attribute:: tt_variations
       :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
 
+Methods
+-------
 
-   .. py:method:: d() -> int
+.. autoapisummary::
 
-
-   .. py:method:: shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: stack_shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: variation_shapes() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis]]
-
-      T3Variations shapes that fit with this T3Basis.
-
-      Shapes of the "holes" in the following tensor diagrams::
-
-          1 -- L0 -- ( ) -- R2 -- R3 -- 1
-               |      |      |      |
-               U0     U1     U2     U3
-               |      |      |      |
-
-          1 -- L0 -- L1 -- O2 -- R3 -- 1
-               |     |     |     |
-               U0    U1    ( )   U3
-               |     |     |     |
-
-
-
-   .. py:method:: data() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
-
-
-   .. py:method:: validate() -> None
-
-      Check rank and shape consistency of Tucker tensor train variations (`T3Variations`).
-
-      :param self:
-      :type self: T3Variations
-
-      :raises ValueError: Error raised if the cores of the T3Variations have inconsistent shapes.
-
-      .. seealso:: :py:obj:`T3Basis`, :py:obj:`T3Variations`
-
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: unstack()
-
-      Unstack into an array-like tree.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.basis_variations_format as bvf
-      >>> import t3toolbox.corewise as cw
-      >>> rnd = lambda x: np.random.randn(*x)
-      >>> ss = (2,3) # not included in variation_shapes.
-      >>> NN, nnU, nnD, rrL, rrR = (10,11,12), (8,7,8), (6,7,8), (2,3,4,3), (5,4,6,1)
-      >>> tucker_variations = tuple(rnd(ss+(n,N)) for n, N in zip(nnD, NN))
-      >>> tt_variations = tuple(rnd(ss+(rL, n, rR)) for rL, n, rR in zip(rrL[:-1],nnU,rrR[1:]))
-      >>> V = bvf.T3Variations(tucker_variations, tt_variations)
-      >>> VV = V.unstack()
-      >>> ii, jj = 1, 2
-      >>> V_ij = VV[ii][jj]
-      >>> tkv_ij = tuple(x[ii,jj,:,:] for x in tucker_variations)
-      >>> ttv_ij = tuple(x[ii,jj,:,:,:] for x in tt_variations)
-      >>> V_ij2 = bvf.T3Variations(tkv_ij, ttv_ij)
-      >>> print(cw.corewise_norm(cw.corewise_sub(V_ij2.data, V_ij.data)))
-      0.0
-
-
-
-   .. py:method:: stack(xx, use_jax: bool = False)
-      :staticmethod:
-
-
-      Stack array-like tree of T3Variations into a single T3Variation.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.basis_variations_format as bvf
-      >>> import t3toolbox.corewise as cw
-      >>> rnd = lambda x: np.random.randn(*x)
-      >>> ss = (2,3) # not included in variation_shapes.
-      >>> NN, nnU, nnD, rrL, rrR = (10,11,12), (8,7,8), (6,7,8), (2,3,4,3), (5,4,6,1)
-      >>> tucker_variations = tuple(rnd(ss+(n,N)) for n, N in zip(nnD, NN))
-      >>> tt_variations = tuple(rnd(ss+(rL, n, rR)) for rL, n, rR in zip(rrL[:-1],nnU,rrR[1:]))
-      >>> V = bvf.T3Variations(tucker_variations, tt_variations)
-      >>> VV = V.unstack()
-      >>> V2 = bvf.T3Variations.stack(VV)
-      >>> print(cw.corewise_norm(cw.corewise_sub(V.data, V2.data)))
-      0.0
+   t3toolbox.basis_variations_format.T3Variations.d
+   t3toolbox.basis_variations_format.T3Variations.shape
+   t3toolbox.basis_variations_format.T3Variations.stack_shape
+   t3toolbox.basis_variations_format.T3Variations.variation_shapes
+   t3toolbox.basis_variations_format.T3Variations.data
+   t3toolbox.basis_variations_format.T3Variations.validate
+   t3toolbox.basis_variations_format.T3Variations.__post_init__
+   t3toolbox.basis_variations_format.T3Variations.unstack
+   t3toolbox.basis_variations_format.T3Variations.stack
 
 

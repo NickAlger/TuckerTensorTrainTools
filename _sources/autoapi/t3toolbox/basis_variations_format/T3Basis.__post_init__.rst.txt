@@ -1,0 +1,4 @@
+t3toolbox.basis_variations_format.T3Basis.__post_init__
+=======================================================
+
+.. py:method:: t3toolbox.basis_variations_format.T3Basis.__post_init__()

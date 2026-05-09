@@ -1,0 +1,31 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape
+===========================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape() -> Tuple[int, Ellipsis]
+
+   If this object contains multiple stacked T3s with the same structure, this is the shape of the stack.
+   If no stacking is used then stack_shape=().
+
+   - tucker_cores[ii].shape = stack_shape + (ni, Ni)
+   - tt_cores[ii].shape = stack_shape + (ri, ni, r(i+1))
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> tucker_cores = [np.zeros((4,14)),np.zeros((5,15)), np.zeros((6,16))]
+   >>> tt_cores = [np.zeros((1,4,3)), np.zeros((3,5,2)), np.ones((2,6,1))]
+   >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with ones
+   >>> print(x.stack_shape)
+   ()
+   >>> tucker_cores = [np.zeros((6, 4,14)),np.zeros((6, 5,15)), np.zeros((6, 6,16))]
+   >>> tt_cores = [np.zeros((6, 1,4,3)), np.zeros((6, 3,5,2)), np.ones((6, 2,6,1))]
+   >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with ones
+   >>> print(x.stack_shape)
+   (6,)
+   >>> tucker_cores = [np.zeros((6,7, 4,14)),np.zeros((6,7, 5,15)), np.zeros((6,7, 6,16))]
+   >>> tt_cores = [np.zeros((6,7, 1,4,3)), np.zeros((6,7, 3,5,2)), np.ones((6,7, 2,6,1))]
+   >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with ones
+   >>> print(x.stack_shape)
+   (6, 7)
+

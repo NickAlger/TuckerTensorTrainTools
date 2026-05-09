@@ -1,0 +1,9 @@
+t3toolbox.backend.common.items_are_uniform
+==========================================
+
+.. py:function:: t3toolbox.backend.common.items_are_uniform(xx) -> bool
+
+   Checks if an object can be treated as uniform for the purposes of jax.scan and jax.map.
+
+   True if x is an array, or a sequence of arrays which all have the same shape. False otherwise.
+

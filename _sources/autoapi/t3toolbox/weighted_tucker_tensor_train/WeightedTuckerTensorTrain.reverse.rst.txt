@@ -1,0 +1,8 @@
+t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.reverse
+========================================================================
+
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.reverse() -> WeightedTuckerTensorTrain
+
+   Reverse the weighted Tucker tensor train.
+
+

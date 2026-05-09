@@ -1,6 +1,24 @@
 t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain
 ================================================================
 
+.. toctree::
+   :hidden:
+
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.data
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.validate
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.__post_init__
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.contract_edge_weights_into_cores
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.squash_tails
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.reverse
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.__neg__
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.__mul__
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.__add__
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.__sub__
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.norm
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.to_dense
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.unstack
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.stack
+
 .. py:class:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain
 
    Class for Tucker tensor trains with weights on internal edges.
@@ -50,170 +68,24 @@ t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain
    .. py:attribute:: edge_weights
       :type:  EdgeVectors
 
+Methods
+-------
 
-   .. py:method:: data()
+.. autoapisummary::
 
-
-   .. py:method:: validate()
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: contract_edge_weights_into_cores(use_jax: bool = False) -> t3toolbox.tucker_tensor_train.TuckerTensorTrain
-
-      Contract each edge vector into a neighboring core.
-
-      Tensor network diagram illustrating groupings::
-
-               ____     ____     ________
-              /    \   /    \   /                    1---w---G0---w---G1---w---G2---w---1
-                  |        |        |
-                / w      / w      / w
-                | |      | |      | |
-                \ B0     \ B1     \ B2
-                  |        |        |
-                  w        w        w
-                  |        |        |
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> randn = np.random.randn
-      >>> x0 = t3.t3_corewise_randn((6,7,8), (5,6,7), (2,3,3,1), stack_shape=(4,))
-      >>> tucker_vectors = tuple([randn(4, 5), randn(4, 6), randn(4, 7)])
-      >>> tt_vectors = tuple([randn(4, 2), randn(4, 3), randn(4, 3), randn(4, 1)])
-      >>> weights = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> x0_w = wt3.WeightedTuckerTensorTrain(x0, weights)
-      >>> x = x0_w.contract_edge_weights_into_cores()
-      >>> dense_x = x.to_dense()
-      >>> all_x_vars = x0.tucker_cores + x0.tt_cores + tucker_vectors + tt_vectors
-      >>> einsum_str = 'qix,qjy,qkz,qaib,qbjc,qckd,qi,qj,qk,qa,qb,qc,qd->qxyz'
-      >>> dense_x2 = np.einsum(einsum_str, *all_x_vars)
-      >>> print(np.linalg.norm(dense_x - dense_x2))
-      4.7254283984394845e-12
-
-
-
-   .. py:method:: squash_tails(use_jax: bool = False) -> WeightedTuckerTensorTrain
-
-
-   .. py:method:: reverse() -> WeightedTuckerTensorTrain
-
-      Reverse the weighted Tucker tensor train.
-
-
-
-
-   .. py:method:: __neg__() -> WeightedTuckerTensorTrain
-
-
-   .. py:method:: __mul__(other) -> WeightedTuckerTensorTrain
-
-
-   .. py:method:: __add__(other, squash: bool = True, use_jax: bool = False)
-
-
-   .. py:method:: __sub__(other, squash: bool = True, use_jax: bool = False)
-
-
-   .. py:method:: norm(use_orthogonalization: bool = True, use_jax: bool = False)
-
-      Computes the Hilbert-Schmidt norm of the weighted Tucker tensor train.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> randn = np.random.randn
-      >>> x0 = t3.t3_corewise_randn((6,7,8), (5,6,7), (2,3,3,1), stack_shape=(4,))
-      >>> x_tucker_vectors = tuple([randn(4, 5), randn(4, 6), randn(4, 7)])
-      >>> x_tt_vectors = tuple([randn(4, 2), randn(4, 3), randn(4, 3), randn(4, 1)])
-      >>> x_weights = wt3.EdgeVectors(x_tucker_vectors, x_tt_vectors)
-      >>> x = wt3.WeightedTuckerTensorTrain(x0, x_weights)
-      >>> print(x.norm())
-      [ 31.94684693   0.68957189 100.53306804  35.34732966]
-      >>> x_dense = x.contract_edge_weights_into_cores().to_dense()
-      >>> print(np.array([np.linalg.norm(x_dense[ii]) for ii in range(4)]))
-      [ 31.94684693   0.68957189 100.53306804  35.34732966]
-
-
-
-   .. py:method:: to_dense(use_jax: bool = False) -> t3toolbox.backend.common.NDArray
-
-      Convert the weighted Tucker tensor train to a dense array.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> randn = np.random.randn
-      >>> x0 = t3.t3_corewise_randn((6,7,8), (5,6,7), (2,3,3,1), stack_shape=(4,))
-      >>> tucker_vectors = tuple([randn(4, 5), randn(4, 6), randn(4, 7)])
-      >>> tt_vectors = tuple([randn(4, 2), randn(4, 3), randn(4, 3), randn(4, 1)])
-      >>> weights = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> x0_w = wt3.WeightedTuckerTensorTrain(x0, weights)
-      >>> dense_x = x0_w.to_dense()
-      >>> all_x_vars = x0.tucker_cores + x0.tt_cores + tucker_vectors + tt_vectors
-      >>> einsum_str = 'qix,qjy,qkz,qaib,qbjc,qckd,qi,qj,qk,qa,qb,qc,qd->qxyz'
-      >>> dense_x2 = np.einsum(einsum_str, *all_x_vars)
-      >>> print(np.linalg.norm(dense_x - dense_x2))
-      2.8199489101171104e-12
-
-
-
-   .. py:method:: unstack()
-
-      Unstack into an array-like tree.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> import t3toolbox.corewise as cw
-      >>> randn = np.random.randn
-      >>> x0 = t3.t3_corewise_randn((6,7,8), (5,6,7), (2,3,3,1), stack_shape=(4,1))
-      >>> tucker_vectors = tuple([randn(4,1, 5), randn(4,1, 6), randn(4,1, 7)])
-      >>> tt_vectors = tuple([randn(4,1, 2), randn(4,1, 3), randn(4,1, 3), randn(4,1, 1)])
-      >>> weights = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> x = wt3.WeightedTuckerTensorTrain(x0, weights)
-      >>> xx = x.unstack()
-      >>> ii, jj = 1, 0
-      >>> x_ij = xx[ii][jj]
-      >>> x0_ij = x0.unstack()[ii][jj]
-      >>> w_ij = weights.unstack()[ii][jj]
-      >>> x_ij2 = wt3.WeightedTuckerTensorTrain(x0_ij, w_ij)
-      >>> print(cw.corewise_norm(cw.corewise_sub(x_ij.data, x_ij2.data)))
-      0.0
-
-
-
-   .. py:method:: stack(xx, use_jax: bool = False)
-      :staticmethod:
-
-
-      Stack array-like tree of WeightedTuckerTrain into a single WeightedTuckerTrain.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> import t3toolbox.corewise as cw
-      >>> randn = np.random.randn
-      >>> x0 = t3.t3_corewise_randn((6,7,8), (5,6,7), (2,3,3,1), stack_shape=(4,1))
-      >>> tucker_vectors = tuple([randn(4,1, 5), randn(4,1, 6), randn(4,1, 7)])
-      >>> tt_vectors = tuple([randn(4,1, 2), randn(4,1, 3), randn(4,1, 3), randn(4,1, 1)])
-      >>> weights = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> x = wt3.WeightedTuckerTensorTrain(x0, weights)
-      >>> xx = x.unstack()
-      >>> x2 = wt3.WeightedTuckerTensorTrain.stack(xx)
-      >>> print(cw.corewise_norm(cw.corewise_sub(x.data, x2.data)))
-      0.0
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.data
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.validate
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__post_init__
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.contract_edge_weights_into_cores
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.squash_tails
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.reverse
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__neg__
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__mul__
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__add__
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__sub__
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.norm
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.to_dense
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.unstack
+   t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.stack
 
 

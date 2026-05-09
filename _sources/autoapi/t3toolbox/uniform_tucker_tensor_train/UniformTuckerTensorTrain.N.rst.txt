@@ -1,0 +1,8 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.N
+================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.N() -> int
+
+   Padded index dimension. N >= max(N0,...,N(d-1)), where Ni are the original (unpadded) shapes.
+
+

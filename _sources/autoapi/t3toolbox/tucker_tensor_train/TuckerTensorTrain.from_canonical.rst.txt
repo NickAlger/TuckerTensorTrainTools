@@ -1,0 +1,27 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_canonical
+==============================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_canonical(factors: Sequence[t3toolbox.backend.common.NDArray]) -> TuckerTensorTrain
+   :staticmethod:
+
+
+   Constructs TuckerTensorTrain from Canonical decomposition.
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> rank = 3
+   >>> shape = (5,6,7)
+   >>> stack_shape = (2,3)
+   >>> FF = [np.random.randn(*(stack_shape+(rank, N))) for N in shape]
+   >>> x = t3.TuckerTensorTrain.t3_from_canonical(FF)
+   >>> x_dense = x.to_dense()
+   >>> x_dense2 = np.einsum('abri,abrj,abrk->abijk', FF[0], FF[1], FF[2])
+   >>> print(np.linalg.norm(x_dense - x_dense2))
+   0.0
+   >>> print(x.tucker_ranks)
+   (3, 3, 3)
+   >>> print(x.tt_ranks)
+   (3, 3, 3, 3)
+

@@ -1,0 +1,4 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__post_init__
+============================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__post_init__()

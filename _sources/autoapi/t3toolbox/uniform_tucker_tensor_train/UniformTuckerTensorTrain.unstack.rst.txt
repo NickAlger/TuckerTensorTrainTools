@@ -1,0 +1,23 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.unstack
+======================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.unstack()
+
+   Unstacks this UniformTuckerTensorTrain into an array-like tree
+   of nested Tuples containing UniformTuckerTensorTrains as leaf nodes.
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> import t3toolbox.uniform_tucker_tensor_train as ut3
+   >>> x = t3.t3_corewise_randn((14,15,16), (4,6,5), (2,3,2,2), stack_shape=(2,3))
+   >>> xx = x.unstack()
+   >>> ux = ut3.t3_to_ut3(x)
+   >>> uxx = ux.unstack()
+   >>> ii, jj = 1, 2
+   >>> uxx_ij = uxx[ii][jj]
+   >>> uxx_ij2 = ut3.t3_to_ut3(xx[ii][jj])
+   >>> print((uxx_ij - uxx_ij2).norm())
+   8.474583009920297e-24
+

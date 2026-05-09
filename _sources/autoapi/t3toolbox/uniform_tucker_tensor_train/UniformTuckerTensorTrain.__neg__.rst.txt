@@ -1,0 +1,19 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__neg__
+======================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__neg__(use_jax: bool = False) -> UniformTuckerTensorTrain
+
+   Flip a uniform Tucker tensor train, x -> -x.
+
+           Examples
+           --------
+   import t3toolbox.backend.uniform_tucker_tensor_train.ut3_conversions        >>> import numpy as np
+           >>> import t3toolbox.tucker_tensor_train as t3
+           >>> import t3toolbox.uniform_tucker_tensor_train as ut3
+           >>> x = t3.t3_corewise_randn((14,15,16), (4,6,5), (2,3,2,2))
+           >>> ux = t3toolbox.backend.uniform_tucker_tensor_train.ut3_conversions.t3_to_ut3(x)
+           >>> neg_ux = -ux
+           >>> print(np.linalg.norm(x.to_dense() + neg_ux.to_dense()))
+           6.440955358355001e-13
+
+

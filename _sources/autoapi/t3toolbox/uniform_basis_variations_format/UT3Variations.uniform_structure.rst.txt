@@ -1,0 +1,4 @@
+t3toolbox.uniform_basis_variations_format.UT3Variations.uniform_structure
+=========================================================================
+
+.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Variations.uniform_structure() -> t3toolbox.backend.common.typ.Tuple[int, int, int, int, int, int, t3toolbox.backend.common.typ.Tuple[int, Ellipsis]]

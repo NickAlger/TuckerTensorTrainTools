@@ -1,0 +1,8 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_jax
+======================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_jax() -> TuckerTensorTrain
+
+   Convert arrays defining TuckerTensorTrain into Jax arrays.
+
+

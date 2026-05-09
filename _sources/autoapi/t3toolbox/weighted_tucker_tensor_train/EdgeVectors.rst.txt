@@ -1,6 +1,20 @@
 t3toolbox.weighted_tucker_tensor_train.EdgeVectors
 ==================================================
 
+.. toctree::
+   :hidden:
+
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.data
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.d
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.tucker_ranks
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.tt_ranks
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.stack_shape
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.validate
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.__post_init__
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.reverse
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.unstack
+   /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.stack
+
 .. py:class:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors
 
    Vectors that "live" on edges in a T3 tensor network.
@@ -22,93 +36,20 @@ t3toolbox.weighted_tucker_tensor_train.EdgeVectors
    .. py:attribute:: tt_vectors
       :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
 
+Methods
+-------
 
-   .. py:method:: data() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. autoapisummary::
 
-
-   .. py:method:: d() -> int
-
-
-   .. py:method:: tucker_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: tt_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: stack_shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
-
-
-   .. py:method:: validate()
-
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: reverse() -> EdgeVectors
-
-      Reverse edge vector ordering.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> randn = np.random.randn
-      >>> tucker_vectors = tuple([randn(9,10, 5), randn(9,10, 6), randn(9,10, 7)])
-      >>> tt_vectors = tuple([randn(9,10, 1), randn(9,10, 2), randn(9,10, 3), randn(9,10, 4)])
-      >>> ev = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> ev_rev = ev.reverse()
-      >>> print(ev.tucker_ranks, ev.tt_ranks)
-      (5, 6, 7) (1, 2, 3, 4)
-      >>> print(ev_rev.tucker_ranks, ev_rev.tt_ranks)
-      (7, 6, 5) (4, 3, 2, 1)
-
-
-
-   .. py:method:: unstack()
-
-      Unstack into an array-like tree.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> import t3toolbox.corewise as cw
-      >>> randn = np.random.randn
-      >>> tucker_vectors = tuple([randn(9,10, 5), randn(9,10, 6), randn(9,10, 7)])
-      >>> tt_vectors = tuple([randn(9,10, 1), randn(9,10, 2), randn(9,10, 3), randn(9,10, 4)])
-      >>> ev = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> evv = ev.unstack()
-      >>> ii, jj = 1, 2
-      >>> ev_ij = evv[ii][jj]
-      >>> tkv_ij = tuple(x[ii,jj,:] for x in tucker_vectors)
-      >>> ttv_ij = tuple(x[ii,jj,:] for x in tt_vectors)
-      >>> ev_ij2 = wt3.EdgeVectors(tkv_ij, ttv_ij)
-      >>> print(cw.corewise_norm(cw.corewise_sub(ev_ij2.data, ev_ij.data)))
-      0.0
-
-
-
-   .. py:method:: stack(xx, use_jax: bool = False)
-      :staticmethod:
-
-
-      Stack array-like tree of T3Basis into a single T3Basis.
-
-      .. rubric:: Examples
-
-      >>> import numpy as np
-      >>> import t3toolbox.tucker_tensor_train as t3
-      >>> import t3toolbox.weighted_tucker_tensor_train as wt3
-      >>> import t3toolbox.corewise as cw
-      >>> randn = np.random.randn
-      >>> tucker_vectors = tuple([randn(9,10, 5), randn(9,10, 6), randn(9,10, 7)])
-      >>> tt_vectors = tuple([randn(9,10, 1), randn(9,10, 2), randn(9,10, 3), randn(9,10, 4)])
-      >>> ev = wt3.EdgeVectors(tucker_vectors, tt_vectors)
-      >>> evv = ev.unstack()
-      >>> ev2 = wt3.EdgeVectors.stack(evv)
-      >>> print(cw.corewise_norm(cw.corewise_sub(ev.data, ev2.data)))
-      0.0
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.data
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.d
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.tucker_ranks
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.tt_ranks
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack_shape
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.validate
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.__post_init__
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.reverse
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.unstack
+   t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack
 
 

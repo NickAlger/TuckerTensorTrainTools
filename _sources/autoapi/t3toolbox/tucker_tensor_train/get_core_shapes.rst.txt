@@ -1,7 +1,7 @@
 t3toolbox.tucker_tensor_train.get_core_shapes
 =============================================
 
-.. py:function:: t3toolbox.tucker_tensor_train.get_core_shapes(shape: t3toolbox.backend.common.typ.Sequence[int], tucker_ranks: t3toolbox.backend.common.typ.Sequence[int], tt_ranks: t3toolbox.backend.common.typ.Sequence[int], stack_shape: t3toolbox.backend.common.typ.Sequence[int] = ()) -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], t3toolbox.backend.common.typ.Tuple[int, Ellipsis]]
+.. py:function:: t3toolbox.tucker_tensor_train.get_core_shapes(shape: Sequence[int], tucker_ranks: Sequence[int], tt_ranks: Sequence[int], stack_shape: Sequence[int] = ()) -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
 
    Compute the tucker and TT core shapes for a Tucker tensor train.
 

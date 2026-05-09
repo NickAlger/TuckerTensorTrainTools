@@ -1,0 +1,8 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.data
+====================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.data() -> Tuple[Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+
+   Tuple containing the Tucker cores and TT cores. data=(tucker_cores, tt_cores)
+
+

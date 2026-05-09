@@ -1,0 +1,30 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.tucker_ranks
+===========================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.tucker_ranks() -> t3toolbox.backend.common.NDArray
+
+   Get the original tucker ranks, not including components of the edges that are unmasked.
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.uniform_tucker_tensor_train as ut3
+   >>> d, N, n, r = 3, 6, 5, 4
+   >>> stack_shape = (2,)
+   >>> tucker_supercore = np.ones((d,)+stack_shape+(n,N))
+   >>> tt_supercore = np.ones((d,)+stack_shape+(r,n,r))
+   >>> shape_mask = np.ones((d,N), dtype=bool)
+   >>> tucker_edge_mask = np.ones((d,)+stack_shape+(n,), dtype=bool)
+   >>> tt_edge_mask = np.ones((d+1,)+stack_shape+(r,), dtype=bool)
+   >>> tucker_edge_mask[0, 1, 0] = False # first edge,  second T3, first component
+   >>> tucker_edge_mask[0, 1, 1] = False # first edge,  second T3, second component
+   >>> tucker_edge_mask[0, 1, 2] = False # first edge,  second T3, third component.  n0=5-3=2
+   >>> tucker_edge_mask[1, 1, 0] = False # second edge, second T3, first component
+   >>> tucker_edge_mask[1, 1, 1] = False # second edge, second T3, second component. n1=5-2=3
+   >>> tucker_edge_mask[2, 1, 0] = False # third edge,  second T3, first component.  n2=5-1=4
+   >>> x = ut3.UniformTuckerTensorTrain(tucker_supercore, tt_supercore, shape_mask, tucker_edge_mask, tt_edge_mask)
+   >>> print(x.tucker_ranks)
+   [[5 2]
+    [5 3]
+    [5 4]]
+

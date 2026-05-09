@@ -1,0 +1,8 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.contains_jax
+============================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.contains_jax() -> bool
+
+   True if any Tucker or TT cores are jax arrays, False if all Tucker and TT cores are numpy arrays.
+
+

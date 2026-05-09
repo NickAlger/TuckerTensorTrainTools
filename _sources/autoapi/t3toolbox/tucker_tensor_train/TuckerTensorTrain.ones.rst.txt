@@ -1,0 +1,23 @@
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.ones
+====================================================
+
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.ones(shape: Tuple[int, Ellipsis], stack_shape: Tuple[int, Ellipsis] = (), use_jax: bool = False) -> TuckerTensorTrain
+   :staticmethod:
+
+
+   Construct the rank-1 Tucker tensor train which represents the dense tensor filled with ones.
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> shape = (14, 15, 16)
+   >>> stack_shape = (2,3)
+   >>> x = t3.TuckerTensorTrain.ones(shape, stack_shape=stack_shape)
+   >>> print(np.linalg.norm(x.to_dense() - np.ones(stack_shape+shape)))
+   0.0
+   >>> print(x.tucker_ranks)
+   (1, 1, 1)
+   >>> print(x.tt_ranks)
+   (1, 1, 1, 1)
+

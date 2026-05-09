@@ -1,0 +1,24 @@
+t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack
+========================================================
+
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack(xx, use_jax: bool = False)
+   :staticmethod:
+
+
+   Stack array-like tree of T3Basis into a single T3Basis.
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> import t3toolbox.weighted_tucker_tensor_train as wt3
+   >>> import t3toolbox.corewise as cw
+   >>> randn = np.random.randn
+   >>> tucker_vectors = tuple([randn(9,10, 5), randn(9,10, 6), randn(9,10, 7)])
+   >>> tt_vectors = tuple([randn(9,10, 1), randn(9,10, 2), randn(9,10, 3), randn(9,10, 4)])
+   >>> ev = wt3.EdgeVectors(tucker_vectors, tt_vectors)
+   >>> evv = ev.unstack()
+   >>> ev2 = wt3.EdgeVectors.stack(evv)
+   >>> print(cw.corewise_norm(cw.corewise_sub(ev.data, ev2.data)))
+   0.0
+

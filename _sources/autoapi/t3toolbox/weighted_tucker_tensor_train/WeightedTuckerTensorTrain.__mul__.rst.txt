@@ -1,0 +1,4 @@
+t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__mul__
+========================================================================
+
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__mul__(other) -> WeightedTuckerTensorTrain

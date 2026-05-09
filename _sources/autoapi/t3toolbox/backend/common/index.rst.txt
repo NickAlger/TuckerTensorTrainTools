@@ -44,6 +44,7 @@ Functions
    /autoapi/t3toolbox/backend/common/xprepend
    /autoapi/t3toolbox/backend/common/randn
    /autoapi/t3toolbox/backend/common/tree_contains_jax
+   /autoapi/t3toolbox/backend/common/items_are_uniform
 
 .. autoapisummary::
 
@@ -59,6 +60,7 @@ Functions
    t3toolbox.backend.common.xprepend
    t3toolbox.backend.common.randn
    t3toolbox.backend.common.tree_contains_jax
+   t3toolbox.backend.common.items_are_uniform
 
 
 Module Contents

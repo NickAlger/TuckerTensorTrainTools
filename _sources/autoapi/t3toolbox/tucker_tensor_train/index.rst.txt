@@ -7,15 +7,6 @@ t3toolbox.tucker_tensor_train
 
    Basic Tucker tensor trains with non-uniform (ragged) shape and ranks.
 
-   Other
-   =====
-
-   Operations here are defined with respect to the dense N0 x ... x N(d-1) tensors that
-   are *represented* by the Tucker tensor train, even though these dense tensors
-   are not formed during computations.
-
-   For corewise backend, see :mod:`t3toolbox.corewise`
-
 
 
 Classes
@@ -40,13 +31,11 @@ Functions
    /autoapi/t3toolbox/tucker_tensor_train/get_core_shapes
    /autoapi/t3toolbox/tucker_tensor_train/get_minimal_ranks
    /autoapi/t3toolbox/tucker_tensor_train/t3svd_dense
-   /autoapi/t3toolbox/tucker_tensor_train/t3svd
 
 .. autoapisummary::
 
    t3toolbox.tucker_tensor_train.get_core_shapes
    t3toolbox.tucker_tensor_train.get_minimal_ranks
    t3toolbox.tucker_tensor_train.t3svd_dense
-   t3toolbox.tucker_tensor_train.t3svd
 
 

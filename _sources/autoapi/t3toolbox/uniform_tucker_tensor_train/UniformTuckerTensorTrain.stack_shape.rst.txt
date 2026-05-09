@@ -1,0 +1,8 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.stack_shape
+==========================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.stack_shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
+
+   If this contains many stacked uniform Tucker tensor trains, this is the stacking shape.
+
+

@@ -1,0 +1,14 @@
+t3toolbox.basis_variations_format.T3Basis.validate
+==================================================
+
+.. py:method:: t3toolbox.basis_variations_format.T3Basis.validate() -> None
+
+   Check rank and shape consistency of Tucker tensor train basis (`T3Basis`).
+
+   :param x:
+   :type x: T3Basis
+
+   :raises ValueError: Error raised if the cores of the T3Basis have inconsistent shapes.
+
+   .. seealso:: :py:obj:`T3Basis`, :py:obj:`T3Variations`
+

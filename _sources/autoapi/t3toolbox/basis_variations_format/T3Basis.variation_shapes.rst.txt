@@ -1,0 +1,32 @@
+t3toolbox.basis_variations_format.T3Basis.variation_shapes
+==========================================================
+
+.. py:method:: t3toolbox.basis_variations_format.T3Basis.variation_shapes() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[int, Ellipsis], Ellipsis]]
+
+   T3Variations shapes that fit with this T3Basis.
+
+   Shapes of the "holes" in the following tensor diagrams::
+
+       1 -- L0 -- ( ) -- R2 -- R3 -- 1
+            |      |      |      |
+            U0     U1     U2     U3
+            |      |      |      |
+
+       1 -- L0 -- L1 -- O2 -- R3 -- 1
+            |     |     |     |
+            U0    U1    ( )   U3
+            |     |     |     |
+
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.basis_variations_format as bvf
+   >>> ss = (2,3) # not included in variation_shapes.
+   >>> up_tucker_cores = (np.ones(ss+(10, 14)), np.ones(ss+(11, 15)), np.ones(ss+(12, 16)))
+   >>> down_tt_cores = (np.ones(ss+(1, 9, 4)), np.ones(ss+(2, 8, 5)), np.ones(ss+(3, 7, 1)))
+   >>> left_tt_cores = (np.ones(ss+(1, 10, 2)), np.ones(ss+(2, 11, 3)), np.ones(ss+(3,12,5)))
+   >>> right_tt_cores = (np.ones(ss+(2, 10, 4)), np.ones(ss+(4, 11, 5)), np.ones(ss+(5, 12, 1)))
+   >>> basis = bvf.T3Basis(up_tucker_cores, down_tt_cores, left_tt_cores, right_tt_cores)
+   >>> print(basis.variation_shapes)
+   (((9, 14), (8, 15), (7, 16)), ((1, 10, 4), (2, 11, 5), (3, 12, 1)))
+

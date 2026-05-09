@@ -1,0 +1,29 @@
+t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.squash_tails
+===========================================================================
+
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.squash_tails(use_jax: bool = False) -> UniformTuckerTensorTrain
+
+   Make the first index of the first TT supercore
+   and the last index of the last TT-supercore equal to 1 by summing.
+
+   .. rubric:: Examples
+
+   EXAMPLE WORK IN PROGRESS
+   >>> import numpy as np
+   >>> import t3toolbox.uniform_tucker_tensor_train as ut3
+   >>> tucker_supercore = np.random.randn(4, 2,3, 6,7)
+   >>> tt_supercore = np.random.randn(4, 2,3, 5,6,5)
+   >>> x = ut3.UniformTuckerTensorTrain(tucker_supercore, tt_supercore)
+   >>> squashed_x = x.squash()
+   >>> print(np.linalg.norm(x.to_dense() - squashed_x.to_dense()))
+
+   >>> new_tt_supercore = uniform_operations.uniform_squash_tt_tails(tt_supercore)
+   >>> print(np.linalg.norm(np.sum(tt_supercore[0], axis=-3) - new_tt_supercore[0, :,:, 0,:,:]))
+   0.0
+   >>> print(np.linalg.norm(new_tt_supercore[0, :,:, 1:,:,:]))
+   0.0
+   >>> print(np.linalg.norm(np.sum(tt_supercore[-1], axis=-1) - new_tt_supercore[-1, :,:, :,:,0]))
+   0.0
+   >>> print(np.linalg.norm(new_tt_supercore[-1, :,:, :,:,1:]))
+   0.0
+

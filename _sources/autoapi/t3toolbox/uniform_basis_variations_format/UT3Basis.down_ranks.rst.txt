@@ -1,0 +1,4 @@
+t3toolbox.uniform_basis_variations_format.UT3Basis.down_ranks
+=============================================================
+
+.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.down_ranks() -> t3toolbox.backend.common.NDArray

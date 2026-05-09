@@ -1,0 +1,4 @@
+t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__add__
+========================================================================
+
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__add__(other, squash: bool = True, use_jax: bool = False)
