@@ -223,33 +223,26 @@ def down_svd_tt_core(
         max_rank: int = None,
         rtol: float = None,
         atol: float = None,
-        use_jax: bool = False,
 ) -> typ.Tuple[
     typ.Tuple[typ.Sequence[NDArray], typ.Sequence[NDArray]],  # new_x
     NDArray,  # singular values, shape=(new_ni,)
 ]:
     '''Compute SVD of ith TT-core outer unfolding and keep non-orthogonal factor with this core.
     '''
+    use_jax = tree_contains_jax(x)
     xnp, _, _ = get_backend(False, use_jax)
 
     #
 
     tucker_cores, tt_cores = x
 
-    if len(tucker_cores[0].shape) > 2:
-        raise RuntimeError(
-            'Cannot use up_svd_ith_tt_core for stacked Tucker tensor train.\n' +
-            'Different elements of the stack could end out having different shapes.\n' +
-            'First unstack, then call up_svd_ith_tt_core for each unstacked Tucker tensor train.'
-        )
-
     G0_a_i_b = tt_cores[ii]
     Q0_i_o = tucker_cores[ii]
 
-    U_a_x_b, ss_x, Vt_x_i = linalg.up_svd(G0_a_i_b, min_rank, max_rank, rtol, atol, use_jax=use_jax)
+    U_a_x_b, ss_x, Vt_x_i = linalg.up_svd(G0_a_i_b, min_rank, max_rank, rtol, atol)
 
     G_a_x_b = xnp.einsum('...axb,...x->...axb', U_a_x_b, ss_x)
-    Q_x_o = xnp.tensordot(Vt_x_i, Q0_i_o, axes=1)
+    Q_x_o = xnp.einsum('...xi,...io->...xo', Vt_x_i, Q0_i_o)
 
     new_tt_cores = list(tt_cores)
     new_tt_cores[ii] = G_a_x_b

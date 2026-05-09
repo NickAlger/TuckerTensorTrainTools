@@ -34,7 +34,18 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 autoapi_modules = {'t3toolbox': None}
-autoapi_own_page_level = 'function'
+autoapi_own_page_level = 'method'
+add_module_names = False
+python_use_unqualified_type_hints = True
+toc_object_entries_show_parents = 'hide'
+
+autoapi_options = [
+    'members',
+    'undoc-members',
+    'show-module-summary',
+    'special-members',
+    'imported-members',
+]
 
 
 
@@ -47,6 +58,6 @@ html_favicon = 'favicon.ico'
 html_theme = "pydata_sphinx_theme"
 html_static_path = ['_static']
 
-html_theme_options = {}
-
+html_theme_options = {
+}
 

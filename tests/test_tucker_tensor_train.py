@@ -1907,8 +1907,8 @@ class TestTuckerTensorTrain(unittest.TestCase):
         base_structures = [
             ((8,),              (4,),           (4, 5)),
             ((8, 9),            (4, 5),         (4, 5, 4)),
-            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
             ((8, 9, 10),        (4, 5, 6),      (4, 5, 4, 3)),
+            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
         ]
         stack_shapes = [
             (),
@@ -1962,8 +1962,8 @@ class TestTuckerTensorTrain(unittest.TestCase):
         base_structures = [
             ((8,),              (4,),           (4, 5)),
             ((8, 9),            (4, 5),         (4, 5, 4)),
-            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
             ((8, 9, 10),        (4, 5, 6),      (4, 5, 4, 3)),
+            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
         ]
         stack_shapes = [
             (),
@@ -2029,8 +2029,8 @@ class TestTuckerTensorTrain(unittest.TestCase):
         base_structures = [
             ((8,),              (4,),           (4, 5)),
             ((8, 9),            (4, 5),         (4, 5, 4)),
-            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
             ((8, 9, 10),        (4, 5, 6),      (4, 5, 4, 3)),
+            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
         ]
         stack_shapes = [
             (),
@@ -2049,7 +2049,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
                     for USE_JAX in [True, False]:
                         with self.subTest(
                                 BASE_STRUCTURE=BASE_STRUCTURE, STACK_SHAPE=STACK_SHAPE,
-                                INDEX_STACK_SHAPE=USE_JAX, USE_JAX=USE_JAX
+                                VECS_STACK_SHAPE=VECS_STACK_SHAPE, USE_JAX=USE_JAX
                         ):
                             x = t3.TuckerTensorTrain.randn(*(BASE_STRUCTURE + (STACK_SHAPE,)))
                             if USE_JAX:
@@ -2096,6 +2096,29 @@ class TestTuckerTensorTrain(unittest.TestCase):
                                     for z, zt in zip(zz, zz_true):
                                         self.check_relerr(zt, z)
 
+    def test_t3svd(self):
+        base_structures = [
+            ((8,),              (4,),           (4, 5)),
+            ((8, 9),            (4, 5),         (4, 5, 4)),
+            ((8, 9, 10),        (4, 5, 6),      (4, 5, 4, 3)),
+            ((8, 9, 10, 11),    (4, 5, 6, 7),   (4, 5, 4, 3, 3)),
+        ]
+        stack_shapes = [
+            (),
+            (2, 3),
+        ]
+
+        for BASE_STRUCTURE in base_structures:
+            shape, tucker_ranks, tt_ranks = BASE_STRUCTURE
+            for STACK_SHAPE in stack_shapes:
+                for USE_JAX in [True, False]:
+                    with self.subTest(
+                            BASE_STRUCTURE=BASE_STRUCTURE, STACK_SHAPE=STACK_SHAPE,
+                            USE_JAX=USE_JAX
+                    ):
+                        x = t3.TuckerTensorTrain.randn(*(BASE_STRUCTURE + (STACK_SHAPE,)))
+                        if USE_JAX:
+                            x = x.to_jax()
 
 #####
 
@@ -2126,106 +2149,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
                 x = t3.t3_corewise_randn(STRUCTURE)
                 self.assertEqual(RESULT, t3.are_t3_ranks_minimal(x))
 
-    def test_pad_t3(self):
-        structures1 = [
-            ((14, 15, 16), (4, 6, 5), (3, 3, 2, 4)),
-        ]
-        structures2 = [
-            ((17, 18, 17), (8, 8, 8), (5, 5, 6, 7)),
-        ]
 
-        for STRUCTURE1, STRUCTURE2 in zip(structures1, structures2):
-            for USE_JAX in [True, False]:
-                with self.subTest(USE_JAX=USE_JAX, STRUCTURE1=STRUCTURE1, STRUCTURE2=STRUCTURE2):
-                    x = t3.t3_corewise_randn(STRUCTURE1)
-                    padded_x = t3.change_structure(x, STRUCTURE2, use_jax=USE_JAX)
-                    self.assertEqual(STRUCTURE2, t3.get_structure(padded_x))
-
-    def test_t3_add_sub(self):
-        structures_x = [
-            ((14, 15, 16), (4, 6, 5), (3, 3, 2, 4)),
-        ]
-        structures_y = [
-            ((14, 15, 16), (3, 7, 2), (1, 5, 6, 5)),
-        ]
-
-        for SQUASH in [True, False]:
-            for STRUCTURE_X, STRUCTURE_Y in zip(structures_x, structures_y):
-                for USE_JAX in [True, False]:
-                    for OP in [t3.t3_add, t3.t3_sub]:
-                        with self.subTest(SQUASH=SQUASH, USE_JAX=USE_JAX, STRUCTURE_X=STRUCTURE_X, STRUCTURE_Y=STRUCTURE_Y, OP=OP):
-                            x = t3.t3_corewise_randn(STRUCTURE_X)
-                            y = t3.t3_corewise_randn(STRUCTURE_Y)
-
-                            z = OP(x, y, squash=SQUASH)
-
-                            Z_SHAPE         = STRUCTURE_X[0]
-                            Z_TUCKER_RANKS  = tuple([SX + SY for SX, SY in zip(STRUCTURE_X[1], STRUCTURE_Y[1])])
-                            Z_TT_RANKS      = tuple([SX + SY for SX, SY in zip(STRUCTURE_X[2], STRUCTURE_Y[2])])
-
-                            if SQUASH:
-                                Z_TT_RANKS = (1,) + Z_TT_RANKS[1:-1] + (1,)
-
-                            STRUCTURE_Z = (Z_SHAPE, Z_TUCKER_RANKS, Z_TT_RANKS)
-
-                            self.assertEqual(t3.get_structure(z), STRUCTURE_Z)
-                            dense_z = t3.t3_to_dense(z)
-                            if OP is t3.t3_add:
-                                dense_z2 = t3.t3_to_dense(x) + t3.t3_to_dense(y)
-                            else:
-                                dense_z2 = t3.t3_to_dense(x) - t3.t3_to_dense(y)
-                            self.check_relerr(dense_z2, dense_z)
-
-    def test_t3_scale_neg(self):
-        structures = [
-            ((14, 15, 16), (4, 5, 6), (2, 3, 2, 1)),
-        ]
-        SCALE_FACTOR = 5.3
-
-        for STRUCTURE in structures:
-            for OP in [t3.t3_scale, t3.t3_neg]:
-                with self.subTest(STRUCTURE=STRUCTURE, OP=OP):
-                    x = t3.t3_corewise_randn(STRUCTURE)
-                    dense_x = t3.t3_to_dense(x)
-                    if OP is t3.t3_scale:
-                        y = t3.t3_scale(x, SCALE_FACTOR) # <--
-                        Y_true = SCALE_FACTOR * dense_x
-                    else:
-                        y = t3.t3_neg(x) # <--
-                        Y_true = -dense_x
-
-                    Y = t3.t3_to_dense(y)
-                    self.check_relerr(Y_true, Y)
-
-    def test_t3_dot_t3(self):
-        structures_x = [
-            ((14, 15, 16), (4, 6, 5), (3, 3, 2, 4)),
-        ]
-        structures_y = [
-            ((14, 15, 16), (3, 7, 2), (1, 5, 6, 5)),
-        ]
-
-        for STRUCTURE_X, STRUCTURE_Y in zip(structures_x, structures_y):
-            for USE_JAX in [True, False]:
-                with self.subTest(USE_JAX=USE_JAX, STRUCTURE_X=STRUCTURE_X, STRUCTURE_Y=STRUCTURE_Y):
-                    x = t3.t3_corewise_randn(STRUCTURE_X)
-                    y = t3.t3_corewise_randn(STRUCTURE_Y)
-                    x_dot_y = t3.t3_inner_product_t3(x, y, use_jax=USE_JAX)
-                    x_dot_y2 = np.sum(t3.t3_to_dense(x) * t3.t3_to_dense(y))
-                    self.check_relerr(x_dot_y2, x_dot_y)
-
-    def test_t3_norm(self):
-        structures = [
-            ((14, 15, 16), (4, 5, 6), (2, 3, 2, 1)),
-        ]
-
-        for STRUCTURE in structures:
-            for USE_JAX in [True, False]:
-                with self.subTest(USE_JAX=USE_JAX, STRUCTURE=STRUCTURE):
-                    x = t3.t3_corewise_randn(STRUCTURE)
-                    norm_x = t3.t3_norm(x, use_jax=USE_JAX)
-                    norm_x2 = np.linalg.norm(t3.t3_to_dense(x))
-                    self.check_relerr(norm_x2, norm_x)
 
 
 if __name__ == '__main__':

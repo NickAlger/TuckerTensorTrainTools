@@ -77,6 +77,7 @@ __all__ = [
     'xappend',
     'xprepend',
     'tree_contains_jax',
+    'items_are_uniform',
     #
     'randn',
 ]
@@ -337,3 +338,25 @@ def tree_contains_jax(T):
     if isinstance(T, typ.Sequence):
         return any([tree_contains_jax(t) for t in T])
     return is_jax_ndarray(T)
+
+
+def items_are_uniform(
+        xx,
+) -> bool:
+    """Checks if an object can be treated as uniform for the purposes of jax.scan and jax.map.
+
+    True if x is an array, or a sequence of arrays which all have the same shape. False otherwise.
+    """
+    if is_ndarray(xx):
+        return True
+
+    elif isinstance(xx, typ.Sequence):
+        if all([is_ndarray(xi) for xi in xx]):
+            if len(xx) == 0:
+                return True
+
+            shape = xx[0].shape
+            if all([xi.shape == shape for xi in xx]):
+                return True
+
+    return False
