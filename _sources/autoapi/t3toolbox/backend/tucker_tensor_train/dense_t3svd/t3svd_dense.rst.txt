@@ -1,8 +1,18 @@
 t3toolbox.backend.tucker_tensor_train.dense_t3svd.t3svd_dense
 =============================================================
 
-.. py:function:: t3toolbox.backend.tucker_tensor_train.dense_t3svd.t3svd_dense(T: t3toolbox.backend.common.NDArray, min_tucker_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, max_tucker_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, min_tt_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, max_tt_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, rtol: float = None, atol: float = None) -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. py:function:: t3toolbox.backend.tucker_tensor_train.dense_t3svd.t3svd_dense(T: t3toolbox.backend.common.NDArray, stack_shape: t3toolbox.backend.common.typ.Sequence[int] = (), max_tucker_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, max_tt_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, rtol: float = None, atol: float = None) -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
 
    Compute TuckerTensorTrain and edge singular values for dense tensor.
 
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.backend.tucker_tensor_train.dense_t3svd as dt3svd
+   >>> T = np.random.randn(2,3, 10,11,12)
+   >>> (BB, GG), ss_tucker, ss_tt = dt3svd.t3svd_dense(T, stack_shape=(2,3))
+   >>> GG_big = [np.einsum('...io,...aib->...aob', B, G) for B, G in zip(BB, GG)]
+   >>> T2 = np.einsum('...aib,...bjc,...ckd->...ijk', *GG_big)
+   >>> print(np.linalg.norm(T2 - T))
+   3.4057168472825226e-13
 
