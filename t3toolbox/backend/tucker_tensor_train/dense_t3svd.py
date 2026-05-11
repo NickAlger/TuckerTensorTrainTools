@@ -4,6 +4,7 @@
 # Documentation: https://nickalger.github.io/TuckerTensorTrainTools/index.html
 import numpy as np
 import typing as typ
+import math
 
 import t3toolbox.backend.linalg as linalg
 from t3toolbox.backend.common import *
@@ -187,10 +188,9 @@ def ttsvd_dense(
 
 
 def t3svd_dense(
-        T: NDArray, # shape=(N1, N2, .., Nd)
-        min_tucker_ranks:  typ.Sequence[int] = None, # len=d
+        T: NDArray, # shape=stack_shape+(N0, .., N(d-1))
+        stack_shape: typ.Sequence[int] = (),
         max_tucker_ranks:  typ.Sequence[int] = None,  # len=d
-        min_tt_ranks:  typ.Sequence[int] = None, # len=d+1
         max_tt_ranks:  typ.Sequence[int] = None,  # len=d+1
         rtol: float = None,
         atol: float = None,
@@ -203,13 +203,77 @@ def t3svd_dense(
     typ.Tuple[NDArray,...], # TT singular values, len=d+1
 ]:
     '''Compute TuckerTensorTrain and edge singular values for dense tensor.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> import t3toolbox.backend.tucker_tensor_train.dense_t3svd as dt3svd
+    >>> T = np.random.randn(2,3, 10,11,12)
+    >>> (BB, GG), ss_tucker, ss_tt = dt3svd.t3svd_dense(T, stack_shape=(2,3))
+    >>> GG_big = [np.einsum('...io,...aib->...aob', B, G) for B, G in zip(BB, GG)]
+    >>> T2 = np.einsum('...aib,...bjc,...ckd->...ijk', *GG_big)
+    >>> print(np.linalg.norm(T2 - T))
+    3.4057168472825226e-13
     '''
-    (tucker_cores, tucker_core), ss_tucker = tucker_svd_dense(
-        T, min_tucker_ranks, max_tucker_ranks, rtol, atol,
-    )
-    tt_cores, ss_tt = ttsvd_dense(
-        tucker_core, min_tt_ranks, max_tt_ranks, rtol, atol,
-    )
-    return (tucker_cores, tt_cores), ss_tucker, ss_tt
+    shape = T.shape[len(stack_shape):]
+
+    max_tucker_ranks    = max_tucker_ranks  if max_tucker_ranks is not None else [None]*len(shape)
+    max_tt_ranks        = max_tt_ranks      if max_tt_ranks     is not None else [None]*(len(shape)+1)
+
+    ss_tt0 = np.linalg.norm(T.reshape((math.prod(stack_shape), -1)), axis=-1)
+
+    max_tt_ranks = list(max_tt_ranks)[1:]
+    max_tucker_ranks = list(max_tucker_ranks)
+
+    T = T.reshape(stack_shape + (1,) + shape)
+
+    tucker_cores = []
+    tt_cores = []
+    ss_tucker = []
+    ss_tt = [ss_tt0]
+    while len(T.shape) > len(stack_shape)+1:
+        rL = T.shape[len(stack_shape)]
+        N = T.shape[len(stack_shape)+1]
+        mm = T.shape[len(stack_shape)+2:]
+        M = math.prod(mm)
+        A = T.reshape(stack_shape + (rL, N, M)).swapaxes(-3, -2)
+        A = A.reshape(stack_shape+(N, rL*M))
+
+        U, ss, Vt = linalg.truncated_svd(A, max_rank=max_tucker_ranks[0], rtol=rtol, atol=atol)
+        max_tucker_ranks = max_tucker_ranks[1:]
+        n = ss.shape[-1]
+
+        tucker_cores.append(U.swapaxes(-2,-1).copy())
+        ss_tucker.append(ss)
+
+        T = np.einsum(
+            '...n,...nx->...nx', ss, Vt
+        ).reshape(stack_shape + (n, rL, M)).swapaxes(-3, -2) # shape=stack_shape+(rL, n, M)
+
+        A = T.reshape(stack_shape + (rL*n, M))
+        U, ss, Vt = linalg.truncated_svd(A, max_rank=max_tt_ranks[0], rtol=rtol, atol=atol)
+        max_tt_ranks = max_tt_ranks[1:]
+        rR = ss.shape[-1]
+
+        G = U.reshape(stack_shape + (rL, n, rR))
+        tt_cores.append(G)
+        ss_tt.append(ss)
+
+        T = np.einsum('...r,...rx->...rx', ss, Vt).reshape(stack_shape + (rR,) + mm)
+
+    Gf = tt_cores[-1]
+
+    Gf = np.einsum('...aib,...b->...aib', Gf, T)
+    tt_cores[-1] = Gf
+
+
+
+    # (tucker_cores, tucker_core), ss_tucker = tucker_svd_dense(
+    #     T, max_ranks=max_tucker_ranks, rtol=rtol, atol=atol,
+    # )
+    # tt_cores, ss_tt = ttsvd_dense(
+    #     tucker_core, max_ranks=max_tt_ranks, rtol=rtol, atol=atol,
+    # )
+    return (tuple(tucker_cores), tuple(tt_cores)), tuple(ss_tucker), tuple(ss_tt)
 
 

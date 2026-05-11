@@ -2832,9 +2832,7 @@ def get_minimal_ranks(
 
 def t3svd_dense(
         T: common.NDArray, # shape=(N1, N2, .., Nd)
-        min_tucker_ranks:  typ.Sequence[int] = None, # len=d
         max_tucker_ranks:  typ.Sequence[int] = None,  # len=d
-        min_tt_ranks:  typ.Sequence[int] = None, # len=d+1
         max_tt_ranks:  typ.Sequence[int] = None,  # len=d+1
         rtol: float = None,
         atol: float = None,
@@ -2898,8 +2896,7 @@ def t3svd_dense(
     '''
     result = dense_t3svd.t3svd_dense(
         T,
-        min_tucker_ranks=min_tucker_ranks, max_tucker_ranks=max_tucker_ranks,
-        min_tt_ranks=min_tt_ranks, max_tt_ranks=max_tt_ranks,
+        max_tucker_ranks=max_tucker_ranks, max_tt_ranks=max_tt_ranks,
         rtol=rtol, atol=atol,
     )
     return TuckerTensorTrain(*result[0]), result[1], result[2]
