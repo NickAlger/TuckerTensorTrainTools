@@ -20,13 +20,10 @@ def t3svd(
             typ.Tuple[NDArray,...], # tucker_cores
             typ.Tuple[NDArray,...], # tt_cores
         ],
-        min_tt_ranks:       typ.Sequence[int] = None, # len=d+1
-        min_tucker_ranks:   typ.Sequence[int] = None,  # len=d
         max_tt_ranks:       typ.Sequence[int] = None, # len=d+1
         max_tucker_ranks:   typ.Sequence[int] = None, # len=d
         rtol: float = None,
         atol: float = None,
-        squash_tails_first: bool = True,
 ) -> typ.Tuple[
     typ.Tuple[
         typ.Tuple[NDArray, ...],  # new_tucker_cores
@@ -43,8 +40,7 @@ def t3svd(
     # print('0. [G.shape for G in x[1]]=', [G.shape for G in x[1]])
 
     # make leading and trailing TT-ranks equal to 1
-    if squash_tails_first:
-        x = (x[0], ragged_ops.squash_tt_tails(x[1]))
+    x = (x[0], ragged_ops.squash_tt_tails(x[1]))
 
     # print('1. [B.shape for B in x[0]]=', [B.shape for B in x[0]])
     # print('1. [G.shape for G in x[1]]=', [G.shape for G in x[1]])
@@ -68,12 +64,11 @@ def t3svd(
     all_ss_tucker = []
     all_ss_tt = [ss_first]
     for ii in range(num_cores):
-        min_rank = min_tucker_ranks[ii] if min_tucker_ranks is not None else None
         max_rank = max_tucker_ranks[ii] if max_tucker_ranks is not None else None
         # SVD inbetween TT core and Tucker core
         x, ss_tucker = ragged_orth.down_svd_tt_core(
             x, ii,
-            min_rank=min_rank, max_rank=max_rank, rtol=rtol, atol=atol,
+            max_rank=max_rank, rtol=rtol, atol=atol,
         )
         all_ss_tucker.append(ss_tucker)
 
@@ -81,12 +76,11 @@ def t3svd(
         # print('4. [G.shape for G in x[1]]=', [G.shape for G in x[1]])
 
         if ii < num_cores-1:
-            min_rank = min_tt_ranks[ii+1] if min_tt_ranks is not None else None
             max_rank = max_tt_ranks[ii+1] if max_tt_ranks is not None else None
             # SVD inbetween ith tt core and (i+1)th tt core
             x, ss_tt = ragged_orth.left_svd_tt_core(
                 x, ii,
-                min_rank=min_rank, max_rank=max_rank, rtol=rtol, atol=atol,
+                max_rank=max_rank, rtol=rtol, atol=atol,
             )
 
             # print('5. [B.shape for B in x[0]]=', [B.shape for B in x[0]])

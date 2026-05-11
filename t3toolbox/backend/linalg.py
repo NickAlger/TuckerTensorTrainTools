@@ -157,8 +157,8 @@ def truncated_svd(
     >>> truncated_rank = ss.shape[-1]
     >>> print(truncated_rank)
     10
-    >>> print(np.linalg.norm(A - A2, 2) / np.linalg.norm(A, 2)) # should be just less than rtol=1e-2
-    10
+    >>> print(np.linalg.norm(A - A2, 2) / np.linalg.norm(A, 2))
+    4.965337463933554e-09
     '''
     use_jax = is_jax_ndarray(A)
     xnp, _, _ = get_backend(False, use_jax)
@@ -178,12 +178,14 @@ def truncated_svd(
             )
         rtol1 = 0.0 if rtol is None else rtol
         atol1 = 0.0 if atol is None else atol
-        tol = xnp.maximum(ss0[0] * rtol1, atol1)
-        K = int(xnp.sum(ss0 >= tol))
+        total_fronorm = xnp.sqrt(xnp.sum(ss0**2))
+        tail_fronorms = xnp.sqrt(xnp.cumsum(ss0[::-1]**2))[::-1]
+        tol = xnp.maximum(total_fronorm * rtol1, atol1)
+        K = int(xnp.sum(tail_fronorms >= tol))
 
     max_rank = K if max_rank is None else min(K, max_rank)
     min_rank = 1 if min_rank is None else max(1, min_rank)
-    r = max(min(K, max_rank), min_rank)
+    r = max(max_rank, min_rank)
 
     U   = U0[..., :, :r]
     ss  = ss0[..., :r]

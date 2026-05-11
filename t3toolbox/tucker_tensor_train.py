@@ -1999,10 +1999,10 @@ class TuckerTensorTrain:
 
         Parameters
         ----------
+        self: TuckerTensorTrain
+            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
         ii: int
             index of TT-core to SVD
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
         min_rank: int
             Minimum rank for truncation.
         min_rank: int
@@ -2011,8 +2011,6 @@ class TuckerTensorTrain:
             Relative tolerance for truncation.
         atol: float
             Absolute tolerance for truncation.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
 
         Returns
         -------
@@ -2597,13 +2595,10 @@ class TuckerTensorTrain:
 
     def t3svd(
             self,
-            min_tt_ranks:       typ.Sequence[int] = None, # len=d+1
-            min_tucker_ranks:   typ.Sequence[int] = None,  # len=d
             max_tt_ranks:       typ.Sequence[int] = None, # len=d+1
             max_tucker_ranks:   typ.Sequence[int] = None, # len=d
             rtol: float = None,
             atol: float = None,
-            squash_tails_first: bool = True,
     ) -> typ.Tuple[
         'TuckerTensorTrain', # new_x
         typ.Tuple[common.NDArray,...], # Tucker singular values, len=d
@@ -2744,25 +2739,6 @@ class TuckerTensorTrain:
         ((14, 15, 16), (10, 11, 12), (1, 8, 9, 1), ())
         >>> print(x2.uniform_structure)
         ((14, 15, 16), (3, 3, 2), (1, 2, 2, 1), ())
-
-        Example where first and last ranks are not ones:
-
-        >>> import numpy as np
-        >>> import t3toolbox.tucker_tensor_train as t3
-        >>> x = t3.t3_corewise_randn((5,6,3), (4,4,3), (2,3,2,2))
-        >>> x2, ss_tucker, ss_tt = t3.t3svd(x, squash_tails_first=False) # Compute T3-SVD
-        >>> x_dense = x.to_dense(squash_tails=False)
-        >>> x2_dense = x2.to_dense(squash_tails=False)
-        >>> print(np.linalg.norm(x_dense - x2_dense)) # Tensor unchanged
-        5.486408687260824e-13
-        >>> ss_tt0 = np.linalg.svd(x_dense.reshape((2,5*6*3*2)))[1] # Singular values of leading unfolding
-        >>> print(ss_tt0); print(ss_tt[0])
-        [303.0474449   88.85034392]
-        [303.0474449   88.85034392]
-        >>> ss_tt3 = np.linalg.svd(x_dense.reshape((2*5*6*3,2)))[1] # Singular values of trailing unfolding
-        >>> print(ss_tt3); print(ss_tt[3])
-        [299.45433768 100.29574828]
-        [299.45433768 100.29574828]
         '''
         if len(self.stack_shape) > 0 and ((rtol is not None) or (atol is not None)):
             raise RuntimeError(
@@ -2773,10 +2749,8 @@ class TuckerTensorTrain:
 
         result = ragged_t3svd.t3svd(
             self.data,
-            min_tt_ranks=min_tt_ranks, min_tucker_ranks=min_tucker_ranks,
             max_tt_ranks=max_tt_ranks, max_tucker_ranks=max_tucker_ranks,
             rtol=rtol, atol=atol,
-            squash_tails_first=squash_tails_first,
         )
         return TuckerTensorTrain(*result[0]), result[1], result[2]
 
