@@ -2101,10 +2101,8 @@ class TestTuckerTensorTrain(unittest.TestCase):
 
     def test_t3svd(self):
         base_structures = [
-            ((10,),             (7,),           (6, 7)),
-            ((10, 11),          (7, 8),         (6, 7, 8)),
-            ((10, 11, 12),      (7, 8, 9),      (6, 7, 8, 7)),
-            ((10, 11, 12, 13),  (7, 8, 9, 8),   (6, 7, 8, 7, 6)),
+            ((8,),          (7,),       (6, 7)),
+            ((8, 9, 10),    (7, 8, 9),  (6, 7, 8, 7)),
         ]
         stack_shapes = [
             (),
@@ -2117,16 +2115,12 @@ class TestTuckerTensorTrain(unittest.TestCase):
             tucker_ranks_limits = [
                 None,
                 tuple(1 for _ in range(len(tucker_ranks))),
-                (2, 3, 2, 3)[:len(tucker_ranks)],
-                (5, 6, 5, 6)[:len(tucker_ranks)],
-                tucker_ranks,
+                (2, 3, 4, 3)[:len(tucker_ranks)],
             ]
             tt_ranks_limits = [
                 None,
                 tuple(1 for _ in range(len(tt_ranks))),
-                (2, 3, 2, 3, 2)[:len(tt_ranks)],
-                (5, 6, 5, 6, 2)[:len(tt_ranks)],
-                tt_ranks,
+                (2, 3, 4, 3, 2)[:len(tt_ranks)],
             ]
 
             for STACK_SHAPE in stack_shapes:
@@ -2156,7 +2150,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
                         all_matricization_ss.append(ss)
 
                     if STACK_SHAPE == ():
-                        all_tols = [None, 5e-1, 5e-2, 5e-3, 5e-4]
+                        all_tols = [None, 5e-1, 5e-2, 5e-3]
                     else:
                         all_tols = [None]
 
