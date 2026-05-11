@@ -2150,7 +2150,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
                         all_matricization_ss.append(ss)
 
                     if STACK_SHAPE == ():
-                        all_tols = [None, 5e-1, 5e-2, 5e-3]
+                        all_tols = [None, 5e-1, 5e-2, 5e-3, 5e-4]
                     else:
                         all_tols = [None]
 
