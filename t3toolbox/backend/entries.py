@@ -40,7 +40,7 @@ def tucker_tensor_train_entries(
         xi_XpI = B_Xpo[..., ind]
 
         mu_XIb = contractions.GFa_Gaib_GiF_to_GFb(
-            mu_XIa, G_Xapb, xi_XpI, use_jax=use_jax,
+            mu_XIa, G_Xapb, xi_XpI,
         )
 
         return mu_XIb, (0,)
