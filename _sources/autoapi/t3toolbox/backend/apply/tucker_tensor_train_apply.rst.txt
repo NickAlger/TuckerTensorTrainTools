@@ -1,7 +1,7 @@
 t3toolbox.backend.apply.tucker_tensor_train_apply
 =================================================
 
-.. py:function:: t3toolbox.backend.apply.tucker_tensor_train_apply(x: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray]], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray]], vecs: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray]) -> t3toolbox.backend.common.NDArray
+.. py:function:: t3toolbox.backend.apply.tucker_tensor_train_apply(x: Union[Tuple[Sequence[NDArray], Sequence[NDArray]], Tuple[NDArray, NDArray]], vecs: Union[Sequence[NDArray], NDArray]) -> NDArray
 
    Contract a Tucker tensor train with vectors in all indices.
 

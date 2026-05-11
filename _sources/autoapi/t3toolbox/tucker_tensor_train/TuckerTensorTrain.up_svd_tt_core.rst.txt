@@ -7,10 +7,10 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core
 
    Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
 
+   :param self: The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
+   :type self: TuckerTensorTrain
    :param ii: index of TT-core to SVD
    :type ii: int
-   :param x: The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-   :type x: TuckerTensorTrain
    :param min_rank: Minimum rank for truncation.
    :type min_rank: int
    :param min_rank: Maximum rank for truncation.
@@ -19,7 +19,6 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core
    :type rtol: float
    :param atol: Absolute tolerance for truncation.
    :type atol: float
-   :param xnp: Linear algebra backend. Default: np (numpy)
 
    :returns: * **new_x** (*NDArray*) -- New TuckerTensorTrain representing the same tensor, but with ith TT-core down orthogonal.
                new_tt_cores[ii].shape = (ri, new_ni, r(i+1))

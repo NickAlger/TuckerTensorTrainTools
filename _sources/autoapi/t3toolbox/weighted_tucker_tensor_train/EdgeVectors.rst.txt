@@ -30,11 +30,11 @@ t3toolbox.weighted_tucker_tensor_train.EdgeVectors
 
 
    .. py:attribute:: tucker_edge_vectors
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 
    .. py:attribute:: tt_vectors
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 Methods
 -------

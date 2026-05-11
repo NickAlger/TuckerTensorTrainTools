@@ -47,23 +47,23 @@ t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain
 
 
    .. py:attribute:: tucker_supercore
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: tt_supercore
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: shape_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: tucker_edge_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: tt_edge_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 Methods
 -------

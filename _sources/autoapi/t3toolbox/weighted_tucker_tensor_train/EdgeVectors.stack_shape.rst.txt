@@ -1,4 +1,4 @@
 t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack_shape
 ==============================================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack_shape() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack_shape() -> Tuple[int, Ellipsis]

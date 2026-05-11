@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.assemble_tangent_zs
 =============================================
 
-.. py:function:: t3toolbox.backend.probing.assemble_tangent_zs(tucker_cores: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray], var_tucker_cores: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray], etas: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray], detas: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray], shape_weights: t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray] = None, use_jax: bool = False) -> t3toolbox.backend.common.typ.Union[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.NDArray]
+.. py:function:: t3toolbox.backend.probing.assemble_tangent_zs(tucker_cores: Union[Sequence[NDArray], NDArray], var_tucker_cores: Union[Sequence[NDArray], NDArray], etas: Union[Sequence[NDArray], NDArray], detas: Union[Sequence[NDArray], NDArray], shape_weights: Union[Sequence[NDArray], NDArray] = None, use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
 
    Assemble tangent vector probes from edge variables.
 

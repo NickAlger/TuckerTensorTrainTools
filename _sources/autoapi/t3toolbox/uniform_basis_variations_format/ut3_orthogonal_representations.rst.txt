@@ -1,7 +1,7 @@
 t3toolbox.uniform_basis_variations_format.ut3_orthogonal_representations
 ========================================================================
 
-.. py:function:: t3toolbox.uniform_basis_variations_format.ut3_orthogonal_representations(x: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain, already_left_orthogonal: bool = False, squash: bool = True, use_jax: bool = False) -> t3toolbox.backend.common.typ.Tuple[UT3Basis, UT3Variations]
+.. py:function:: t3toolbox.uniform_basis_variations_format.ut3_orthogonal_representations(x: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain, already_left_orthogonal: bool = False, squash: bool = True, use_jax: bool = False) -> Tuple[UT3Basis, UT3Variations]
 
    Construct base-variation representations of UniformTuckerTensorTrain with orthogonal base.
 

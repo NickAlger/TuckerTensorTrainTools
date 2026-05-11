@@ -1,7 +1,7 @@
 t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.tucker_ranks
 ===========================================================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.tucker_ranks() -> t3toolbox.backend.common.NDArray
+.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.tucker_ranks() -> NDArray
 
    Get the original tucker ranks, not including components of the edges that are unmasked.
 

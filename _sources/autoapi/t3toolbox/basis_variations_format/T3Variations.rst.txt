@@ -46,11 +46,11 @@ t3toolbox.basis_variations_format.T3Variations
 
 
    .. py:attribute:: tucker_variations
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 
    .. py:attribute:: tt_variations
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 Methods
 -------

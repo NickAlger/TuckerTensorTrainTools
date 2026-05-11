@@ -1,7 +1,7 @@
 t3toolbox.weighted_tucker_tensor_train.wt3_entries
 ==================================================
 
-.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_entries(x: WeightedTuckerTensorTrain, index: t3toolbox.backend.common.NDArray, use_jax: bool = False) -> t3toolbox.backend.common.NDArray
+.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_entries(x: WeightedTuckerTensorTrain, index: NDArray, use_jax: bool = False) -> NDArray
 
    Compute an entry (or multiple entries) of a weighted Tucker tensor train.
 

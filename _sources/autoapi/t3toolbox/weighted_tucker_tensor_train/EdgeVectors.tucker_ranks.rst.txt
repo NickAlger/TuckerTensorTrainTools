@@ -1,4 +1,4 @@
 t3toolbox.weighted_tucker_tensor_train.EdgeVectors.tucker_ranks
 ===============================================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.tucker_ranks() -> t3toolbox.backend.common.typ.Tuple[int, Ellipsis]
+.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.tucker_ranks() -> Tuple[int, Ellipsis]

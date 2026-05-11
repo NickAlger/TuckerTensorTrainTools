@@ -51,39 +51,39 @@ t3toolbox.uniform_basis_variations_format.UT3Basis
 
 
    .. py:attribute:: up_tucker_supercore
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: down_tt_supercore
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: left_tt_supercore
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: right_tt_supercore
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: shape_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: up_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: down_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: basis_left_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 
    .. py:attribute:: basis_right_mask
-      :type:  t3toolbox.backend.common.NDArray
+      :type:  NDArray
 
 Methods
 -------

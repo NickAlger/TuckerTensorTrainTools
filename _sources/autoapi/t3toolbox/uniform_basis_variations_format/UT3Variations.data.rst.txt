@@ -1,4 +1,4 @@
 t3toolbox.uniform_basis_variations_format.UT3Variations.data
 ============================================================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Variations.data() -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray]
+.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Variations.data() -> Tuple[NDArray, NDArray, NDArray, NDArray, NDArray, NDArray, NDArray]

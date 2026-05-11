@@ -112,19 +112,19 @@ t3toolbox.basis_variations_format.T3Basis
 
 
    .. py:attribute:: up_tucker_cores
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 
    .. py:attribute:: down_tt_cores
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 
    .. py:attribute:: left_tt_cores
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 
    .. py:attribute:: right_tt_cores
-      :type:  t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]
+      :type:  Tuple[NDArray, Ellipsis]
 
 Methods
 -------

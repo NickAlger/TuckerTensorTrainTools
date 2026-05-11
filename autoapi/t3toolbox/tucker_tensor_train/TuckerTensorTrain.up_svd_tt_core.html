@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core &#8212; T3Toolbox 0.1 Documentation</title>
+    <title>t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core &#8212; T3Toolbox 0.1 documentation</title>
   
   
   
@@ -44,7 +44,6 @@
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.up_svd_tt_core';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
-    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.orthogonalize_relative_to_tucker_core" href="TuckerTensorTrain.orthogonalize_relative_to_tucker_core.html" />
@@ -119,7 +118,7 @@
   
   
   
-    <p class="title logo__title">T3Toolbox 0.1 Documentation</p>
+    <p class="title logo__title">T3Toolbox 0.1 documentation</p>
   
 </a></div>
     
@@ -796,13 +795,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – The Tucker tensor train. structure=((N1,…,Nd), (n1,…,nd), (1,r1,…r(d-1),1))</p></li>
 <li><p><strong>ii</strong> (<em>int</em>) – index of TT-core to SVD</p></li>
-<li><p><strong>x</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – The Tucker tensor train. structure=((N1,…,Nd), (n1,…,nd), (1,r1,…r(d-1),1))</p></li>
 <li><p><strong>min_rank</strong> (<em>int</em>) – Minimum rank for truncation.</p></li>
 <li><p><strong>min_rank</strong> – Maximum rank for truncation.</p></li>
 <li><p><strong>rtol</strong> (<em>float</em>) – Relative tolerance for truncation.</p></li>
 <li><p><strong>atol</strong> (<em>float</em>) – Absolute tolerance for truncation.</p></li>
-<li><p><strong>xnp</strong> – Linear algebra backend. Default: np (numpy)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

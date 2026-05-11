@@ -1,7 +1,7 @@
 t3toolbox.basis_variations_format.bv_to_t3
 ==========================================
 
-.. py:function:: t3toolbox.basis_variations_format.bv_to_t3(index: t3toolbox.backend.common.typ.Tuple[bool, int], basis: T3Basis, variations: T3Variations) -> t3toolbox.tucker_tensor_train.TuckerTensorTrain
+.. py:function:: t3toolbox.basis_variations_format.bv_to_t3(index: Tuple[bool, int], basis: T3Basis, variations: T3Variations) -> t3toolbox.tucker_tensor_train.TuckerTensorTrain
 
    Convert basis-variations representation to TuckerTensorTrain.
 

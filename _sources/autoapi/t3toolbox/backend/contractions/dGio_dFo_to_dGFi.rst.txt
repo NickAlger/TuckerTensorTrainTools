@@ -1,7 +1,7 @@
 t3toolbox.backend.contractions.dGio_dFo_to_dGFi
 ===============================================
 
-.. py:function:: t3toolbox.backend.contractions.dGio_dFo_to_dGFi(dGio: t3toolbox.backend.common.NDArray, dFo: t3toolbox.backend.common.NDArray, use_jax: bool = False) -> t3toolbox.backend.common.NDArray
+.. py:function:: t3toolbox.backend.contractions.dGio_dFo_to_dGFi(dGio: NDArray, dFo: NDArray, use_jax: bool = False) -> NDArray
 
    Computes named contraction. Capital letters indicate grouped indices, which may be empty.
 
