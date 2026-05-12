@@ -33,7 +33,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
    :raises ValueError: If ``stack_shape`` is not empty and ``rtol`` or ``atol`` are supplied.
        (Cannot use tolerances with stacking)
 
-   .. seealso:: :py:obj:`..`, :py:obj:`..`, :py:obj:`..`
+   .. seealso:: :py:class::`t3toolbox.tucker_tensor_train.TuckerTensorTrain`, :py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd`, :py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks`
 
    .. rubric:: Notes
 
@@ -44,7 +44,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
    .. [1] Alger, N., Christierson, B., Chen, P., & Ghattas, O. (2026).
       Tucker Tensor Train Taylor Series.
       arXiv preprint arXiv:2603.21141.
-      __ https://arxiv.org/abs/2603.21141
+      .. __: https://arxiv.org/abs/2603.21141
 
    .. rubric:: Examples
 
