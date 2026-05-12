@@ -22,6 +22,9 @@ import t3toolbox.backend.tucker_tensor_train.t3_linalg as ragged_linalg
 import t3toolbox.backend.tucker_tensor_train.t3_svd as ragged_t3svd
 
 import t3toolbox.backend.common as common
+from t3toolbox.backend.common import NDArray
+from collections.abc import Sequence
+from typing import Tuple
 
 jax = None
 if common.has_jax:
@@ -226,11 +229,11 @@ class TuckerTensorTrain:
     >>> print(np.linalg.norm(result - result2) / np.linalg.norm(result2))
     1.1486488440369942e-15
     """
-    tucker_cores:   typ.Tuple[common.NDArray,...] # len=d, elm_shape=stack_shape+(ni, Ni)
-    tt_cores:       typ.Tuple[common.NDArray,...] # len=d, elm_shape=stack_shape+(ri, ni, r(i+1))
+    tucker_cores:   Tuple[NDArray,...] # len=d, elm_shape=stack_shape+(ni, Ni)
+    tt_cores:       Tuple[NDArray,...] # len=d, elm_shape=stack_shape+(ri, ni, r(i+1))
 
     @ft.cached_property
-    def data(self) -> typ.Tuple[typ.Tuple[common.NDArray,...], typ.Tuple[common.NDArray,...]]:
+    def data(self) -> Tuple[Tuple[NDArray,...], Tuple[NDArray,...]]:
         """Tuple containing the Tucker cores and TT cores. data=(tucker_cores, tt_cores)
         """
         return tuple(self.tucker_cores), tuple(self.tt_cores)
@@ -257,7 +260,7 @@ class TuckerTensorTrain:
         return len(self.tucker_cores)
 
     @ft.cached_property
-    def stack_shape(self) -> typ.Tuple[int, ...]:
+    def stack_shape(self) -> Tuple[int, ...]:
         """If this object contains multiple stacked T3s with the same structure, this is the shape of the stack.
         If no stacking is used then stack_shape=().
 
@@ -287,7 +290,7 @@ class TuckerTensorTrain:
         return self.tucker_cores[0].shape[:-2]
 
     @ft.cached_property
-    def shape(self) -> typ.Tuple[int, ...]: # len=d
+    def shape(self) -> Tuple[int, ...]: # len=d
         """Shape of the represented dense tensor. shape=(N0,...,N(d-1))
 
         Examples
@@ -303,7 +306,7 @@ class TuckerTensorTrain:
         return tuple([B.shape[-1] for B in self.tucker_cores])
 
     @ft.cached_property
-    def tucker_ranks(self) -> typ.Tuple[int, ...]: # len=d
+    def tucker_ranks(self) -> Tuple[int, ...]: # len=d
         """Tucker ranks. tucker_ranks=(n0,...,n(d-1))
 
         Examples
@@ -319,7 +322,7 @@ class TuckerTensorTrain:
         return tuple([B.shape[-2] for B in self.tucker_cores])
 
     @ft.cached_property
-    def tt_ranks(self) -> typ.Tuple[int, ...]: # len=d+1
+    def tt_ranks(self) -> Tuple[int, ...]: # len=d+1
         """TT ranks. tt_ranks=(r0,...,rd)
 
         >>> import numpy as np
@@ -333,7 +336,7 @@ class TuckerTensorTrain:
         return rr
 
     @ft.cached_property
-    def ranks(self) -> typ.Tuple[typ.Tuple[int, ...], typ.Tuple[int, ...]]:
+    def ranks(self) -> Tuple[Tuple[int, ...], Tuple[int, ...]]:
         """Tuple containing Tucker ranks and TT ranks.
 
         ranks = (tucker_ranks, tt_ranks)
@@ -353,11 +356,11 @@ class TuckerTensorTrain:
         return self.tucker_ranks, self.tt_ranks
 
     @ft.cached_property
-    def structure(self) -> typ.Tuple[
-        typ.Tuple[int,...], # shape
-        typ.Tuple[int,...], # tucker_ranks
-        typ.Tuple[int,...], # tt_ranks
-        typ.Tuple[int,...], # stack_shape
+    def structure(self) -> Tuple[
+        Tuple[int,...], # shape
+        Tuple[int,...], # tucker_ranks
+        Tuple[int,...], # tt_ranks
+        Tuple[int,...], # stack_shape
     ]:
         """Tuple containing tensor shape, Tucker ranks, TT ranks, and stack shape.
 
@@ -380,13 +383,13 @@ class TuckerTensorTrain:
 
     @staticmethod
     def get_core_shapes(
-            shape: typ.Sequence[int],
-            tucker_ranks: typ.Sequence[int],
-            tt_ranks: typ.Sequence[int],
-            stack_shape: typ.Sequence[int] = (),
-    ) -> typ.Tuple[
-        typ.Tuple[int, ...],  # tucker_core_shapes
-        typ.Tuple[int, ...],  # tt_core_shapes
+            shape: Sequence[int],
+            tucker_ranks: Sequence[int],
+            tt_ranks: Sequence[int],
+            stack_shape: Sequence[int] = (),
+    ) -> Tuple[
+        Tuple[int, ...],  # tucker_core_shapes
+        Tuple[int, ...],  # tt_core_shapes
     ]:
         """Compute the tucker and TT core shapes for a Tucker tensor train.
 
@@ -406,9 +409,9 @@ class TuckerTensorTrain:
         )
 
     @ft.cached_property
-    def core_shapes(self) -> typ.Tuple[
-        typ.Tuple[typ.Tuple[int,...],...], # tucker core shapes
-        typ.Tuple[typ.Tuple[int,...],...], # tt core shapes
+    def core_shapes(self) -> Tuple[
+        Tuple[Tuple[int,...],...], # tucker core shapes
+        Tuple[Tuple[int,...],...], # tt core shapes
     ]:
         """Shapes of the Tucker and TT cores.
 
@@ -450,12 +453,12 @@ class TuckerTensorTrain:
 
     @staticmethod
     def get_minimal_ranks(
-            shape: typ.Sequence[int],
-            tucker_ranks: typ.Sequence[int],
-            tt_ranks: typ.Sequence[int],
-    ) -> typ.Tuple[
-        typ.Tuple[int, ...],  # new_tucker_ranks
-        typ.Tuple[int, ...],  # new_tt_ranks
+            shape: Sequence[int],
+            tucker_ranks: Sequence[int],
+            tt_ranks: Sequence[int],
+    ) -> Tuple[
+        Tuple[int, ...],  # new_tucker_ranks
+        Tuple[int, ...],  # new_tt_ranks
     ]:
         '''Find minimal ranks for a generic Tucker tensor train with a given structure.
 
@@ -483,7 +486,7 @@ class TuckerTensorTrain:
         return ranks.compute_minimal_ranks(shape, tucker_ranks, tt_ranks)
 
     @ft.cached_property
-    def minimal_ranks(self) -> typ.Tuple[typ.Tuple[int,...], typ.Tuple[int,...]]:
+    def minimal_ranks(self) -> Tuple[Tuple[int,...], Tuple[int,...]]:
         """Ranks of the smallest possible Tucker tensor train that represents the same tensor.
         Tucker tensor trains may be made to have minimal ranks using T3-SVD.
 
@@ -619,7 +622,7 @@ class TuckerTensorTrain:
     def to_dense(
             self,
             squash_tails: bool = True,
-    ) -> common.NDArray:
+    ) -> NDArray:
         """Contract a Tucker tensor train to form the dense tensor it represents.
 
         Parameters
@@ -725,7 +728,7 @@ class TuckerTensorTrain:
 
     @staticmethod
     def concatenate(
-            xx: typ.Sequence['TuckerTensorTrain'],
+            xx: Sequence['TuckerTensorTrain'],
     ) -> 'TuckerTensorTrain':
         """Concatenates TuckerTensorTrains.
 
@@ -861,9 +864,9 @@ class TuckerTensorTrain:
 
     def resize(
             self,
-            new_shape: typ.Sequence[int], # len=d
-            new_tucker_ranks: typ.Sequence[int], # len=d
-            new_tt_ranks: typ.Sequence[int], # len=d+1
+            new_shape: Sequence[int], # len=d
+            new_tucker_ranks: Sequence[int], # len=d
+            new_tt_ranks: Sequence[int], # len=d+1
     ) -> 'TuckerTensorTrain':
         '''Change cores shapes via zero padding to make cores bigger or truncation to make cores smaller.
 
@@ -984,10 +987,10 @@ class TuckerTensorTrain:
 
     @staticmethod
     def zeros(
-            shape: typ.Tuple[int, ...],
-            tucker_ranks: typ.Tuple[int, ...] = None,
-            tt_ranks: typ.Tuple[int, ...] = None,
-            stack_shape: typ.Tuple[int, ...] = (),
+            shape: Tuple[int, ...],
+            tucker_ranks: Tuple[int, ...] = None,
+            tt_ranks: Tuple[int, ...] = None,
+            stack_shape: Tuple[int, ...] = (),
             use_jax: bool = False,
     ) -> 'TuckerTensorTrain':
         """Construct a Tucker tensor train of zeros.
@@ -1029,8 +1032,8 @@ class TuckerTensorTrain:
 
     @staticmethod
     def ones(
-            shape: typ.Tuple[int, ...],
-            stack_shape: typ.Tuple[int, ...] = (),
+            shape: Tuple[int, ...],
+            stack_shape: Tuple[int, ...] = (),
             use_jax: bool = False,
     ) -> 'TuckerTensorTrain':
         """Construct the rank-1 Tucker tensor train which represents the dense tensor filled with ones.
@@ -1055,10 +1058,10 @@ class TuckerTensorTrain:
 
     @staticmethod
     def randn(
-            shape: typ.Tuple[int, ...],
-            tucker_ranks: typ.Tuple[int, ...],
-            tt_ranks: typ.Tuple[int, ...],
-            stack_shape: typ.Tuple[int, ...] = (),
+            shape: Tuple[int, ...],
+            tucker_ranks: Tuple[int, ...],
+            tt_ranks: Tuple[int, ...],
+            stack_shape: Tuple[int, ...] = (),
             use_jax: bool = False,
     ) -> 'TuckerTensorTrain':
         """Construct a Tucker tensor train with random cores.
@@ -1069,7 +1072,7 @@ class TuckerTensorTrain:
             Tucker tensor train structure
             (shape, tucker_ranks, tt_ranks)=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...,r(d-1),1))).
 
-        randn: typ.Callable[[..., NDArray]
+        randn: Callable[[..., NDArray]
             Function for creating random arrays. Arguments are a sequence of ints defining the shape of the array.
             Default: np.random.randn (numpy)
 
@@ -1109,7 +1112,7 @@ class TuckerTensorTrain:
 
     @staticmethod
     def from_canonical(
-            factors: typ.Sequence[common.NDArray], # elm_shape = stack_shape + (canonical_rank, Ni)
+            factors: Sequence[NDArray], # elm_shape = stack_shape + (canonical_rank, Ni)
     ) -> 'TuckerTensorTrain':
         """Constructs TuckerTensorTrain from Canonical decomposition.
 
@@ -1154,7 +1157,7 @@ class TuckerTensorTrain:
 
     @staticmethod
     def from_tensor_train(
-            tt_cores: typ.Sequence[common.NDArray], # elm_shape=stack_shape+(ri, N, r(i+1))
+            tt_cores: Sequence[NDArray], # elm_shape=stack_shape+(ri, N, r(i+1))
     ) -> 'TuckerTensorTrain':
         """Convert tensor train into Tucker tensor train by using identity matrices for Tucker bases.
 
@@ -1174,7 +1177,7 @@ class TuckerTensorTrain:
 
     def to_tensor_train(
             self,
-    ) -> typ.Tuple[common.NDArray,...]: # tt_cores
+    ) -> Tuple[NDArray,...]: # tt_cores
         """Convert TuckerTensorTrain to tensor train by contracting Tucker bases with TT cores.
 
         Examples
@@ -1196,7 +1199,7 @@ class TuckerTensorTrain:
 
     def to_vector(
             self,
-    ) -> common.NDArray:
+    ) -> NDArray:
         """Converts a TuckerTensorTrain into a 1D vector containing the core entries.
 
         Examples
@@ -1214,11 +1217,11 @@ class TuckerTensorTrain:
 
     @staticmethod
     def from_vector(
-            x_flat: common.NDArray,
-            shape: typ.Sequence[int],
-            tucker_ranks: typ.Sequence[int],
-            tt_ranks: typ.Sequence[int],
-            stack_shape: typ.Sequence[int] = (),
+            x_flat: NDArray,
+            shape: Sequence[int],
+            tucker_ranks: Sequence[int],
+            tt_ranks: Sequence[int],
+            stack_shape: Sequence[int] = (),
     ) -> 'TuckerTensorTrain':
         """Constructs a TuckerTensorTrain from a 1D vector containing the core entries.
 
@@ -1838,7 +1841,7 @@ class TuckerTensorTrain:
         (2, 3)
         """
         result = ragged_operations.t3_sum(self.data, axis=axis)
-        if isinstance(result, typ.Sequence):
+        if isinstance(result, Sequence):
             result = TuckerTensorTrain(*result)
         return result
 
@@ -1854,9 +1857,9 @@ class TuckerTensorTrain:
             max_rank: int = None,
             rtol: float = None,
             atol: float = None,
-    ) -> typ.Tuple[
+    ) -> Tuple[
         'TuckerTensorTrain',  # new_x
-        common.NDArray,  # ss_x. singular values
+        NDArray,  # ss_x. singular values
     ]:
         '''Compute SVD of ith tucker core and contract non-orthogonal factor into the TT-core above.
 
@@ -1923,9 +1926,9 @@ class TuckerTensorTrain:
             max_rank: int = None,
             rtol: float = None,
             atol: float = None,
-    ) -> typ.Tuple[
+    ) -> Tuple[
         'TuckerTensorTrain',  # new_x
-        common.NDArray,  # singular values, shape=(r(i+1),)
+        NDArray,  # singular values, shape=(r(i+1),)
     ]:
         '''Compute SVD of ith TT-core left unfolding and contract non-orthogonal factor into the TT-core to the right.
 
@@ -1995,9 +1998,9 @@ class TuckerTensorTrain:
             max_rank: int = None,
             rtol: float = None,
             atol: float = None,
-    ) -> typ.Tuple[
+    ) -> Tuple[
         'TuckerTensorTrain',  # new_x
-        common.NDArray,  # singular values, shape=(new_ri,)
+        NDArray,  # singular values, shape=(new_ri,)
     ]:
         '''Compute SVD of ith TT-core right unfolding and contract non-orthogonal factor into the TT-core to the left.
 
@@ -2067,9 +2070,9 @@ class TuckerTensorTrain:
             max_rank: int = None,
             rtol: float = None,
             atol: float = None,
-    ) -> typ.Tuple[
+    ) -> Tuple[
         'TuckerTensorTrain',  # new_x
-        common.NDArray,  # singular values, shape=(new_ni,)
+        NDArray,  # singular values, shape=(new_ni,)
     ]:
         '''Compute SVD of ith TT-core right unfolding and contract non-orthogonal factor down into the tucker core below.
 
@@ -2439,8 +2442,8 @@ class TuckerTensorTrain:
 
     def entries(
             self,
-            index: common.NDArray,  # or convertible to NDArray. dtype=int
-    ) -> common.NDArray:
+            index: NDArray,  # or convertible to NDArray. dtype=int
+    ) -> NDArray:
         '''Compute an entry (or multiple entries) of a Tucker tensor train.
 
         This is the entry of the N0 x ... x N(d-1) tensor *represented* by the
@@ -2526,15 +2529,15 @@ class TuckerTensorTrain:
 
     def apply(
             self, # shape=(N0,...,N(d-1))
-            vecs: typ.Sequence[common.NDArray],  # len=d, elm_shape=vecs_stack_shape+(Ni,)
-    ) -> common.NDArray:
+            vecs: Sequence[NDArray],  # len=d, elm_shape=vecs_stack_shape+(Ni,)
+    ) -> NDArray:
         '''Contract a Tucker tensor train with vectors in all indices.
 
         Parameters
         ----------
         x: TuckerTensorTrain
             Tucker tensor train. shape=(N0,...,N(d-1))
-        vecs: typ.Sequence[NDArray]
+        vecs: Sequence[NDArray]
             Vectors to contract with indices of x. len=d, elm_shape=stack_shape+(Ni,)
         xnp:
             Linear algebra backend. Default: np (numpy)
@@ -2577,11 +2580,11 @@ class TuckerTensorTrain:
         >>> randn = np.random.randn
         >>> stack_shape = (2,3)
         >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (2,3,2,1), stack_shape)
-        >>> vstack_shape = (4,5,1)
-        >>> vecs = [randn(*(vstack_shape+(14,))), randn(*(vstack_shape+(15,))), randn(*(vstack_shape+(16,)))]
+        >>> vec_stack_shape = (4,5,1)
+        >>> vecs = [randn(*(vec_stack_shape+(14,))), randn(*(vec_stack_shape+(15,))), randn(*(vec_stack_shape+(16,)))]
         >>> result = x.apply(vecs)
-        >>> ii, jj = 1, 2
-        >>> ll, mm, nn =  3, 2, 0
+        >>> ii, jj = 1, 2 # T3 stack index
+        >>> ll, mm, nn =  3, 2, 0 # input vectors stack index
         >>> result_ij_lmn = result[ii,jj, ll,mm,nn]
         >>> x_ij_dense = x.to_dense()[ii,jj]
         >>> vecs_lmn = [vecs[0][ll,mm,nn], vecs[1][ll,mm,nn], vecs[2][ll,mm,nn]]
@@ -2620,8 +2623,8 @@ class TuckerTensorTrain:
 
     def probe(
             self,
-            ww: typ.Sequence[common.NDArray],  # len=d, elm_shape=W+(Ni,)
-    ) -> typ.Sequence[common.NDArray]:  # zz, len=d, elm_shape=X+W+(Ni,)
+            ww: Sequence[NDArray],  # len=d, elm_shape=W+(Ni,)
+    ) -> Sequence[NDArray]:  # zz, len=d, elm_shape=X+W+(Ni,)
         """Probe a TuckerTensorTrain.
 
         Examples
@@ -2677,28 +2680,28 @@ class TuckerTensorTrain:
 
     def t3svd(
             self,
-            max_tt_ranks:       typ.Sequence[int] = None, # len=d+1
-            max_tucker_ranks:   typ.Sequence[int] = None, # len=d
+            max_tt_ranks:       Sequence[int] = None, # len=d+1
+            max_tucker_ranks:   Sequence[int] = None, # len=d
             rtol: float = None,
             atol: float = None,
-    ) -> typ.Tuple[
+    ) -> Tuple[
         'TuckerTensorTrain', # new_x
-        typ.Tuple[common.NDArray,...], # Tucker singular values, len=d
-        typ.Tuple[common.NDArray,...], # TT singular values, len=d+1
+        Tuple[NDArray,...], # Tucker singular values, len=d
+        Tuple[NDArray,...], # TT singular values, len=d+1
     ]:
         '''Compute (truncated) T3-SVD of TuckerTensorTrain.
 
         Parameters
         ----------
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-        min_tucker_ranks: typ.Sequence[int]
+        self: TuckerTensorTrain
+            The Tucker tensor train. structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))
+        min_tucker_ranks: Sequence[int]
             Minimum Tucker ranks for truncation.
-        min_tt_ranks: typ.Sequence[int]
+        min_tt_ranks: Sequence[int]
             Minimum TT-ranks for truncation.
-        max_tucker_ranks: typ.Sequence[int]
+        max_tucker_ranks: Sequence[int]
             Maximum Tucker ranks for truncation.
-        max_tt_ranks: typ.Sequence[int]
+        max_tt_ranks: Sequence[int]
             Maximum TT-ranks for truncation.
         rtol: float
             Relative tolerance for truncation.
@@ -2709,11 +2712,11 @@ class TuckerTensorTrain:
 
         Returns
         -------
-        NDArray
+        TuckerTensorTrain
             New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
-        typ.Tuple[NDArray,...]
+        Tuple[NDArray,...]
             Singular values associated with edges between Tucker cores and TT-cores
-        typ.Tuple[NDArray,...]
+        Tuple[NDArray,...]
             Singular values associated with edges between adjacent TT-cores
 
         See Also
@@ -2733,6 +2736,10 @@ class TuckerTensorTrain:
 
         T3-SVD with no truncation:
         (ranks may decrease to minimal values, but no approximation error)
+
+        # AIMS:
+        # 1) Show very basic use case example (no truncation or stacking)
+        # 2) Illustrate meaning of ss_tucker and ss_tt: they are singular values of matrix unfoldings, not including extra zeros
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
@@ -2838,53 +2845,71 @@ class TuckerTensorTrain:
 
     @staticmethod
     def t3svd_dense(
-            T: common.NDArray,  # shape=stack_shape+(N1, N2, .., Nd)
-            stack_shape: typ.Sequence[int] = (),
-            max_tucker_ranks: typ.Sequence[int] = None,  # len=d
-            max_tt_ranks: typ.Sequence[int] = None,  # len=d+1
+            T: NDArray,  # shape=stack_shape+(N1, N2, .., Nd)
+            stack_shape: Sequence[int] = (),
+            max_tucker_ranks: Sequence[int] = None,  # len=d
+            max_tt_ranks: Sequence[int] = None,  # len=d+1
             rtol: float = None,
             atol: float = None,
-    ) -> typ.Tuple[
+    ) -> Tuple[
         'TuckerTensorTrain',  # Approximation of T by Tucker tensor train
-        typ.Tuple[common.NDArray, ...],  # Tucker singular values, len=d
-        typ.Tuple[common.NDArray, ...],  # TT singular values, len=d+1
+        Tuple[NDArray, ...],  # Tucker singular values, len=d
+        Tuple[NDArray, ...],  # TT singular values, len=d+1
     ]:
-        '''Compute TuckerTensorTrain and edge singular values for dense tensor.
+        '''Compute ``TuckerTensorTrain`` representation or approximation of a dense tensor.
 
         Parameters
         ----------
         T: NDArray
-            The dense tensor. shape=(N1, ..., Nd)
-        min_tucker_ranks: typ.Sequence[int]
-            Minimum Tucker ranks for truncation. len=d. e.g., (3,3,3)
-        max_tucker_ranks: typ.Sequence[int]
-            Maximum Tucker ranks for truncation. len=d. e.g., (5,5,5)
-        min_tt_ranks: typ.Sequence[int]
-            Minimum TT-ranks for truncation. len=d+1. e.g., (1,3,3,3,1)
-        max_tt_ranks: typ.Sequence[int]
-            Maximum TT-ranks for truncation. len=d+1. e.g., (1,5,5,5,1)
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+            The dense tensor. ``shape = stack_shape + (N0, ..., N(d-1))``
+        stack_shape: Sequence[int], optional
+            The stack shape. Default: no stacking (``stack_shape=()``)
+        max_tucker_ranks: Sequence[int], optional
+            Maximum Tucker ranks ``ni``, e.g., ``(5,5,5)``. ``len(max_tucker_ranks)=d``.
+            Default: no max Tucker rank truncation (``None``).
+        max_tt_ranks: Sequence[int], optional
+            Maximum TT-ranks ``ri``, e.g., ``(1,5,5,5,1)``. ``len(max_tt_ranks)=d+1``.
+            Default: no max TT rank truncation (``None``).
+        rtol: float, optional
+            Relative tolerance for truncation (in the Frobenius norm).
+            Default: no ``rtol`` rank truncation (``None``).
+            Requires ``stack_shape=()``.
+        atol: float, optional
+            Absolute tolerance for truncation (in the Frobenius norm).
+            Default: no ``atol`` rank truncation (``None``).
+            Requires ``stack_shape=()``.
 
         Returns
         -------
         TuckerTensorTrain
-            Tucker tensor train approxiamtion of T
-        typ.Tuple[NDArray,...]
-            Singular values of matricizations. len=d. elm_shape=(ni,)
-        typ.Tuple[NDArray,...]
-            Singular values of unfoldings. len=d+1. elm_shape=(ri,)
+            Tucker tensor train approximation of ``T``
+        Tuple[NDArray,...]
+            Singular values of matricizations. ``len=d``. ``elm_shape=(ni,)``
+        Tuple[NDArray,...]
+            Singular values of unfoldings. ``len=d+1``. ``elm_shape=(ri,)``
+
+        Raises
+        ------
+        ValueError
+            If ``stack_shape`` is not empty and ``rtol`` or ``atol`` are supplied.
+            (Cannot use tolerances with stacking)
 
         See Also
         --------
-        truncated_svd
-        tucker_svd_dense
-        tt_svd_dense
-        t3_svd
+        .. py:class::`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
+        .. py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd`
+        .. py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks`
+
+        Notes
+        -----
+        See Algorithm 3 in Appendix A of [1]_.
+
+        References
+        ----------
+        .. [1] Alger, N., Christierson, B., Chen, P., & Ghattas, O. (2026).
+           Tucker Tensor Train Taylor Series.
+           arXiv preprint arXiv:2603.21141.
+           __ https://arxiv.org/abs/2603.21141
 
         Examples
         --------
@@ -2896,12 +2921,22 @@ class TuckerTensorTrain:
         >>> c2 = 1.0 / np.arange(1, 61)**2
         >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2) # Preconditioned random tensor
         >>> x, ss_tucker, ss_tt = t3.TuckerTensorTrain.t3svd_dense(T, rtol=1e-3) # Truncate T3-SVD to reduce rank
-        >>> print(x.uniform_structure)
-        ((40, 50, 60), (11, 10, 12), (1, 11, 12, 1), ())
+        >>> print(x.tucker_ranks) # Different random values may lead to different ranks
+        (12, 12, 11)
+        >>> print(x.tt_ranks)
+        (1, 11, 12, 1)
         >>> T2 = x.to_dense()
-        >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
-        0.0019311065250053555
+        >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # Should be slightly more than rtol=1e-3
+        0.001985061012010537
         '''
+        if stack_shape and ((rtol is not None) or (atol is not None)):
+            raise ValueError(
+                'Cannot use t3svd_dense with rtol or atol for stacked tensor T.\n' +
+                'Different elements of the stack could end out having different shapes.\n' +
+                'First unstack, then call t3svd_dense for each unstacked tensor.\n' +
+                'stack_shape = ' + str(stack_shape)
+            )
+
         result = dense_t3svd.t3svd_dense(
             T,
             stack_shape=stack_shape,
@@ -2917,37 +2952,5 @@ if common.has_jax:
         lambda x: (x.data, None),
         lambda aux_data, children: TuckerTensorTrain(*children),
     )
-
-
-####
-
-
-# def get_core_shapes(
-#         shape: typ.Sequence[int],
-#         tucker_ranks: typ.Sequence[int],
-#         tt_ranks: typ.Sequence[int],
-#         stack_shape: typ.Sequence[int] = (),
-# ) -> typ.Tuple[
-#     typ.Tuple[int,...], # tucker_core_shapes
-#     typ.Tuple[int,...], # tt_core_shapes
-# ]:
-#     """Compute the tucker and TT core shapes for a Tucker tensor train.
-#
-#     Examples
-#     --------
-#     >>> import numpy as np
-#     >>> import t3toolbox.tucker_tensor_train as t3
-#     >>> import t3toolbox.corewise as cw
-#     >>> x = t3.t3_corewise_randn((14,15,16), (4,5,6), (1,3,4,5), stack_shape=(9,))
-#     >>> print(t3.get_core_shapes(x.shape, x.tucker_ranks, x.tt_ranks, stack_shape=x.stack_shape))
-#     (((9, 4, 14), (9, 5, 15), (9, 6, 16)), ((9, 1, 4, 3), (9, 3, 5, 4), (9, 4, 6, 5)))
-#     >>> print(x.core_shapes)
-#     (((9, 4, 14), (9, 5, 15), (9, 6, 16)), ((9, 1, 4, 3), (9, 3, 5, 4), (9, 4, 6, 5)))
-#     """
-#     return ragged_operations.t3_core_shapes(
-#         shape, tucker_ranks, tt_ranks, stack_shape,
-#     )
-
-
 
 

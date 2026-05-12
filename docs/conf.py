@@ -19,6 +19,7 @@ extensions = [
 # This prevents Sphinx from prefixing every class/function with its module path.
 add_module_names = False
 typehints_fully_qualified = False
+python_use_unqualified_type_names = True
 toc_object_entries_show_parents = 'hide'
 
 # -- AutoAPI configuration ---------------------------------------------------

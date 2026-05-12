@@ -5,6 +5,34 @@
 import numpy as np
 import typing as typ
 
+__all__ = [
+    'has_jax',
+    #
+    'NDArray',
+    'is_ndarray',
+    'is_boolean_ndarray',
+    'is_jax_ndarray',
+    'is_numpy_ndarray',
+    'to_jax',
+    'to_numpy',
+    #
+    'ragged_scan',
+    'numpy_scan',
+    'jax_scan',
+    #
+    'ragged_map',
+    'numpy_map',
+    'jax_map',
+    #
+    'get_backend',
+    'xcat',
+    'xappend',
+    'xprepend',
+    'tree_contains_jax',
+    'items_are_uniform',
+    #
+    'randn',
+]
 
 has_jax = False
 try:
@@ -52,35 +80,6 @@ if has_jax:
 
 to_numpy = lambda x: np.array(x)
 
-
-__all__ = [
-    'has_jax',
-    #
-    'NDArray',
-    'is_ndarray',
-    'is_boolean_ndarray',
-    'is_jax_ndarray',
-    'is_numpy_ndarray',
-    'to_jax',
-    'to_numpy',
-    #
-    'ragged_scan',
-    'numpy_scan',
-    'jax_scan',
-    #
-    'ragged_map',
-    'numpy_map',
-    'jax_map',
-    #
-    'get_backend',
-    'xcat',
-    'xappend',
-    'xprepend',
-    'tree_contains_jax',
-    'items_are_uniform',
-    #
-    'randn',
-]
 
 #
 
