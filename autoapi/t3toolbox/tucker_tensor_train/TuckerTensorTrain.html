@@ -979,12 +979,12 @@ it may be useful to perform truncated T3SVDs between operations
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores">
-<span class="sig-name descname"><span class="pre">tucker_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><span class="pre">t3toolbox.backend.common.NDArray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tucker_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><span class="pre">NDArray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores">
-<span class="sig-name descname"><span class="pre">tt_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><span class="pre">t3toolbox.backend.common.NDArray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tt_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><span class="pre">NDArray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -1165,14 +1165,14 @@ it may be useful to perform truncated T3SVDs between operations
 <tr class="row-odd"><td><p><a class="reference internal" href="TuckerTensorTrain.apply.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code></a>(→ t3toolbox.backend.common.NDArray)</p></td>
 <td><p>Contract a Tucker tensor train with vectors in all indices.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="TuckerTensorTrain.probe.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">probe</span></code></a>(→ Sequence[t3toolbox.backend.common.NDArray])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="TuckerTensorTrain.probe.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">probe</span></code></a>(...)</p></td>
 <td><p>Probe a TuckerTensorTrain.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="TuckerTensorTrain.t3svd.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t3svd</span></code></a>(→ Tuple[TuckerTensorTrain, ...)</p></td>
 <td><p>Compute (truncated) T3-SVD of TuckerTensorTrain.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="TuckerTensorTrain.t3svd_dense.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t3svd_dense</span></code></a>(, max_tucker_ranks, max_tt_ranks, rtol, ...)</p></td>
-<td><p>Compute TuckerTensorTrain and edge singular values for dense tensor.</p></td>
+<td><p>Compute <code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code> representation or approximation of a dense tensor.</p></td>
 </tr>
 </tbody>
 </table>

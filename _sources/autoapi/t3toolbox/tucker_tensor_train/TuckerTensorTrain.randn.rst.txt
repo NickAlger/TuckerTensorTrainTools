@@ -12,7 +12,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.randn
    :type structure: T3Structure
    :param randn: Function for creating random arrays. Arguments are a sequence of ints defining the shape of the array.
                  Default: np.random.randn (numpy)
-   :type randn: typ.Callable[[..., NDArray]
+   :type randn: Callable[[..., NDArray]
 
    :returns: Dense tensor represented by x, which has shape (N0, ..., N(d-1))
    :rtype: NDArray

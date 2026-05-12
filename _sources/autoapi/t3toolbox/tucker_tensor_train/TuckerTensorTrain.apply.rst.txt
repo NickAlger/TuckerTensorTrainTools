@@ -1,14 +1,14 @@
 t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply
 =====================================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply(vecs: Sequence[t3toolbox.backend.common.NDArray]) -> t3toolbox.backend.common.NDArray
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply(vecs: collections.abc.Sequence[t3toolbox.backend.common.NDArray]) -> t3toolbox.backend.common.NDArray
 
    Contract a Tucker tensor train with vectors in all indices.
 
    :param x: Tucker tensor train. shape=(N0,...,N(d-1))
    :type x: TuckerTensorTrain
    :param vecs: Vectors to contract with indices of x. len=d, elm_shape=stack_shape+(Ni,)
-   :type vecs: typ.Sequence[NDArray]
+   :type vecs: Sequence[NDArray]
    :param xnp: Linear algebra backend. Default: np (numpy)
 
    :returns: Result of contracting x with the vectors in all indices.
@@ -39,11 +39,11 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply
    >>> randn = np.random.randn
    >>> stack_shape = (2,3)
    >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (2,3,2,1), stack_shape)
-   >>> vstack_shape = (4,5,1)
-   >>> vecs = [randn(*(vstack_shape+(14,))), randn(*(vstack_shape+(15,))), randn(*(vstack_shape+(16,)))]
+   >>> vec_stack_shape = (4,5,1)
+   >>> vecs = [randn(*(vec_stack_shape+(14,))), randn(*(vec_stack_shape+(15,))), randn(*(vec_stack_shape+(16,)))]
    >>> result = x.apply(vecs)
-   >>> ii, jj = 1, 2
-   >>> ll, mm, nn =  3, 2, 0
+   >>> ii, jj = 1, 2 # T3 stack index
+   >>> ll, mm, nn =  3, 2, 0 # input vectors stack index
    >>> result_ij_lmn = result[ii,jj, ll,mm,nn]
    >>> x_ij_dense = x.to_dense()[ii,jj]
    >>> vecs_lmn = [vecs[0][ll,mm,nn], vecs[1][ll,mm,nn], vecs[2][ll,mm,nn]]

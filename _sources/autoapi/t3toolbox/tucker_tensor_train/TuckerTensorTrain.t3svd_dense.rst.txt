@@ -1,33 +1,50 @@
 t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
 ===========================================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense(T: t3toolbox.backend.common.NDArray, stack_shape: Sequence[int] = (), max_tucker_ranks: Sequence[int] = None, max_tt_ranks: Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense(T: t3toolbox.backend.common.NDArray, stack_shape: collections.abc.Sequence[int] = (), max_tucker_ranks: collections.abc.Sequence[int] = None, max_tt_ranks: collections.abc.Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
    :staticmethod:
 
 
-   Compute TuckerTensorTrain and edge singular values for dense tensor.
+   Compute ``TuckerTensorTrain`` representation or approximation of a dense tensor.
 
-   :param T: The dense tensor. shape=(N1, ..., Nd)
+   :param T: The dense tensor. ``shape = stack_shape + (N0, ..., N(d-1))``
    :type T: NDArray
-   :param min_tucker_ranks: Minimum Tucker ranks for truncation. len=d. e.g., (3,3,3)
-   :type min_tucker_ranks: typ.Sequence[int]
-   :param max_tucker_ranks: Maximum Tucker ranks for truncation. len=d. e.g., (5,5,5)
-   :type max_tucker_ranks: typ.Sequence[int]
-   :param min_tt_ranks: Minimum TT-ranks for truncation. len=d+1. e.g., (1,3,3,3,1)
-   :type min_tt_ranks: typ.Sequence[int]
-   :param max_tt_ranks: Maximum TT-ranks for truncation. len=d+1. e.g., (1,5,5,5,1)
-   :type max_tt_ranks: typ.Sequence[int]
-   :param rtol: Relative tolerance for truncation.
-   :type rtol: float
-   :param atol: Absolute tolerance for truncation.
-   :type atol: float
-   :param xnp: Linear algebra backend. Default: np (numpy)
+   :param stack_shape: The stack shape. Default: no stacking (``stack_shape=()``)
+   :type stack_shape: Sequence[int], optional
+   :param max_tucker_ranks: Maximum Tucker ranks ``ni``, e.g., ``(5,5,5)``. ``len(max_tucker_ranks)=d``.
+                            Default: no max Tucker rank truncation (``None``).
+   :type max_tucker_ranks: Sequence[int], optional
+   :param max_tt_ranks: Maximum TT-ranks ``ri``, e.g., ``(1,5,5,5,1)``. ``len(max_tt_ranks)=d+1``.
+                        Default: no max TT rank truncation (``None``).
+   :type max_tt_ranks: Sequence[int], optional
+   :param rtol: Relative tolerance for truncation (in the Frobenius norm).
+                Default: no ``rtol`` rank truncation (``None``).
+                Requires ``stack_shape=()``.
+   :type rtol: float, optional
+   :param atol: Absolute tolerance for truncation (in the Frobenius norm).
+                Default: no ``atol`` rank truncation (``None``).
+                Requires ``stack_shape=()``.
+   :type atol: float, optional
 
-   :returns: * *TuckerTensorTrain* -- Tucker tensor train approxiamtion of T
-             * *typ.Tuple[NDArray,...]* -- Singular values of matricizations. len=d. elm_shape=(ni,)
-             * *typ.Tuple[NDArray,...]* -- Singular values of unfoldings. len=d+1. elm_shape=(ri,)
+   :returns: * *TuckerTensorTrain* -- Tucker tensor train approximation of ``T``
+             * *Tuple[NDArray,...]* -- Singular values of matricizations. ``len=d``. ``elm_shape=(ni,)``
+             * *Tuple[NDArray,...]* -- Singular values of unfoldings. ``len=d+1``. ``elm_shape=(ri,)``
 
-   .. seealso:: :py:obj:`truncated_svd`, :py:obj:`tucker_svd_dense`, :py:obj:`tt_svd_dense`, :py:obj:`t3_svd`
+   :raises ValueError: If ``stack_shape`` is not empty and ``rtol`` or ``atol`` are supplied.
+       (Cannot use tolerances with stacking)
+
+   .. seealso:: :py:obj:`..`, :py:obj:`..`, :py:obj:`..`
+
+   .. rubric:: Notes
+
+   See Algorithm 3 in Appendix A of [1]_.
+
+   .. rubric:: References
+
+   .. [1] Alger, N., Christierson, B., Chen, P., & Ghattas, O. (2026).
+      Tucker Tensor Train Taylor Series.
+      arXiv preprint arXiv:2603.21141.
+      __ https://arxiv.org/abs/2603.21141
 
    .. rubric:: Examples
 
@@ -39,9 +56,11 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
    >>> c2 = 1.0 / np.arange(1, 61)**2
    >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2) # Preconditioned random tensor
    >>> x, ss_tucker, ss_tt = t3.TuckerTensorTrain.t3svd_dense(T, rtol=1e-3) # Truncate T3-SVD to reduce rank
-   >>> print(x.uniform_structure)
-   ((40, 50, 60), (11, 10, 12), (1, 11, 12, 1), ())
+   >>> print(x.tucker_ranks) # Different random values may lead to different ranks
+   (12, 12, 11)
+   >>> print(x.tt_ranks)
+   (1, 11, 12, 1)
    >>> T2 = x.to_dense()
-   >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
-   0.0019311065250053555
+   >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # Should be slightly more than rtol=1e-3
+   0.001985061012010537
 

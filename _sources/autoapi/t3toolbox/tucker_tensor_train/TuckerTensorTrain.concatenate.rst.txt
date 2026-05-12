@@ -1,7 +1,7 @@
 t3toolbox.tucker_tensor_train.TuckerTensorTrain.concatenate
 ===========================================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.concatenate(xx: Sequence[TuckerTensorTrain]) -> TuckerTensorTrain
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.concatenate(xx: collections.abc.Sequence[TuckerTensorTrain]) -> TuckerTensorTrain
    :staticmethod:
 
 

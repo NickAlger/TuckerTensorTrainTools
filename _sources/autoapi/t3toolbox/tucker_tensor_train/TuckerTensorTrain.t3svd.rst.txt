@@ -1,29 +1,29 @@
 t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd
 =====================================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd(max_tt_ranks: Sequence[int] = None, max_tucker_ranks: Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd(max_tt_ranks: collections.abc.Sequence[int] = None, max_tucker_ranks: collections.abc.Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
 
    Compute (truncated) T3-SVD of TuckerTensorTrain.
 
-   :param x: The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-   :type x: TuckerTensorTrain
+   :param self: The Tucker tensor train. structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))
+   :type self: TuckerTensorTrain
    :param min_tucker_ranks: Minimum Tucker ranks for truncation.
-   :type min_tucker_ranks: typ.Sequence[int]
+   :type min_tucker_ranks: Sequence[int]
    :param min_tt_ranks: Minimum TT-ranks for truncation.
-   :type min_tt_ranks: typ.Sequence[int]
+   :type min_tt_ranks: Sequence[int]
    :param max_tucker_ranks: Maximum Tucker ranks for truncation.
-   :type max_tucker_ranks: typ.Sequence[int]
+   :type max_tucker_ranks: Sequence[int]
    :param max_tt_ranks: Maximum TT-ranks for truncation.
-   :type max_tt_ranks: typ.Sequence[int]
+   :type max_tt_ranks: Sequence[int]
    :param rtol: Relative tolerance for truncation.
    :type rtol: float
    :param atol: Absolute tolerance for truncation.
    :type atol: float
    :param xnp: Linear algebra backend. Default: np (numpy)
 
-   :returns: * *NDArray* -- New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
-             * *typ.Tuple[NDArray,...]* -- Singular values associated with edges between Tucker cores and TT-cores
-             * *typ.Tuple[NDArray,...]* -- Singular values associated with edges between adjacent TT-cores
+   :returns: * *TuckerTensorTrain* -- New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
+             * *Tuple[NDArray,...]* -- Singular values associated with edges between Tucker cores and TT-cores
+             * *Tuple[NDArray,...]* -- Singular values associated with edges between adjacent TT-cores
 
    .. seealso:: :py:obj:`left_svd_3tensor`, :py:obj:`right_svd_3tensor`, :py:obj:`outer_svd_3tensor`, :py:obj:`up_svd_ith_tucker_core`, :py:obj:`left_svd_ith_tt_core`, :py:obj:`right_svd_ith_tt_core`, :py:obj:`up_svd_ith_tt_core`, :py:obj:`down_svd_ith_tt_core`, :py:obj:`truncated_svd`
 
@@ -31,6 +31,10 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd
 
    T3-SVD with no truncation:
    (ranks may decrease to minimal values, but no approximation error)
+
+   # AIMS:
+   # 1) Show very basic use case example (no truncation or stacking)
+   # 2) Illustrate meaning of ss_tucker and ss_tt: they are singular values of matrix unfoldings, not including extra zeros
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3
