@@ -1,7 +1,9 @@
-t3toolbox.tucker_tensor_train.t3svd_dense
-=========================================
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
+===========================================================
 
-.. py:function:: t3toolbox.tucker_tensor_train.t3svd_dense(T: t3toolbox.backend.common.NDArray, stack_shape: Sequence[int] = (), max_tucker_ranks: Sequence[int] = None, max_tt_ranks: Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense(T: t3toolbox.backend.common.NDArray, stack_shape: Sequence[int] = (), max_tucker_ranks: Sequence[int] = None, max_tt_ranks: Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+   :staticmethod:
+
 
    Compute TuckerTensorTrain and edge singular values for dense tensor.
 
@@ -36,10 +38,10 @@ t3toolbox.tucker_tensor_train.t3svd_dense
    >>> c1 = 1.0 / np.arange(1, 51)**2
    >>> c2 = 1.0 / np.arange(1, 61)**2
    >>> T = np.einsum('ijk,i,j,k->ijk', T0, c0, c1, c2) # Preconditioned random tensor
-   >>> x, ss_tucker, ss_tt = t3.t3svd_dense(T, rtol=1e-3) # Truncate T3-SVD to reduce rank
+   >>> x, ss_tucker, ss_tt = t3.TuckerTensorTrain.t3svd_dense(T, rtol=1e-3) # Truncate T3-SVD to reduce rank
    >>> print(x.uniform_structure)
    ((40, 50, 60), (11, 10, 12), (1, 11, 12, 1), ())
    >>> T2 = x.to_dense()
    >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
-   0.002920893302364434
+   0.0019311065250053555
 

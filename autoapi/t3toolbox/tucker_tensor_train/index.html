@@ -478,8 +478,10 @@
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.tt_ranks.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.ranks.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.structure.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_core_shapes.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.core_shapes.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.size.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.size</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_minimal_ranks.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.minimal_ranks.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.has_minimal_ranks.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.validate.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.validate</a></li>
@@ -527,11 +529,9 @@
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.apply.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.probe.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.t3svd.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.t3svd_dense.html">t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense</a></li>
 </ul>
 </details></li>
-<li class="toctree-l3"><a class="reference internal" href="get_core_shapes.html">t3toolbox.tucker_tensor_train.get_core_shapes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="get_minimal_ranks.html">t3toolbox.tucker_tensor_train.get_minimal_ranks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="t3svd_dense.html">t3toolbox.tucker_tensor_train.t3svd_dense</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../uniform_basis_variations_format/index.html">t3toolbox.uniform_basis_variations_format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -795,25 +795,6 @@
 </table>
 </div>
 </section>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-</div>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="get_core_shapes.html#t3toolbox.tucker_tensor_train.get_core_shapes" title="t3toolbox.tucker_tensor_train.get_core_shapes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_core_shapes</span></code></a>() → Tuple[Tuple[int, Ellipsis], ...)</p></td>
-<td><p>Compute the tucker and TT core shapes for a Tucker tensor train.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="get_minimal_ranks.html#t3toolbox.tucker_tensor_train.get_minimal_ranks" title="t3toolbox.tucker_tensor_train.get_minimal_ranks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_minimal_ranks</span></code></a>(→ Tuple[Tuple[int, Ellipsis], ...)</p></td>
-<td><p>Find minimal ranks for a generic Tucker tensor train with a given structure.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="t3svd_dense.html#t3toolbox.tucker_tensor_train.t3svd_dense" title="t3toolbox.tucker_tensor_train.t3svd_dense"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t3svd_dense</span></code></a>(, max_tucker_ranks, max_tt_ranks, rtol, ...)</p></td>
-<td><p>Compute TuckerTensorTrain and edge singular values for dense tensor.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
 </section>
 
 
@@ -864,7 +845,6 @@
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 </ul>
   </nav></div>
 

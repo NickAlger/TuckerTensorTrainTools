@@ -12,8 +12,10 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.tt_ranks
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.ranks
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.structure
+   /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.get_core_shapes
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.core_shapes
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.size
+   /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.get_minimal_ranks
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.minimal_ranks
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.has_minimal_ranks
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.validate
@@ -61,6 +63,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.apply
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.probe
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.t3svd
+   /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.t3svd_dense
 
 .. py:class:: t3toolbox.tucker_tensor_train.TuckerTensorTrain
 
@@ -248,8 +251,10 @@ Methods
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure
+   t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.size
+   t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.validate
@@ -297,5 +302,6 @@ Methods
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe
    t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd
+   t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
 
 

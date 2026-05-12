@@ -1,7 +1,9 @@
-t3toolbox.tucker_tensor_train.get_minimal_ranks
-===============================================
+t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks
+=================================================================
 
-.. py:function:: t3toolbox.tucker_tensor_train.get_minimal_ranks(shape: Sequence[int], tucker_ranks: Sequence[int], tt_ranks: Sequence[int]) -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks(shape: Sequence[int], tucker_ranks: Sequence[int], tt_ranks: Sequence[int]) -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+   :staticmethod:
+
 
    Find minimal ranks for a generic Tucker tensor train with a given structure.
 
@@ -23,6 +25,6 @@ t3toolbox.tucker_tensor_train.get_minimal_ranks
    .. rubric:: Examples
 
    >>> import t3toolbox.tucker_tensor_train as t3
-   >>> print(t3.get_minimal_ranks((10,11,12,13), (14,15,16,17), (98,99,100,101,102)))
+   >>> print(t3.TuckerTensorTrain.get_minimal_ranks((10,11,12,13), (14,15,16,17), (98,99,100,101,102)))
    ((10, 11, 12, 13), (1, 10, 100, 13, 1))
 

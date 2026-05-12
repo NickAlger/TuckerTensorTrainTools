@@ -22,20 +22,3 @@ Classes
    t3toolbox.tucker_tensor_train.TuckerTensorTrain
 
 
-Functions
----------
-
-.. toctree::
-   :hidden:
-
-   /autoapi/t3toolbox/tucker_tensor_train/get_core_shapes
-   /autoapi/t3toolbox/tucker_tensor_train/get_minimal_ranks
-   /autoapi/t3toolbox/tucker_tensor_train/t3svd_dense
-
-.. autoapisummary::
-
-   t3toolbox.tucker_tensor_train.get_core_shapes
-   t3toolbox.tucker_tensor_train.get_minimal_ranks
-   t3toolbox.tucker_tensor_train.t3svd_dense
-
-
