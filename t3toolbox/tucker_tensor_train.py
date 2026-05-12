@@ -105,6 +105,21 @@ class TuckerTensorTrain:
     Generally, operations that use a numerical tolerance (rtol or atol) cannot be used with stacked TuckerTensorTrains
     because the shape of the results could vary between different Tucker tensor trains in the stack.
 
+    (non-)Example:
+
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> x = t3.TuckerTensorTrain.randn((13,14,15), (4,5,6), (2,8,9,3))
+    >>> result = x.t3svd() # OK
+    >>> result = x.t3svd(rtol=1e-2) # OK
+    >>> x = t3.TuckerTensorTrain.randn((13,14,15), (4,5,6), (2,8,9,3), stack_shape=(2,3))
+    >>> result = x.t3svd() # OK
+    >>> result = x.t3svd(rtol=1e-2) # RuntimeError!
+    RuntimeError: Cannot use rtol or atol with t3svd for stacked Tucker tensor train.
+    Different elements of the stack could end out having different shapes.
+    First unstack, then call t3svd for each unstacked Tucker tensor train.
+
+
     Tensor linear algebra:
     ----------------------
     Linear algebra operations (addition, multiplication, inner products, etc...) are mathematically defined
@@ -112,8 +127,15 @@ class TuckerTensorTrain:
     These operations are performed implicitly using Tucker tensor train cores as a computational device,
     because the dense tensors can be extremely large.
     The results faithfully represent what one would have gotten if one performed the operations on the dense tensors.
-    E.g.,
-        (x + y).to_dense() = x.to_dense() + y.to_dense()
+
+    Example:
+
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (2,8,9,7,3))
+    >>> y = t3.TuckerTensorTrain.randn((13,14,15,16), (9,8,7,6), (1,2,3,4,5))
+    >>> print(np.linalg.norm((x + y).to_dense() - (x.to_dense() + y.to_dense())))
+    3.8159914295689006e-11
 
     Generally, adding Tucker tensor trains adds their ranks, and multiplication multiplies their ranks.
     To prevent ranks growing too large when many linear algebra operations are performed in sequence,
