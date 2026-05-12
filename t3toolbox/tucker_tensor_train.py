@@ -45,7 +45,7 @@ class TuckerTensorTrain:
     """
     Tucker tensor train with non-uniform (ragged) shape and ranks.
 
-    Tensor network diagram for a d'th order Tucker tensor train::
+    Tensor network diagram for a TuckerTensorTrain with ``d`` free indices::
 
             r0        r1        r2       r(d-1)          rd
         1 ------ G0 ------ G1 ------ ... ------ G(d-1) ------ 1
@@ -77,13 +77,29 @@ class TuckerTensorTrain:
     is the number 1. However, it is allowed for these ranks to not be 1, in which case
     the "1"s in the diagram are vectors of ones.
 
+    Make a TuckerTensorTrain and print its structural properties:
+
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> tucker_cores = (np.zeros((4,14)), np.zeros((5,15)), np.zeros((6,16)))
+    >>> tt_cores = (np.zeros((1,4,3)), np.zeros((3,5,2)), np.zeros((2,6,1)))
+    >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with zeros
+    >>> print(x.d)
+    3
+    >>> print(x.shape)
+    (14, 15, 16)
+    >>> print(x.tucker_ranks)
+    (4, 5, 6)
+    >>> print(x.tt_ranks)
+    (1, 3, 2, 1)
+
     Minimal ranks:
     --------------
     Tucker tensor train ranks are minimal if they satisfy the following conditions,
-        - r(i+1) <= (ri*ni) for i=1,...,d
-        - ri <= (ni*r(i+1)) for i=1,...,d
-        - ni <= (ri*r(i+1)) for i=1,...,d
-        - ni <= Ni for i=1,...,d
+        - ``r(i+1) <= (ri*ni)`` for ``i=1,...,d``
+        - ``ri <= (ni*r(i+1))`` for ``i=1,...,d``
+        - ``ni <= (ri*r(i+1))`` for ``i=1,...,d``
+        - ``ni <= Ni`` for ``i=1,...,d``
 
     The first three conditions say that the product of any two dimensions of a TT core
     is at least as large as the other dimension. The last condition says that the Tucker ranks
@@ -93,20 +109,59 @@ class TuckerTensorTrain:
     of the given form based on its structure. We do not account for numerical
     rank deficiency.
 
-    Minimal ranks always exist and are unique.
-        - Minimal TT ranks are equal to the ranks of (N0*...*Ni) x (N(i+1)*...*N(d-1)) matrix unfoldings.
-        - Minimal Tucker ranks are equal to the ranks of Ni x (N0*...*N(i-1)*N(i+1)*...*N(d-1)) matricizations.
+    Example:
 
-    A Tucker tensor train can be converted to a Tucker tensor train with minimal ranks using T3SVD.
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,99,6,7), (1,4,9,7,1)) # random T3
+    >>> print(x.ranks)
+    ((4, 99, 6, 7), (1, 4, 9, 7, 1))
+    >>> print(x.minimal_ranks)
+    ((4, 14, 6, 7), (1, 4, 9, 7, 1))
+    >>> print(x.has_minimal_ranks)
+    False
+    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,4,9,7,1))
+    >>> print(x.has_minimal_ranks)
+    True
+    >>> x = t3.TuckerTensorTrain.zeros((13,14,15,16), (4,5,6,7), (1,4,9,7,1)) # T3 filled with zeros
+    >>> print(x.has_minimal_ranks) # minimal ranks depends on structural ranks, not numerical ranks
+    True
+
+    Minimal ranks always exist and are unique.
+        - Minimal TT ranks are equal to the ranks of ``(N0*...*Ni) x (N(i+1)*...*N(d-1))`` matrix unfoldings.
+        - Minimal Tucker ranks are equal to the ranks of ``Ni x (N0*...*N(i-1)*N(i+1)*...*N(d-1))`` matricizations.
+    For more details, see Section 2.3 in [1]_.
+
+    A Tucker tensor train can be converted to a Tucker tensor train with minimal ranks using T3SVD:
+
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,99,9,7,1))
+    >>> print(x.has_minimal_ranks)
+    False
+    >>> print(x.minimal_ranks)
+    >>> x2, _, _ = x.t3svd()
+    >>> print(x2.has_minimal_ranks)
+    True
 
     Stacking:
     ---------
-    Many stacked Tucker tensor trains with the same structure may be stored in this object for vectorized operations.
+    Many stacked Tucker tensor trains with the same shape and ranks may be stored in this object for vectorized operations.
     In this case,
-        - tucker_cores[ii].shape = stack_shape + (ni,Ni)
-        - tt_cores[ii].shape = stack_shape + (ri, ni, r(i+1))
+        - ``tucker_cores[ii].shape = stack_shape + (ni,Ni)``
+        - ``tt_cores[ii].shape = stack_shape + (ri, ni, r(i+1))``
 
-    Example:
+    Examples:
+
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> tucker_cores = [np.zeros((6,7, 4,14)),np.zeros((6,7, 5,15)),np.zeros((6,7, 6,16))]
+    >>> tt_cores = [np.zeros((6,7, 1,4,3)), np.zeros((6,7, 3,5,2)), np.ones((6,7, 2,6,1))]
+    >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with ones
+    >>> print(x.stack_shape)
+    (6, 7)
+    >>> print(x.structure)
+    ((14, 15, 16), (4, 5, 6), (1, 3, 2, 1), (6, 7))
 
     >>> import numpy as np
     >>> import t3toolbox.tucker_tensor_train as t3
@@ -118,11 +173,15 @@ class TuckerTensorTrain:
     [(4, 13), (5, 14), (6, 15)]
     >>> print([G.shape for G in x00.tt_cores])
     [(2, 4, 8), (8, 5, 9), (9, 6, 3)]
+    >>> print(x00.stack_shape)
+    ()
     >>> x_stacked = t3.TuckerTensorTrain.stack([[x00, x01], [x10, x11]])
     >>> print([B.shape for B in x_stacked.tucker_cores])
     [(2, 2, 4, 13), (2, 2, 5, 14), (2, 2, 6, 15)]
     >>> print([G.shape for G in x_stacked.tt_cores])
     [(2, 2, 2, 4, 8), (2, 2, 8, 5, 9), (2, 2, 9, 6, 3)]
+    >>> print(x_stacked.stack_shape)
+    (2, 2)
 
     Generally, operations that use a numerical tolerance (rtol or atol) cannot be used with stacked TuckerTensorTrains
     because the shape of the results could vary between different elements of the stack.
@@ -150,7 +209,7 @@ class TuckerTensorTrain:
     because the dense tensors can be extremely large.
     The results faithfully represent what one would have gotten if one performed the operations on the dense tensors.
 
-    Example:
+    Examples:
 
     >>> import numpy as np
     >>> import t3toolbox.tucker_tensor_train as t3
@@ -158,84 +217,6 @@ class TuckerTensorTrain:
     >>> y = t3.TuckerTensorTrain.randn((13,14,15,16), (9,8,7,6), (1,2,3,4,5))
     >>> print(np.linalg.norm((x + y).to_dense() - (x.to_dense() + y.to_dense())))
     3.8159914295689006e-11
-
-    Generally, adding Tucker tensor trains adds their ranks, and multiplication multiplies their ranks.
-    To prevent ranks growing too large when many linear algebra operations are performed in sequence,
-    it may be useful to perform truncated T3SVDs between operations
-    (using either max_ranks, rtol, or atol as parameters in t3svd).
-
-    For corewise operations, see :py:mod:`t3toolbox.corewise`
-
-    Examples
-    --------
-
-    Make a TuckerTensorTrain and print its structural properties:
-
-    >>> import numpy as np
-    >>> import t3toolbox.tucker_tensor_train as t3
-    >>> tucker_cores = (np.zeros((4,14)), np.zeros((5,15)), np.zeros((6,16)))
-    >>> tt_cores = (np.zeros((1,4,3)), np.zeros((3,5,2)), np.zeros((2,6,1)))
-    >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with zeros
-    >>> print(x.d)
-    3
-    >>> print(x.shape)
-    (14, 15, 16)
-    >>> print(x.tucker_ranks)
-    (4, 5, 6)
-    >>> print(x.tt_ranks)
-    (1, 3, 2, 1)
-    >>> print(x.stack_shape)
-    ()
-    >>> print(x.structure)
-    ((14, 15, 16), (4, 5, 6), (1, 3, 2, 1), ())
-    >>> print(x.core_shapes)
-    (((4, 14), (5, 15), (6, 16)), ((1, 4, 3), (3, 5, 2), (2, 6, 1)))
-    >>> print(x.size == 4*14 + 5*15 + 6*16 + 1*4*3 + 3*5*2 + 2*6*1)
-    True
-
-    Stacked TuckerTensorTrain:
-
-    >>> import numpy as np
-    >>> import t3toolbox.tucker_tensor_train as t3
-    >>> tucker_cores = [np.zeros((6,7, 4,14)),np.zeros((6,7, 5,15)),np.zeros((6,7, 6,16))]
-    >>> tt_cores = [np.zeros((6,7, 1,4,3)), np.zeros((6,7, 3,5,2)), np.ones((6,7, 2,6,1))]
-    >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with ones
-    >>> print(x.stack_shape)
-    (6, 7)
-    >>> print(x.structure)
-    ((14, 15, 16), (4, 5, 6), (1, 3, 2, 1), (6, 7))
-
-    Minimal ranks
-
-    >>> import numpy as np
-    >>> import t3toolbox.tucker_tensor_train as t3
-    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,99,6,7), (1,4,9,7,1)) # random T3
-    >>> print(x.ranks)
-    ((4, 99, 6, 7), (1, 4, 9, 7, 1))
-    >>> print(x.minimal_ranks)
-    ((4, 14, 6, 7), (1, 4, 9, 7, 1))
-    >>> print(x.has_minimal_ranks)
-    False
-    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,4,9,7,1))
-    >>> print(x.has_minimal_ranks)
-    True
-    >>> x = t3.TuckerTensorTrain.zeros((13,14,15,16), (4,5,6,7), (1,4,9,7,1)) # T3 filled with zeros
-    >>> print(x.has_minimal_ranks) # minimal ranks depends on structural ranks, not numerical ranks
-    True
-
-    Using T3-SVD to make equivalent T3 with minimal ranks:
-
-    >>> import numpy as np
-    >>> import t3toolbox.tucker_tensor_train as t3
-    >>> x = t3.TuckerTensorTrain.randn((13,14,15,16), (4,5,6,7), (1,99,9,7,1))
-    >>> print(x.has_minimal_ranks)
-    False
-    >>> print(x.minimal_ranks)
-    >>> x2 = x.t3svd()[0]
-    >>> print(x2.has_minimal_ranks)
-    True
-
-    Some linear algebra with Tucker tensor trains:
 
     >>> import numpy as np
     >>> import t3toolbox.tucker_tensor_train as t3
@@ -247,6 +228,20 @@ class TuckerTensorTrain:
     >>> result2 = np.einsum('ijkl,ijkl', (X * (Y * 2.4 + Z)), Z) + np.linalg.norm(X - Y) + Z.sum()
     >>> print(np.linalg.norm(result - result2) / np.linalg.norm(result2))
     1.1486488440369942e-15
+
+    Generally, adding Tucker tensor trains adds their ranks, and multiplication multiplies their ranks.
+    To prevent ranks growing too large when many linear algebra operations are performed in sequence,
+    it may be useful to perform truncated T3SVDs between operations
+    (using either max_ranks, rtol, or atol as parameters in t3svd).
+
+    For corewise operations, see :py:mod:`t3toolbox.corewise`
+
+    References
+    ----------
+    .. [1] Alger, N., Christierson, B., Chen, P., & Ghattas, O. (2026).
+           Tucker Tensor Train Taylor Series.
+           arXiv preprint arXiv:2603.21141.
+           .. __: https://arxiv.org/abs/2603.21141
     """
     tucker_cores:   Tuple[NDArray,...] # len=d, elm_shape=stack_shape+(ni, Ni)
     tt_cores:       Tuple[NDArray,...] # len=d, elm_shape=stack_shape+(ri, ni, r(i+1))
