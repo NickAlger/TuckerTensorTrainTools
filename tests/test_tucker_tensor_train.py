@@ -2332,7 +2332,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
                                             MAX_TUCKER_RANKS=MAX_TUCKER_RANKS,
                                             MAX_TT_RANKS=MAX_TT_RANKS,
                                     ):
-                                        x2, ss_tk, ss_tt = t3.t3svd_dense(
+                                        x2, ss_tk, ss_tt = t3.TuckerTensorTrain.t3svd_dense(
                                             X,
                                             stack_shape=STACK_SHAPE,
                                             max_tt_ranks=MAX_TT_RANKS,
@@ -2427,15 +2427,14 @@ class TestTuckerTensorTrain(unittest.TestCase):
                     with self.subTest(
                             STRUCTURE=STRUCTURE, X_IS_JAX=X_IS_JAX, RTOL=RTOL, ATOL=ATOL
                     ):
-                        x2, ss_tk, ss_tt = t3.t3svd_dense(X, rtol=RTOL, atol=ATOL)
+                        x2, ss_tk, ss_tt = t3.TuckerTensorTrain.t3svd_dense(X, rtol=RTOL, atol=ATOL)
 
                         self.assertEqual(shape, x2.shape)
                         self.assertEqual(min_tucker_ranks, x2.tucker_ranks)
                         self.assertEqual(min_tt_ranks, x2.tt_ranks)
 
-
     def test_get_minimal_ranks(self):
-        mr = t3.get_minimal_ranks((10, 11, 12, 13), (14, 15, 16, 17), (98, 99, 100, 101, 102))
+        mr = t3.TuckerTensorTrain.get_minimal_ranks((10, 11, 12, 13), (14, 15, 16, 17), (98, 99, 100, 101, 102))
 
         mr_true = ((10, 11, 12, 13), (1, 10, 100, 13, 1))
         self.assertEqual(mr, mr_true)
@@ -2458,7 +2457,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
             for STACK_SHAPE in stack_shapes:
                 x = t3.TuckerTensorTrain.zeros(shape, tucker_ranks, tt_ranks, STACK_SHAPE)
 
-                tucker_shapes, tt_shapes = t3.get_core_shapes(shape, tucker_ranks, tt_ranks, STACK_SHAPE)
+                tucker_shapes, tt_shapes = t3.TuckerTensorTrain.get_core_shapes(shape, tucker_ranks, tt_ranks, STACK_SHAPE)
                 self.assertEqual(tuple(B.shape for B in x.tucker_cores), tucker_shapes)
                 self.assertEqual(tuple(G.shape for G in x.tt_cores), tt_shapes)
 
