@@ -2248,7 +2248,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
             resized_tucker_ranks = (max(tucker_ranks)+5,) * len(shape)
             resized_tt_ranks = (max(tt_ranks)+6,) * (len(shape) + 1)
 
-            min_tucker_ranks, min_tt_ranks = t3.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
+            min_tucker_ranks, min_tt_ranks = t3.TuckerTensorTrain.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
 
             for X_IS_JAX in [True, False]:
                 x = t3.TuckerTensorTrain.randn(shape, tucker_ranks, tt_ranks, stack_shape)
@@ -2413,7 +2413,7 @@ class TestTuckerTensorTrain(unittest.TestCase):
             resized_tucker_ranks = (max(tucker_ranks)+5,) * len(shape)
             resized_tt_ranks = (max(tt_ranks)+6,) * (len(shape) + 1)
 
-            min_tucker_ranks, min_tt_ranks = t3.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
+            min_tucker_ranks, min_tt_ranks = t3.TuckerTensorTrain.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
 
             for X_IS_JAX in [True, False]:
                 x = t3.TuckerTensorTrain.randn(shape, tucker_ranks, tt_ranks, stack_shape)
