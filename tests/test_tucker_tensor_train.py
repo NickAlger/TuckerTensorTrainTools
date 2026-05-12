@@ -2186,8 +2186,6 @@ class TestTuckerTensorTrain(unittest.TestCase):
                                                 self.check_relerr(sss2[..., :sss.shape[-1]], sss)
 
                                             for sss, sss2 in zip(ss_tt, all_unfolding_ss):
-                                                if np.linalg.norm(sss2[..., :sss.shape[-1]] - sss) > 1e-10:
-                                                    print('asdf')
                                                 self.check_relerr(sss2[..., :sss.shape[-1]], sss)
 
                                         if MAX_TUCKER_RANKS is not None:
@@ -2267,6 +2265,174 @@ class TestTuckerTensorTrain(unittest.TestCase):
                         self.assertEqual(shape, x2.shape)
                         self.assertEqual(min_tucker_ranks, x2.tucker_ranks)
                         self.assertEqual(min_tt_ranks, x2.tt_ranks)
+
+    def test_t3svd_dense(self):
+        shapes = [
+            (8,),
+            (8, 9),
+            (8, 9, 10),
+        ]
+        stack_shapes = [
+            (),
+            (2,3),
+        ]
+
+        for SHAPE in shapes:
+            tucker_ranks_limits = [
+                None,
+                tuple(1 for _ in range(len(SHAPE))),
+                (2, 3, 4, 3)[:len(SHAPE)],
+            ]
+            tt_ranks_limits = [
+                None,
+                tuple(1 for _ in range(len(SHAPE)+1)),
+                (2, 3, 4, 3, 2)[:len(SHAPE)+1],
+            ]
+
+            for STACK_SHAPE in stack_shapes:
+                for X_IS_JAX in [True, False]:
+                    num_stack_dims = len(STACK_SHAPE)
+                    X = np.random.randn(*(STACK_SHAPE + SHAPE))
+                    for ii, N in enumerate(SHAPE):
+                        c = 1.0 / (1.0 + np.arange(N))**2
+                        ax = num_stack_dims + ii
+                        X = np.einsum('...i,i->...i', X.swapaxes(ax, -1), c).swapaxes(-1, ax)
+
+                    if X_IS_JAX:
+                        X = jnp.array(X)
+
+                    all_unfolding_ss = []
+                    for ii in range(len(SHAPE)+1):
+                        N = math.prod(SHAPE[:ii])
+                        M = math.prod(SHAPE[ii:])
+                        XI = X.reshape(STACK_SHAPE + (N, M))
+                        _, ss, _ = np.linalg.svd(XI, full_matrices=False)
+                        all_unfolding_ss.append(ss)
+
+                    all_matricization_ss = []
+                    for ii in range(len(SHAPE)):
+                        N = SHAPE[ii]
+                        M = math.prod(SHAPE[:ii]+SHAPE[ii+1:])
+                        XI = np.swapaxes(X, num_stack_dims, num_stack_dims+ii).reshape(STACK_SHAPE + (N, M))
+                        _, ss, _ = np.linalg.svd(XI, full_matrices=False)
+                        all_matricization_ss.append(ss)
+
+                    if STACK_SHAPE == ():
+                        all_tols = [None, 5e-1, 5e-2, 5e-3, 5e-4]
+                    else:
+                        all_tols = [None]
+
+                    for RTOL in all_tols:
+                        for ATOL in all_tols:
+                            for MAX_TUCKER_RANKS in tucker_ranks_limits:
+                                for MAX_TT_RANKS in tt_ranks_limits:
+                                    with self.subTest(
+                                            SHAPE=SHAPE, STACK_SHAPE=STACK_SHAPE,
+                                            X_IS_JAX=X_IS_JAX, RTOL=RTOL, ATOL=ATOL,
+                                            MAX_TUCKER_RANKS=MAX_TUCKER_RANKS,
+                                            MAX_TT_RANKS=MAX_TT_RANKS,
+                                    ):
+                                        x2, ss_tk, ss_tt = t3.t3svd_dense(
+                                            X,
+                                            stack_shape=STACK_SHAPE,
+                                            max_tt_ranks=MAX_TT_RANKS,
+                                            max_tucker_ranks=MAX_TUCKER_RANKS,
+                                            rtol=RTOL,
+                                            atol=ATOL,
+                                        )
+
+                                        if (
+                                                RTOL is None and ATOL is None and
+                                                MAX_TUCKER_RANKS is None and MAX_TT_RANKS is None
+                                        ):
+                                            self.check_relerr(X, x2.to_dense())
+
+                                            for sss, sss2 in zip(ss_tk, all_matricization_ss):
+                                                self.check_relerr(sss2[..., :sss.shape[-1]], sss)
+
+                                            for sss, sss2 in zip(ss_tt, all_unfolding_ss):
+                                                self.check_relerr(sss2[..., :sss.shape[-1]], sss)
+
+                                        if MAX_TUCKER_RANKS is not None:
+                                            for n2, n_max in zip(x2.tucker_ranks, MAX_TUCKER_RANKS):
+                                                self.assertLessEqual(n2, n_max)
+
+                                        if MAX_TT_RANKS is not None:
+                                            for r2, r_max in zip(x2.tt_ranks, MAX_TT_RANKS):
+                                                self.assertLessEqual(r2, r_max)
+
+                                        nn_max = MAX_TUCKER_RANKS if MAX_TUCKER_RANKS is not None else x2.tucker_ranks
+                                        rr_max = MAX_TT_RANKS if MAX_TT_RANKS is not None else x2.tt_ranks
+                                        rt = RTOL if RTOL is not None else 0.0
+                                        at = ATOL if ATOL is not None else 0.0
+
+                                        stack_inds = list(itertools.product(*[tuple(range(s)) for s in STACK_SHAPE]))
+
+                                        x2_dense = x2.to_dense()
+                                        for ind in stack_inds:
+                                            unfolding_Esq = []
+                                            for sss, r_max in zip(all_unfolding_ss, rr_max):
+                                                ss = sss[ind]
+                                                fronorm = np.sqrt(np.sum(ss**2))
+                                                fronorm_tails = np.sqrt(np.cumsum(ss[::-1]**2))[::-1]
+                                                frotol = np.maximum(fronorm * rt, at)
+                                                r = np.minimum(np.sum(fronorm_tails >= frotol), r_max)
+                                                Esq = np.sum(ss[r:]**2)
+                                                unfolding_Esq.append(Esq)
+
+                                            matricization_Esq = []
+                                            for sss, n_max in zip(all_matricization_ss, nn_max):
+                                                ss = sss[ind]
+                                                fronorm = np.sqrt(np.sum(ss**2))
+                                                fronorm_tails = np.sqrt(np.cumsum(ss[::-1]**2))[::-1]
+                                                frotol = np.maximum(fronorm * rt, at)
+                                                n = np.minimum(np.sum(fronorm_tails >= frotol), n_max)
+                                                Esq = np.sum(ss[n:]**2)
+                                                matricization_Esq.append(Esq)
+
+                                            error_upper_bound = np.sqrt(
+                                                    np.sum(unfolding_Esq) +
+                                                    np.sum(matricization_Esq)
+                                            )
+
+                                            self.assertLessEqual(
+                                                np.linalg.norm(X[ind] - x2_dense[ind]),
+                                                error_upper_bound + tol * np.linalg.norm(X[ind])
+                                            )
+
+    def test_t3svd_dense_tols(self):
+        structures = [
+            ((8,),              (7,),           (6, 7),             ()),
+            ((8, 9),            (7, 8),         (6, 7, 8),          ()),
+            ((8, 9, 10),        (7, 8, 9),      (6, 7, 8, 7),       ()),
+            ((8, 9, 10, 11),    (7, 8, 9, 10),  (6, 7, 8, 7, 5),    ()),
+        ]
+
+        for STRUCTURE in structures:
+            shape, tucker_ranks, tt_ranks, stack_shape = STRUCTURE
+            resized_tucker_ranks = (max(tucker_ranks)+5,) * len(shape)
+            resized_tt_ranks = (max(tt_ranks)+6,) * (len(shape) + 1)
+
+            min_tucker_ranks, min_tt_ranks = t3.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
+
+            for X_IS_JAX in [True, False]:
+                x = t3.TuckerTensorTrain.randn(shape, tucker_ranks, tt_ranks, stack_shape)
+                if X_IS_JAX:
+                    x = x.to_jax()
+
+                x = x.resize(x.shape, resized_tucker_ranks, resized_tt_ranks)
+                X = x.to_dense()
+
+                for RTOL, ATOL in [(None, 1e-7), (1e-7, None), (1e-7, 1e-7)]:
+                    with self.subTest(
+                            STRUCTURE=STRUCTURE, X_IS_JAX=X_IS_JAX, RTOL=RTOL, ATOL=ATOL
+                    ):
+                        x2, ss_tk, ss_tt = t3.t3svd_dense(X, rtol=RTOL, atol=ATOL)
+
+                        self.assertEqual(shape, x2.shape)
+                        self.assertEqual(min_tucker_ranks, x2.tucker_ranks)
+                        self.assertEqual(min_tt_ranks, x2.tt_ranks)
+
 
     def test_get_minimal_ranks(self):
         mr = t3.get_minimal_ranks((10, 11, 12, 13), (14, 15, 16, 17), (98, 99, 100, 101, 102))

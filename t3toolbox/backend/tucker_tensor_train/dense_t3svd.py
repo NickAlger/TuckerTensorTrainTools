@@ -7,7 +7,7 @@ import typing as typ
 import math
 
 import t3toolbox.backend.linalg as linalg
-from t3toolbox.backend.common import *
+import t3toolbox.backend.common as common
 
 __all__ = [
     'tucker_svd_dense',
@@ -16,17 +16,17 @@ __all__ = [
 ]
 
 def tucker_svd_dense(
-        T: NDArray, # shape=(N1, N2, .., Nd)
+        T: common.NDArray, # shape=(N1, N2, .., Nd)
         min_ranks:  typ.Sequence[int] = None, # len=d
         max_ranks:  typ.Sequence[int] = None,  # len=d
         rtol: float = None,
         atol: float = None,
 ) -> typ.Tuple[
     typ.Tuple[
-        typ.Tuple[NDArray,...], # Tucker bases, ith_elm_shape=(ni, Ni)
-        NDArray, # Tucker core, shape=(n1,n2,...,nd)
+        typ.Tuple[common.NDArray,...], # Tucker bases, ith_elm_shape=(ni, Ni)
+        common.NDArray, # Tucker core, shape=(n1,n2,...,nd)
     ],
-    typ.Tuple[NDArray,...], # singular values of matricizations
+    typ.Tuple[common.NDArray,...], # singular values of matricizations
 ]:
     '''Compute Tucker decomposition and matricization singular values for dense tensor.
 
@@ -101,15 +101,14 @@ def tucker_svd_dense(
 
 
 def ttsvd_dense(
-        T: NDArray,
+        T: common.NDArray,
         min_ranks:  typ.Sequence[int] = None, # len=d+1
         max_ranks:  typ.Sequence[int] = None,  # len=d+1
         rtol: float = None,
         atol: float = None,
-        use_jax: bool = False,
 ) -> typ.Tuple[
-    typ.Tuple[NDArray,...], # tt_cores
-    typ.Tuple[NDArray,...], # singular values of unfoldings
+    typ.Tuple[common.NDArray,...], # tt_cores
+    typ.Tuple[common.NDArray,...], # singular values of unfoldings
 ]:
     '''Compute tensor train (TT) decomposition and unfolding singular values for dense tensor.
 
@@ -158,8 +157,10 @@ def ttsvd_dense(
     >>> print(np.linalg.norm(T - T2) / np.linalg.norm(T)) # should be slightly more than rtol=1e-3
     0.0023999063535883633
     '''
-    xnp, xmap, xscan = get_backend(True, use_jax)
+    use_jax = common.is_jax_ndarray(T)
+    xnp, xmap, xscan = common.get_backend(False, use_jax)
 
+    #
     nn = T.shape
 
     X = T.reshape((1,) + T.shape)
@@ -188,7 +189,7 @@ def ttsvd_dense(
 
 
 def t3svd_dense(
-        T: NDArray, # shape=stack_shape+(N0, .., N(d-1))
+        T: common.NDArray, # shape=stack_shape+(N0, .., N(d-1))
         stack_shape: typ.Sequence[int] = (),
         max_tucker_ranks:  typ.Sequence[int] = None,  # len=d
         max_tt_ranks:  typ.Sequence[int] = None,  # len=d+1
@@ -196,11 +197,11 @@ def t3svd_dense(
         atol: float = None,
 ) -> typ.Tuple[
     typ.Tuple[
-        typ.Tuple[NDArray,...], # tucker_cores
-        typ.Tuple[NDArray,...], # tt_cores
+        typ.Tuple[common.NDArray,...], # tucker_cores
+        typ.Tuple[common.NDArray,...], # tt_cores
     ], # Approximation of T by Tucker tensor train
-    typ.Tuple[NDArray,...], # Tucker singular values, len=d
-    typ.Tuple[NDArray,...], # TT singular values, len=d+1
+    typ.Tuple[common.NDArray,...], # Tucker singular values, len=d
+    typ.Tuple[common.NDArray,...], # TT singular values, len=d+1
 ]:
     '''Compute TuckerTensorTrain and edge singular values for dense tensor.
 
@@ -215,12 +216,16 @@ def t3svd_dense(
     >>> print(np.linalg.norm(T2 - T))
     3.4057168472825226e-13
     '''
+    use_jax = common.is_jax_ndarray(T)
+    xnp, xmap, xscan = common.get_backend(False, use_jax)
+
+    #
     shape = T.shape[len(stack_shape):]
 
     max_tucker_ranks    = max_tucker_ranks  if max_tucker_ranks is not None else [None]*len(shape)
     max_tt_ranks        = max_tt_ranks      if max_tt_ranks     is not None else [None]*(len(shape)+1)
 
-    ss_tt0 = np.linalg.norm(T.reshape((math.prod(stack_shape), -1)), axis=-1)
+    ss_tt0 = xnp.linalg.norm(T.reshape(stack_shape+(-1,)), axis=-1).reshape(stack_shape + (1,))
 
     max_tt_ranks = list(max_tt_ranks)[1:]
     max_tucker_ranks = list(max_tucker_ranks)
@@ -246,7 +251,7 @@ def t3svd_dense(
         tucker_cores.append(U.swapaxes(-2,-1).copy())
         ss_tucker.append(ss)
 
-        T = np.einsum(
+        T = xnp.einsum(
             '...n,...nx->...nx', ss, Vt
         ).reshape(stack_shape + (n, rL, M)).swapaxes(-3, -2) # shape=stack_shape+(rL, n, M)
 
@@ -259,21 +264,13 @@ def t3svd_dense(
         tt_cores.append(G)
         ss_tt.append(ss)
 
-        T = np.einsum('...r,...rx->...rx', ss, Vt).reshape(stack_shape + (rR,) + mm)
+        T = xnp.einsum('...r,...rx->...rx', ss, Vt).reshape(stack_shape + (rR,) + mm)
 
     Gf = tt_cores[-1]
 
-    Gf = np.einsum('...aib,...b->...aib', Gf, T)
+    Gf = xnp.einsum('...aib,...b->...aib', Gf, T)
     tt_cores[-1] = Gf
 
-
-
-    # (tucker_cores, tucker_core), ss_tucker = tucker_svd_dense(
-    #     T, max_ranks=max_tucker_ranks, rtol=rtol, atol=atol,
-    # )
-    # tt_cores, ss_tt = ttsvd_dense(
-    #     tucker_core, max_ranks=max_tt_ranks, rtol=rtol, atol=atol,
-    # )
     return (tuple(tucker_cores), tuple(tt_cores)), tuple(ss_tucker), tuple(ss_tt)
 
 
