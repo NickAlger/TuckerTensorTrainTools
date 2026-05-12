@@ -60,20 +60,20 @@ class TuckerTensorTrain:
     Attributes:
     -----------
     tucker_cores : Tuple[NDArray]
-        Tucker cores: (B0, ..., B(d-1)), len=d, elm_shape = stack_shape + (ni, Ni).
+        Tucker cores: ``(B0, ..., B(d-1))``. ``len(tucker_cores)=d``, ``elm_shape = stack_shape + (ni, Ni)``.
 
     tt_cores : Tuple[NDArray]
-        Tensor train cores: (G0, ..., G(d-1)), len=d, elm_shape = stack_shape + (ri, ni, r(i+1)).
+        Tensor train cores: ``(G0, ..., G(d-1))``. ``len(tt_cores)=d``, ``elm_shape = stack_shape + (ri, ni, r(i+1))``.
 
     Shape and ranks:
     ----------------
     The structure of a Tucker tensor train is defined by:
 
-    - Tensor shape: (N0, N1, ..., N(d-1))
-    - Tucker ranks: (n0, r1, ..., n(d-1))
-    - TT ranks: (r0, r1, ..., rd)
+    - Tensor shape: ``(N0, N1, ..., N(d-1))``
+    - Tucker ranks: ``(n0, r1, ..., n(d-1))``
+    - TT ranks: ``(r0, r1, ..., rd)``
 
-    Often, the first and last TT-ranks satisfy r0=rd=1, and "1" in the diagram
+    Often, the first and last TT-ranks satisfy ``r0=rd=1``, and "1" in the diagram
     is the number 1. However, it is allowed for these ranks to not be 1, in which case
     the "1"s in the diagram are vectors of ones.
 
@@ -105,8 +105,27 @@ class TuckerTensorTrain:
     In this case,
         - tucker_cores[ii].shape = stack_shape + (ni,Ni)
         - tt_cores[ii].shape = stack_shape + (ri, ni, r(i+1))
+
+    Example:
+
+    >>> import numpy as np
+    >>> import t3toolbox.tucker_tensor_train as t3
+    >>> x00 = t3.TuckerTensorTrain.randn((13,14,15), (4,5,6), (2,8,9,3))
+    >>> x01 = t3.TuckerTensorTrain.randn((13,14,15), (4,5,6), (2,8,9,3))
+    >>> x10 = t3.TuckerTensorTrain.randn((13,14,15), (4,5,6), (2,8,9,3))
+    >>> x11 = t3.TuckerTensorTrain.randn((13,14,15), (4,5,6), (2,8,9,3))
+    >>> print([B.shape for B in x00.tucker_cores])
+    [(4, 13), (5, 14), (6, 15)]
+    >>> print([G.shape for G in x00.tt_cores])
+    [(2, 4, 8), (8, 5, 9), (9, 6, 3)]
+    >>> x_stacked = t3.TuckerTensorTrain.stack([[x00, x01], [x10, x11]])
+    >>> print([B.shape for B in x_stacked.tucker_cores])
+    [(2, 2, 4, 13), (2, 2, 5, 14), (2, 2, 6, 15)]
+    >>> print([G.shape for G in x_stacked.tt_cores])
+    [(2, 2, 2, 4, 8), (2, 2, 8, 5, 9), (2, 2, 9, 6, 3)]
+
     Generally, operations that use a numerical tolerance (rtol or atol) cannot be used with stacked TuckerTensorTrains
-    because the shape of the results could vary between different Tucker tensor trains in the stack.
+    because the shape of the results could vary between different elements of the stack.
 
     (non-)Example:
 
@@ -2896,9 +2915,9 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        .. py:class::`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
-        .. py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd`
-        .. py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks`
+        :py:class::`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
+        :py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd`
+        :py:method::`t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks`
 
         Notes
         -----
@@ -2909,7 +2928,7 @@ class TuckerTensorTrain:
         .. [1] Alger, N., Christierson, B., Chen, P., & Ghattas, O. (2026).
            Tucker Tensor Train Taylor Series.
            arXiv preprint arXiv:2603.21141.
-           __ https://arxiv.org/abs/2603.21141
+           .. __: https://arxiv.org/abs/2603.21141
 
         Examples
         --------
