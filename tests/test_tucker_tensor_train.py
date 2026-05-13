@@ -144,9 +144,10 @@ class TestTuckerTensorTrain(unittest.TestCase):
                     ),
                     x.core_shapes,
                 )
+                self.assertEqual(math.prod(shape), x.size)
                 self.assertEqual(
                     sum(x.size for x in tucker_cores) + sum(x.size for x in tt_cores),
-                    x.size,
+                    x.data_size,
                 )
 
     def test_minimal_ranks(self):

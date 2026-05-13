@@ -168,13 +168,10 @@ def change_tt_core_shapes(
 
 def t3_stack(
         xx, # array-like structure of nested tuples containing Tucker tensor trains
-        use_jax: bool = False,
 ) -> typ.Tuple[typ.Tuple[NDArray,...], typ.Tuple[NDArray,...]]:  # (stacked_tucker_cores, stacked_tt_cores)
-    xnp,_,_ = get_backend(False, use_jax)
-
     num_stacking_axes = stacking.tree_depth(xx) - 2
     stacking_axes = tuple(range(num_stacking_axes))
-    stacked_xx = stacking.stack(xx, stacking_axes, use_jax=use_jax)
+    stacked_xx = stacking.stack(xx, stacking_axes)
     return stacked_xx
 
 

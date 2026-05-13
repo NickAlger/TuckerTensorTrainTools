@@ -9,7 +9,8 @@ release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 extensions = [
-    'sphinx.ext.autodoc',
+    #'autodoc2',
+    #'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'autoapi.extension',
     'sphinx.ext.githubpages',
@@ -23,6 +24,12 @@ toc_object_entries_show_parents = 'hide'
 autodoc_typehints = 'description'
 
 html_favicon = 'favicon.ico'
+
+# -- Autodoc2 ----
+
+autodoc2_packages = [
+    "../t3toolbox",
+]
 
 # -- AutoAPI configuration ---------------------------------------------------
 autoapi_dirs = ['../t3toolbox']  # Path to your source code
