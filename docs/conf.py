@@ -39,6 +39,8 @@ autoapi_type = 'python'
 
 autoapi_own_page_level = 'method'
 
+autoapi_ignore = ["*OLD*.py", "*backend*.py", "*eighted*.py", "*anifold*.py", "*niform*.py", "*basis_variation*"]
+
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'pydata_sphinx_theme'
 

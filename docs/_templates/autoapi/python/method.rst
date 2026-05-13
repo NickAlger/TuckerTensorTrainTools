@@ -1,13 +1,13 @@
 {% if obj.display %}
    {% if is_own_page %}
 {{ obj.id | class_method_format }}
-{{ "=" * obj.id | length }}
+{{ "=" * obj.id | class_method_format | length }}
 
    {% endif %}
-.. py:method:: {% if is_own_page %}{{ obj.name }}{% else %}{{ obj.name }}{% endif %}({{ obj.args }}){% if obj.return_annotation is not none %} -> {{ obj.return_annotation }}{% endif %}
+.. py:method:: {% if is_own_page %}{{ obj.id }}{% else %}{{ obj.id | class_method_format }}{% endif %}({{ obj.args }}){% if obj.return_annotation is not none %} -> {{ obj.return_annotation }}{% endif %}
    {% for (args, return_annotation) in obj.overloads %}
 
-               {%+ if is_own_page %}{{ obj.name }}{% else %}{{ obj.name }}{% endif %}({{ args }}){% if return_annotation is not none %} -> {{ return_annotation }}{% endif %}
+               {%+ if is_own_page %}{{ obj.id }}{% else %}{{ obj.id }}{% endif %}({{ args }}){% if return_annotation is not none %} -> {{ return_annotation }}{% endif %}
    {% endfor %}
    {% for property in obj.properties %}
 

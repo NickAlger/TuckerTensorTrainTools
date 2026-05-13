@@ -95,7 +95,7 @@ Methods
 .. autoapisummary::
 
             {% for method in visible_methods %}
-   {{ method.name }}
+   {{ method.id }}
             {% endfor %}
 
 
