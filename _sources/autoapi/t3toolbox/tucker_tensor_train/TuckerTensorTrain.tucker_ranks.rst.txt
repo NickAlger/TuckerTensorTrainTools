@@ -3,7 +3,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks() -> Tuple[int, Ellipsis]
 
-   Tucker ranks. tucker_ranks=(n0,...,n(d-1))
+   Tucker ranks. ``tucker_ranks=(n0,...,n(d-1))``
 
    .. rubric:: Examples
 

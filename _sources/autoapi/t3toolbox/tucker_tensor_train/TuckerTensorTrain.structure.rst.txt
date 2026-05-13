@@ -5,10 +5,11 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure
 
    Tuple containing tensor shape, Tucker ranks, TT ranks, and stack shape.
 
-   structure = (shape, tucker_ranks, tt_ranks, stack_shape)
-       - shape:          Tuple[int,...] = (N0,...,N(d-1))
-       - tucker_ranks:   Tuple[int,...] = (n0,...,n(d-1))
-       - tt_ranks:       Tuple[int,...] = (r0,...,rd)
+   ``structure = (shape, tucker_ranks, tt_ranks, stack_shape)``
+       - ``shape``:          ``Tuple[int,...] = (N0,...,N(d-1))``
+       - ``tucker_ranks``:   ``Tuple[int,...] = (n0,...,n(d-1))``
+       - ``tt_ranks``:       ``Tuple[int,...] = (r0,...,rd)``
+       - ``stack_shape``:    ``Tuple[int, ...]``
 
    .. rubric:: Examples
 

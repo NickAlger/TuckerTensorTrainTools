@@ -1,0 +1,25 @@
+t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations
+============================================================
+
+.. py:module:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations
+
+
+Functions
+---------
+
+.. toctree::
+   :hidden:
+
+   /autoapi/t3toolbox/backend/uniform_tucker_tensor_train/ut3_operations/reverse_utt
+   /autoapi/t3toolbox/backend/uniform_tucker_tensor_train/ut3_operations/uniform_squash_tt_tails
+   /autoapi/t3toolbox/backend/uniform_tucker_tensor_train/ut3_operations/ut3_unstack
+   /autoapi/t3toolbox/backend/uniform_tucker_tensor_train/ut3_operations/ut3_stack
+
+.. autoapisummary::
+
+   t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations.reverse_utt
+   t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations.uniform_squash_tt_tails
+   t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations.ut3_unstack
+   t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations.ut3_stack
+
+

@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    /autoapi/t3toolbox/backend/apply/index
+   /autoapi/t3toolbox/backend/basis_variations_format/index
    /autoapi/t3toolbox/backend/common/index
    /autoapi/t3toolbox/backend/contractions/index
    /autoapi/t3toolbox/backend/entries/index
@@ -21,6 +22,8 @@ Submodules
    /autoapi/t3toolbox/backend/ranks/index
    /autoapi/t3toolbox/backend/stacking/index
    /autoapi/t3toolbox/backend/tucker_tensor_train/index
+   /autoapi/t3toolbox/backend/uniform_basis_variations_format/index
+   /autoapi/t3toolbox/backend/uniform_tucker_tensor_train/index
    /autoapi/t3toolbox/backend/weighted_tucker_tensor_train/index
 
 

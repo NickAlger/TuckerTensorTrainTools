@@ -3,7 +3,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks() -> Tuple[int, Ellipsis]
 
-   TT ranks. tt_ranks=(r0,...,rd)
+   TT ranks. ``tt_ranks=(r0,...,rd)``
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3
@@ -11,4 +11,5 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks
    >>> tt_cores = (np.zeros((1,4,3)), np.zeros((3,5,2)), np.zeros((2,6,1)))
    >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with zeros
    >>> print(x.tt_ranks)
+   (1, 3, 2, 1)
 

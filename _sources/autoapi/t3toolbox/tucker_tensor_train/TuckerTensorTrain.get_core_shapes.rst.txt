@@ -5,7 +5,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes
    :staticmethod:
 
 
-   Compute the tucker and TT core shapes for a Tucker tensor train.
+   Compute the Tucker and TT core shapes for a Tucker tensor train.
 
    .. rubric:: Examples
 

@@ -3,7 +3,7 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.d
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.d() -> int
 
-   Number of indices of the tensor. d=len(tucker_cores)=len(tt_cores)
+   Number of indices of the tensor. ``d=len(tucker_cores)=len(tt_cores)``
 
    .. rubric:: Examples
 

@@ -8,10 +8,10 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks
    Find minimal ranks for a generic Tucker tensor train with a given structure.
 
    Minimal ranks satisfy:
-       - Left TT core unfoldings are full rank: r(i+1) <= (ri*ni)
-       - Right TT core unfoldings are full rank: ri <= (ni*r(i+1))
-       - Outer TT core unfoldings are full rank: ni <= (ri*r(i+1))
-       - Basis matrices have full row rank: ni <= Ni
+       - Left TT core unfoldings are full rank: ``r(i+1) <= (ri*ni)``
+       - Right TT core unfoldings are full rank: ``ri <= (ni*r(i+1))``
+       - Down TT core unfoldings are full rank: ``ni <= (ri*r(i+1))``
+       - Tucker ranks do not exceed shape: ``ni <= Ni``
 
    In this function, minimal ranks are defined with respect to a
    generic Tucker tensor train of the given form based on its structure.
@@ -19,8 +19,8 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks
    the numerical values within the cores.
 
    Minimal ranks always exist and are unique.
-       - Minimal TT ranks are equal to the ranks of (N*...*Ni) x (N(i+1)*...*N(d-1)) matrix unfoldings.
-       - Minimal Tucker ranks are equal to the ranks of Ni x (N1*...*N(i-1)*N(i+1)*...*N(d-1)) matricizations.
+       - Minimal TT ranks are equal to the ranks of ``(N*...*Ni) x (N(i+1)*...*N(d-1))`` matrix unfoldings.
+       - Minimal Tucker ranks are equal to the ranks of ``Ni x (N1*...*N(i-1)*N(i+1)*...*N(d-1))`` matricizations.
 
    .. rubric:: Examples
 

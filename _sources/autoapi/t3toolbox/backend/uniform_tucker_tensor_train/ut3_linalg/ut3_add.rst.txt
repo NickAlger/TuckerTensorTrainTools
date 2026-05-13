@@ -1,0 +1,8 @@
+t3toolbox.backend.uniform_tucker_tensor_train.ut3_linalg.ut3_add
+================================================================
+
+.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_linalg.ut3_add(x: t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray], y: t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray], use_jax: bool = False) -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray, t3toolbox.backend.common.NDArray]
+
+   Add two UniformTuckerTensorTrains, x,y -> x+y.
+
+

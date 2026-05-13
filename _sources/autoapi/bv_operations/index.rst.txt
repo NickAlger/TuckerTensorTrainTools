@@ -1,6 +1,0 @@
-bv_operations
-=============
-
-.. py:module:: bv_operations
-
-

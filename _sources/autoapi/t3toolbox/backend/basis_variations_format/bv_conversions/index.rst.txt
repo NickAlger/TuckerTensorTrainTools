@@ -1,0 +1,19 @@
+t3toolbox.backend.basis_variations_format.bv_conversions
+========================================================
+
+.. py:module:: t3toolbox.backend.basis_variations_format.bv_conversions
+
+
+Functions
+---------
+
+.. toctree::
+   :hidden:
+
+   /autoapi/t3toolbox/backend/basis_variations_format/bv_conversions/bv_to_t3
+
+.. autoapisummary::
+
+   t3toolbox.backend.basis_variations_format.bv_conversions.bv_to_t3
+
+

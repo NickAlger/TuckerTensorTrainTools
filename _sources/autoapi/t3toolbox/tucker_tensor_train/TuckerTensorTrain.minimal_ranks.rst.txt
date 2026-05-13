@@ -6,9 +6,9 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks
    Ranks of the smallest possible Tucker tensor train that represents the same tensor.
    Tucker tensor trains may be made to have minimal ranks using T3-SVD.
 
-   minimal_ranks = (minimal_tucker_ranks, minimal_tt_ranks)
-       - len(minimal_tucker_ranks) = d
-       - len(minimal_tt_ranks) = d+1
+   ``minimal_ranks = (minimal_tucker_ranks, minimal_tt_ranks)``
+       - ``len(minimal_tucker_ranks) = d``
+       - ``len(minimal_tt_ranks) = d+1``
 
    .. rubric:: Examples
 

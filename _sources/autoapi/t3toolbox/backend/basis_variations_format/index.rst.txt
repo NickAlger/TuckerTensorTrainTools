@@ -1,0 +1,16 @@
+t3toolbox.backend.basis_variations_format
+=========================================
+
+.. py:module:: t3toolbox.backend.basis_variations_format
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/t3toolbox/backend/basis_variations_format/bv_conversions/index
+   /autoapi/t3toolbox/backend/basis_variations_format/bv_operations/index
+
+

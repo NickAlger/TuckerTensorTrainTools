@@ -3,6 +3,15 @@ t3toolbox.tucker_tensor_train.TuckerTensorTrain.data
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.data() -> Tuple[Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
 
-   Tuple containing the Tucker cores and TT cores. data=(tucker_cores, tt_cores)
+   Tuple containing the Tucker cores and TT cores. ``data=(tucker_cores, tt_cores)``
 
+   .. rubric:: Examples
+
+   >>> import numpy as np
+   >>> import t3toolbox.tucker_tensor_train as t3
+   >>> tucker_cores = (np.ones((4,14)),np.ones((5,15)),np.ones((6,16)))
+   >>> tt_cores = (np.ones((1,4,3)), np.ones((3,5,2)), np.ones((2,6,1)))
+   >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with ones
+   >>> print(x.data == (tucker_cores, tt_cores))
+   True
 
