@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure
-=========================================================
+TuckerTensorTrain.structure
+===========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure() -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis], Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: TuckerTensorTrain.structure()
 
    Tuple containing tensor shape, Tucker ranks, TT ranks, and stack shape.
 

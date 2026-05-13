@@ -1,7 +1,7 @@
 t3toolbox.weighted_tucker_tensor_train.wt3_sub
 ==============================================
 
-.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_sub(A: WeightedTuckerTensorTrain, B: WeightedTuckerTensorTrain, squash: bool = True, use_jax: bool = False) -> WeightedTuckerTensorTrain
+.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_sub(A, B, squash = True, use_jax = False)
 
    Subtract two weighted Tucker tensor trains, A-B.
 

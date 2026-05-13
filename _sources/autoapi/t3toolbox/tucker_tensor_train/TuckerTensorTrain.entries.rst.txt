@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.entries
-=======================================================
+TuckerTensorTrain.entries
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.entries(index: t3toolbox.backend.common.NDArray) -> t3toolbox.backend.common.NDArray
+.. py:method:: TuckerTensorTrain.entries(index)
 
    Compute an entry (or multiple entries) of a Tucker tensor train.
 

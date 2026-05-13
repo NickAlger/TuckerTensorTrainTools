@@ -1,4 +1,4 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis.nD
-=====================================================
+UT3Basis.nD
+===========
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.nD() -> int
+.. py:method:: UT3Basis.nD()

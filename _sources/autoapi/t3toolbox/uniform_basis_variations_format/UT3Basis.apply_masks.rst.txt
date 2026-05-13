@@ -1,7 +1,7 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis.apply_masks
-==============================================================
+UT3Basis.apply_masks
+====================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.apply_masks() -> UT3Basis
+.. py:method:: UT3Basis.apply_masks()
 
    Apply masks to the basis supercores, zeroing out unmasked entries.
 

@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe
-=====================================================
+TuckerTensorTrain.probe
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe(ww: collections.abc.Sequence[t3toolbox.backend.common.NDArray]) -> collections.abc.Sequence[t3toolbox.backend.common.NDArray]
+.. py:method:: TuckerTensorTrain.probe(ww)
 
    Probe a TuckerTensorTrain.
 

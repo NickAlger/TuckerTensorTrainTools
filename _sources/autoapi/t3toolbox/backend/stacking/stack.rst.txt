@@ -1,7 +1,7 @@
 t3toolbox.backend.stacking.stack
 ================================
 
-.. py:function:: t3toolbox.backend.stacking.stack(T, axes, use_jax: bool = False)
+.. py:function:: t3toolbox.backend.stacking.stack(T, axes, use_jax = False)
 
    Stack array-like nested tree structure.
 

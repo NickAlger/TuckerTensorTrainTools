@@ -1,7 +1,7 @@
 t3toolbox.manifold.manifold_dim
 ===============================
 
-.. py:function:: t3toolbox.manifold.manifold_dim(s=t3.T3Structure) -> int
+.. py:function:: t3toolbox.manifold.manifold_dim(s=t3.T3Structure)
 
    Get the dimension of the fixed rank T3 manifold with a given structure.
 

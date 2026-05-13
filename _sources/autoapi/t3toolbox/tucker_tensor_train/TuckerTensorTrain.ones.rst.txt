@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.ones
-====================================================
+TuckerTensorTrain.ones
+======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.ones(shape: Tuple[int, Ellipsis], stack_shape: Tuple[int, Ellipsis] = (), use_jax: bool = False) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.ones(shape, stack_shape = (), use_jax = False)
    :staticmethod:
 
 

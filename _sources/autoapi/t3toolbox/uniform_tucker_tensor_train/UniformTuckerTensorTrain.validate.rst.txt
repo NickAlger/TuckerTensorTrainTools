@@ -1,4 +1,4 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.validate
-=======================================================================
+UniformTuckerTensorTrain.validate
+=================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.validate()
+.. py:method:: UniformTuckerTensorTrain.validate()

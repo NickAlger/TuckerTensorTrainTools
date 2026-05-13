@@ -1,7 +1,7 @@
 t3toolbox.corewise.corewise_dot
 ===============================
 
-.. py:function:: t3toolbox.corewise.corewise_dot(X: NDArrayTree, Y: NDArrayTree, use_jax: bool = False)
+.. py:function:: t3toolbox.corewise.corewise_dot(X, Y, use_jax = False)
 
    Dot product of nested objects, X,Y -> X.Y.
 

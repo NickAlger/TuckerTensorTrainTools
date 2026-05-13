@@ -1,7 +1,7 @@
-t3toolbox.basis_variations_format.T3Basis.stack
-===============================================
+T3Basis.stack
+=============
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.stack(xx, use_jax: bool = False)
+.. py:method:: T3Basis.stack(xx, use_jax = False)
    :staticmethod:
 
 

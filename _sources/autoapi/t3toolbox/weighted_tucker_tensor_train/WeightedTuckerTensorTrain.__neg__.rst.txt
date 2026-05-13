@@ -1,4 +1,4 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__neg__
-========================================================================
+WeightedTuckerTensorTrain.__neg__
+=================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__neg__() -> WeightedTuckerTensorTrain
+.. py:method:: WeightedTuckerTensorTrain.__neg__()

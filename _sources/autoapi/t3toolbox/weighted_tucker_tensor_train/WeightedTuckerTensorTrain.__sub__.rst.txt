@@ -1,4 +1,4 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__sub__
-========================================================================
+WeightedTuckerTensorTrain.__sub__
+=================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.__sub__(other, squash: bool = True, use_jax: bool = False)
+.. py:method:: WeightedTuckerTensorTrain.__sub__(other, squash = True, use_jax = False)

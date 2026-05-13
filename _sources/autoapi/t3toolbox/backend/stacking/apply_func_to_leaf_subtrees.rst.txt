@@ -1,7 +1,7 @@
 t3toolbox.backend.stacking.apply_func_to_leaf_subtrees
 ======================================================
 
-.. py:function:: t3toolbox.backend.stacking.apply_func_to_leaf_subtrees(tree, func: Callable, leaf_structure)
+.. py:function:: t3toolbox.backend.stacking.apply_func_to_leaf_subtrees(tree, func, leaf_structure)
 
    Apply a function to all "leafs" in a tree.
    A "leaf" is, itself, a subtree with the structure given in leaft_structure.

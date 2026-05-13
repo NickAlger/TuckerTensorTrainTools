@@ -1,4 +1,4 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis.rL
-=====================================================
+UT3Basis.rL
+===========
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.rL() -> int
+.. py:method:: UT3Basis.rL()

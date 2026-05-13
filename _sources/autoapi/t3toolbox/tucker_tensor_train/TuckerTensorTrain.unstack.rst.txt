@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.unstack
-=======================================================
+TuckerTensorTrain.unstack
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.unstack()
+.. py:method:: TuckerTensorTrain.unstack()
 
    If this object contains multiple stacked T3s, this unstacks them
    into an array-like structure of nested tuples with the same "shape" as self.stack_shape.

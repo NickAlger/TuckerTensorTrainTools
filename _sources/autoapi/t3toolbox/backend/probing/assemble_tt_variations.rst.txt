@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.assemble_tt_variations
 ================================================
 
-.. py:function:: t3toolbox.backend.probing.assemble_tt_variations(sigma_tildes: Union[Sequence[NDArray], NDArray], tau_tildes: Union[Sequence[NDArray], NDArray], deta_tildes: Union[Sequence[NDArray], NDArray], xis: Union[Sequence[NDArray], NDArray], mus: Union[Sequence[NDArray], NDArray], nus: Union[Sequence[NDArray], NDArray], sum_over_probes: bool = False, use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.assemble_tt_variations(sigma_tildes, tau_tildes, deta_tildes, xis, mus, nus, sum_over_probes = False, use_jax = False)
 
    Assemble TT core variations, delta_G_tilde.
    Used for computing transpose of mapping from a Tucker tensor train tangent vector to its actions.

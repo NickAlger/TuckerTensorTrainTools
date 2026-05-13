@@ -1,7 +1,7 @@
 t3toolbox.OLD_uniform.get_uniform_base_structure
 ================================================
 
-.. py:function:: t3toolbox.OLD_uniform.get_uniform_base_structure(base: UniformT3Base) -> UniformBVStructure
+.. py:function:: t3toolbox.OLD_uniform.get_uniform_base_structure(base)
 
    Get the structore of a uniform base.
 

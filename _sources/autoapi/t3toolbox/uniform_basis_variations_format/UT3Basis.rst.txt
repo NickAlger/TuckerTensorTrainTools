@@ -1,5 +1,5 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis
-==================================================
+UT3Basis
+========
 
 .. toctree::
    :hidden:
@@ -26,7 +26,7 @@ t3toolbox.uniform_basis_variations_format.UT3Basis
    /autoapi/t3toolbox/uniform_basis_variations_format/UT3Basis.unstack
    /autoapi/t3toolbox/uniform_basis_variations_format/UT3Basis.stack
 
-.. py:class:: t3toolbox.uniform_basis_variations_format.UT3Basis
+.. py:class:: UT3Basis
 
    Basis for basis-variations representation of uniform Tucker tensor trains
 

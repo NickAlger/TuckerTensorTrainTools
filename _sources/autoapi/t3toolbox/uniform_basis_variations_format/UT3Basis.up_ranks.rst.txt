@@ -1,4 +1,4 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis.up_ranks
-===========================================================
+UT3Basis.up_ranks
+=================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.up_ranks() -> NDArray
+.. py:method:: UT3Basis.up_ranks()

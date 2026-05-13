@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.reverse
-=======================================================
+TuckerTensorTrain.reverse
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.reverse() -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.reverse()
 
    Reverse Tucker tensor train.
 

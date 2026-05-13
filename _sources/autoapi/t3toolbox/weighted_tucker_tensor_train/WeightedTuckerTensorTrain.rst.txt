@@ -1,5 +1,5 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain
-================================================================
+WeightedTuckerTensorTrain
+=========================
 
 .. toctree::
    :hidden:
@@ -19,7 +19,7 @@ t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain
    /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.unstack
    /autoapi/t3toolbox/weighted_tucker_tensor_train/WeightedTuckerTensorTrain.stack
 
-.. py:class:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain
+.. py:class:: WeightedTuckerTensorTrain
 
    Class for Tucker tensor trains with weights on internal edges.
 

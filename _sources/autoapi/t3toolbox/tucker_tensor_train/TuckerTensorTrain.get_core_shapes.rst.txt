@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes
-===============================================================
+TuckerTensorTrain.get_core_shapes
+=================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes(shape: collections.abc.Sequence[int], tucker_ranks: collections.abc.Sequence[int], tt_ranks: collections.abc.Sequence[int], stack_shape: collections.abc.Sequence[int] = ()) -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: TuckerTensorTrain.get_core_shapes(shape, tucker_ranks, tt_ranks, stack_shape = ())
    :staticmethod:
 
 

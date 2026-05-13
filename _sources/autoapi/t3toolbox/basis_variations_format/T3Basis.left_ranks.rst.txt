@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Basis.left_ranks
-====================================================
+T3Basis.left_ranks
+==================
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.left_ranks() -> Tuple[int, Ellipsis]
+.. py:method:: T3Basis.left_ranks()

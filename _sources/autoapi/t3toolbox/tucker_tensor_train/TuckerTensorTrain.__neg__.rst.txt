@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__
-=======================================================
+TuckerTensorTrain.__neg__
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__() -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.__neg__()
 
    Scale a Tucker tensor train by -1.
 

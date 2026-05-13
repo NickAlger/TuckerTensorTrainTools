@@ -1,7 +1,7 @@
 t3toolbox.backend.tucker_tensor_train.t3_orthogonalization.down_svd_tucker_core
 ===============================================================================
 
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_orthogonalization.down_svd_tucker_core(x: t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray]], ii: int, min_rank: int = None, max_rank: int = None, rtol: float = None, atol: float = None) -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray], t3toolbox.backend.common.typ.Sequence[t3toolbox.backend.common.NDArray]], t3toolbox.backend.common.NDArray]
+.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_orthogonalization.down_svd_tucker_core(x, ii, min_rank = None, max_rank = None, rtol = None, atol = None)
 
    Compute SVD of ith tucker core and contract non-orthogonal factor up into the TT-core above.
 

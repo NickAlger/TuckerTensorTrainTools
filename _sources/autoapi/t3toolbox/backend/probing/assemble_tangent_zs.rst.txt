@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.assemble_tangent_zs
 =============================================
 
-.. py:function:: t3toolbox.backend.probing.assemble_tangent_zs(tucker_cores: Union[Sequence[NDArray], NDArray], var_tucker_cores: Union[Sequence[NDArray], NDArray], etas: Union[Sequence[NDArray], NDArray], detas: Union[Sequence[NDArray], NDArray], shape_weights: Union[Sequence[NDArray], NDArray] = None, use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.assemble_tangent_zs(tucker_cores, var_tucker_cores, etas, detas, shape_weights = None, use_jax = False)
 
    Assemble tangent vector probes from edge variables.
 

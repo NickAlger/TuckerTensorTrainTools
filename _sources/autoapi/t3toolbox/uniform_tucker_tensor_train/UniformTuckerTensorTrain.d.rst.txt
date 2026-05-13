@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.d
-================================================================
+UniformTuckerTensorTrain.d
+==========================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.d() -> int
+.. py:method:: UniformTuckerTensorTrain.d()
 
    Number of indices of the tensor.
 

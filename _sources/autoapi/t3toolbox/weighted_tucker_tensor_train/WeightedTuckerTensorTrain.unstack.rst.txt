@@ -1,7 +1,7 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.unstack
-========================================================================
+WeightedTuckerTensorTrain.unstack
+=================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.unstack()
+.. py:method:: WeightedTuckerTensorTrain.unstack()
 
    Unstack into an array-like tree.
 

@@ -1,4 +1,4 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.masks
-====================================================================
+UniformTuckerTensorTrain.masks
+==============================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.masks() -> Tuple[NDArray, NDArray, NDArray]
+.. py:method:: UniformTuckerTensorTrain.masks()

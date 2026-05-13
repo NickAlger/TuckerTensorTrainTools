@@ -1,4 +1,4 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.squash_tails
-=============================================================================
+WeightedTuckerTensorTrain.squash_tails
+======================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.squash_tails(use_jax: bool = False) -> WeightedTuckerTensorTrain
+.. py:method:: WeightedTuckerTensorTrain.squash_tails(use_jax = False)

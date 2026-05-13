@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__neg__
-======================================================================
+UniformTuckerTensorTrain.__neg__
+================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__neg__(use_jax: bool = False) -> UniformTuckerTensorTrain
+.. py:method:: UniformTuckerTensorTrain.__neg__(use_jax = False)
 
    Flip a uniform Tucker tensor train, x -> -x.
 

@@ -1,7 +1,7 @@
 t3toolbox.weighted_tucker_tensor_train.wt3_add
 ==============================================
 
-.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_add(A: WeightedTuckerTensorTrain, B: WeightedTuckerTensorTrain, squash: bool = True, use_jax: bool = False) -> WeightedTuckerTensorTrain
+.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_add(A, B, squash = True, use_jax = False)
 
    Add two weighted Tucker tensor trains.
 

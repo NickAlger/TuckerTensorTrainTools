@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.resize
-======================================================
+TuckerTensorTrain.resize
+========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.resize(new_shape: collections.abc.Sequence[int], new_tucker_ranks: collections.abc.Sequence[int], new_tt_ranks: collections.abc.Sequence[int]) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.resize(new_shape, new_tucker_ranks, new_tt_ranks)
 
    Change cores shapes via zero padding to make cores bigger or truncation to make cores smaller.
 

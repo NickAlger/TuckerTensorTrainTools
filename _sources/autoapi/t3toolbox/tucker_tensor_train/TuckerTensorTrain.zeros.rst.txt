@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.zeros
-=====================================================
+TuckerTensorTrain.zeros
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.zeros(shape: Tuple[int, Ellipsis], tucker_ranks: Tuple[int, Ellipsis] = None, tt_ranks: Tuple[int, Ellipsis] = None, stack_shape: Tuple[int, Ellipsis] = (), use_jax: bool = False) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.zeros(shape, tucker_ranks = None, tt_ranks = None, stack_shape = (), use_jax = False)
    :staticmethod:
 
 

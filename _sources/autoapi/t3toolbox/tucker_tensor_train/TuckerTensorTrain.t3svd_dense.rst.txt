@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense
-===========================================================
+TuckerTensorTrain.t3svd_dense
+=============================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense(T: t3toolbox.backend.common.NDArray, stack_shape: collections.abc.Sequence[int] = (), max_tucker_ranks: collections.abc.Sequence[int] = None, max_tt_ranks: collections.abc.Sequence[int] = None, rtol: float = None, atol: float = None) -> Tuple[TuckerTensorTrain, Tuple[t3toolbox.backend.common.NDArray, Ellipsis], Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. py:method:: TuckerTensorTrain.t3svd_dense(T, stack_shape = (), max_tucker_ranks = None, max_tt_ranks = None, rtol = None, atol = None)
    :staticmethod:
 
 

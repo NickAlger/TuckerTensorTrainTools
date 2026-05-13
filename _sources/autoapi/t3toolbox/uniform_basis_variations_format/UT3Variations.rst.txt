@@ -1,5 +1,5 @@
-t3toolbox.uniform_basis_variations_format.UT3Variations
-=======================================================
+UT3Variations
+=============
 
 .. toctree::
    :hidden:
@@ -26,7 +26,7 @@ t3toolbox.uniform_basis_variations_format.UT3Variations
    /autoapi/t3toolbox/uniform_basis_variations_format/UT3Variations.unstack
    /autoapi/t3toolbox/uniform_basis_variations_format/UT3Variations.stack
 
-.. py:class:: t3toolbox.uniform_basis_variations_format.UT3Variations
+.. py:class:: UT3Variations
 
    Tuple containing variation cores for basis-variation representations of TuckerTensorTrains.
 

@@ -1,4 +1,4 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.data
-===================================================================
+UniformTuckerTensorTrain.data
+=============================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.data() -> Tuple[NDArray, NDArray, NDArray, NDArray, NDArray]
+.. py:method:: UniformTuckerTensorTrain.data()

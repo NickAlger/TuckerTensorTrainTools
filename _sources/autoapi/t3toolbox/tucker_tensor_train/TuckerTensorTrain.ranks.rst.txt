@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks
-=====================================================
+TuckerTensorTrain.ranks
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks() -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: TuckerTensorTrain.ranks()
 
    Tuple containing Tucker ranks and TT ranks.
 

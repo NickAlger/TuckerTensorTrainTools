@@ -1,4 +1,4 @@
-t3toolbox.weighted_tucker_tensor_train.EdgeVectors.data
-=======================================================
+EdgeVectors.data
+================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.data() -> Tuple[Tuple[NDArray, Ellipsis], Tuple[NDArray, Ellipsis]]
+.. py:method:: EdgeVectors.data()

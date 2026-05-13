@@ -1,7 +1,7 @@
 t3toolbox.backend.common.items_are_uniform
 ==========================================
 
-.. py:function:: t3toolbox.backend.common.items_are_uniform(xx) -> bool
+.. py:function:: t3toolbox.backend.common.items_are_uniform(xx)
 
    Checks if an object can be treated as uniform for the purposes of jax.scan and jax.map.
 

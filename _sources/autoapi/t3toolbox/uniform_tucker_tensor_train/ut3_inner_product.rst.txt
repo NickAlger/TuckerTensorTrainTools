@@ -1,7 +1,7 @@
 t3toolbox.uniform_tucker_tensor_train.ut3_inner_product
 =======================================================
 
-.. py:function:: t3toolbox.uniform_tucker_tensor_train.ut3_inner_product(x: UniformTuckerTensorTrain, y: UniformTuckerTensorTrain, use_orthogonalization: bool = True, use_jax: bool = False)
+.. py:function:: t3toolbox.uniform_tucker_tensor_train.ut3_inner_product(x, y, use_orthogonalization = True, use_jax = False)
 
    Compute the Hilbert-Schmidt inner product of two uniform Tucker tensor trains.
 

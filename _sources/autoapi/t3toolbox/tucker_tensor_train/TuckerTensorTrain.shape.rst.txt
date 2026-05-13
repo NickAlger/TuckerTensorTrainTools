@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape
-=====================================================
+TuckerTensorTrain.shape
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape() -> Tuple[int, Ellipsis]
+.. py:method:: TuckerTensorTrain.shape()
 
    Shape of the represented dense tensor. ``shape=(N0,...,N(d-1))``
 

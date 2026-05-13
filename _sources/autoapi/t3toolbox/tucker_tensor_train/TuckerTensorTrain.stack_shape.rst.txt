@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape
-===========================================================
+TuckerTensorTrain.stack_shape
+=============================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape() -> Tuple[int, Ellipsis]
+.. py:method:: TuckerTensorTrain.stack_shape()
 
    If this object contains multiple stacked T3s with the same structure, this is the shape of the stack.
    If no stacking is used then ``stack_shape=()``.

@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.compute_dxis
 ======================================
 
-.. py:function:: t3toolbox.backend.probing.compute_dxis(var_tucker_cores: Union[Sequence[NDArray], NDArray], ww: Union[Sequence[NDArray], NDArray], outer_tucker_weights: Union[Sequence[NDArray], NDArray] = None, use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.compute_dxis(var_tucker_cores, ww, outer_tucker_weights = None, use_jax = False)
 
    Compute var-upward edge variables dxi.
    Used for probing a tangent vector.

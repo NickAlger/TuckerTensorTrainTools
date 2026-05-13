@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.probe_t3
 ==================================
 
-.. py:function:: t3toolbox.backend.probing.probe_t3(ww: Union[Sequence[NDArray], NDArray], x: Union[Tuple[Sequence[NDArray], Sequence[NDArray]], Tuple[NDArray, NDArray]], edge_weights: Union[Tuple[Sequence[NDArray], Sequence[NDArray], Sequence[NDArray]], Tuple[NDArray, NDArray, NDArray]] = (None, None, None)) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.probe_t3(ww, x, edge_weights = (None, None, None))
 
    Probe a Tucker tensor train.
 

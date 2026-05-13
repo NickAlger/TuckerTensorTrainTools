@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.load
-====================================================
+TuckerTensorTrain.load
+======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.load(file, use_jax: bool = False) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.load(file, use_jax = False)
    :staticmethod:
 
 

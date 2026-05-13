@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.reverse
-======================================================================
+UniformTuckerTensorTrain.reverse
+================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.reverse() -> UniformTuckerTensorTrain
+.. py:method:: UniformTuckerTensorTrain.reverse()
 
    Reversed a UniformTuckerTensorTrain.
 

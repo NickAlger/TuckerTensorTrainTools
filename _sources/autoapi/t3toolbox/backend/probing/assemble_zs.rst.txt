@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.assemble_zs
 =====================================
 
-.. py:function:: t3toolbox.backend.probing.assemble_zs(tucker_cores: Union[Sequence[NDArray], NDArray], etas: Union[Sequence[NDArray], NDArray], shape_weights: Union[Sequence[NDArray], NDArray] = None) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.assemble_zs(tucker_cores, etas, shape_weights = None)
 
    Assemble probes from downward edge variables.
 

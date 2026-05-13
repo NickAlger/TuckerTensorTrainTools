@@ -1,7 +1,7 @@
 t3toolbox.corewise.corewise_neg
 ===============================
 
-.. py:function:: t3toolbox.corewise.corewise_neg(X: NDArrayTree) -> NDArrayTree
+.. py:function:: t3toolbox.corewise.corewise_neg(X)
 
    Negate nested objects, X -> -X.
 

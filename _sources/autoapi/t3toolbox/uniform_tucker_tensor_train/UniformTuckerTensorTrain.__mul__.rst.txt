@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__mul__
-======================================================================
+UniformTuckerTensorTrain.__mul__
+================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__mul__(s, use_jax: bool = False) -> UniformTuckerTensorTrain
+.. py:method:: UniformTuckerTensorTrain.__mul__(s, use_jax = False)
 
    Scale a uniform Tucker tensor train, s,x -> s*x.
 

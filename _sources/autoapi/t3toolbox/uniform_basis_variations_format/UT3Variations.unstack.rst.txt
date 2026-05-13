@@ -1,7 +1,7 @@
-t3toolbox.uniform_basis_variations_format.UT3Variations.unstack
-===============================================================
+UT3Variations.unstack
+=====================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Variations.unstack()
+.. py:method:: UT3Variations.unstack()
 
    Unstacks stacked UT3Basis into into array-like tree of unstacked UT3Basis.
 

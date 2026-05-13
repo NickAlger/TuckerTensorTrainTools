@@ -1,7 +1,7 @@
 t3toolbox.weighted_tucker_tensor_train.wt3_probe
 ================================================
 
-.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_probe(ww: Sequence[NDArray], x: WeightedTuckerTensorTrain, use_jax: bool = False) -> Sequence[NDArray]
+.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_probe(ww, x, use_jax = False)
 
    Probe a TuckerTensorTrain.
 

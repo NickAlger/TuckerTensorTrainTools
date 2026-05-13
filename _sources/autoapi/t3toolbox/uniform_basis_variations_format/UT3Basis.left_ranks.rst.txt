@@ -1,4 +1,4 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis.left_ranks
-=============================================================
+UT3Basis.left_ranks
+===================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.left_ranks() -> NDArray
+.. py:method:: UT3Basis.left_ranks()

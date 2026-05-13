@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.d
-=================================================
+TuckerTensorTrain.d
+===================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.d() -> int
+.. py:method:: TuckerTensorTrain.d()
 
    Number of indices of the tensor. ``d=len(tucker_cores)=len(tt_cores)``
 

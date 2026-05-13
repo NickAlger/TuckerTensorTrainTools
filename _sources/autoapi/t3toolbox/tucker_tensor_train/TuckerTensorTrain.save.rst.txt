@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.save
-====================================================
+TuckerTensorTrain.save
+======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.save(file) -> None
+.. py:method:: TuckerTensorTrain.save(file)
 
    Save a Tucker tensor train to a file.
 

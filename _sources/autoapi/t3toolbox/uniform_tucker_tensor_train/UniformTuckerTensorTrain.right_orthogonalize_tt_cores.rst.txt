@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.right_orthogonalize_tt_cores
-===========================================================================================
+UniformTuckerTensorTrain.right_orthogonalize_tt_cores
+=====================================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.right_orthogonalize_tt_cores(return_variation_cores: bool = False, use_jax: bool = False)
+.. py:method:: UniformTuckerTensorTrain.right_orthogonalize_tt_cores(return_variation_cores = False, use_jax = False)
 
    Right orthogonalize the TT cores, possibly returning variation cores as well.
 

@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.randn
-=====================================================
+TuckerTensorTrain.randn
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.randn(shape: Tuple[int, Ellipsis], tucker_ranks: Tuple[int, Ellipsis], tt_ranks: Tuple[int, Ellipsis], stack_shape: Tuple[int, Ellipsis] = (), use_jax: bool = False) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.randn(shape, tucker_ranks, tt_ranks, stack_shape = (), use_jax = False)
    :staticmethod:
 
 

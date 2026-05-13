@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply
-=====================================================
+TuckerTensorTrain.apply
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.apply(vecs: collections.abc.Sequence[t3toolbox.backend.common.NDArray]) -> t3toolbox.backend.common.NDArray
+.. py:method:: TuckerTensorTrain.apply(vecs)
 
    Contract a Tucker tensor train with vectors in all indices.
 

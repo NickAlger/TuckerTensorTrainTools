@@ -1,4 +1,4 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.validate
-=========================================================================
+WeightedTuckerTensorTrain.validate
+==================================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.validate()
+.. py:method:: WeightedTuckerTensorTrain.validate()

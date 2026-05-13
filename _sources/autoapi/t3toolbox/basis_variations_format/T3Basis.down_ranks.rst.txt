@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Basis.down_ranks
-====================================================
+T3Basis.down_ranks
+==================
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.down_ranks() -> Tuple[int, Ellipsis]
+.. py:method:: T3Basis.down_ranks()

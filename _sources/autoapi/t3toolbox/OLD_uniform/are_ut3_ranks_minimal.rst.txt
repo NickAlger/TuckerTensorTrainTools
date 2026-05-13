@@ -1,7 +1,7 @@
 t3toolbox.OLD_uniform.are_ut3_ranks_minimal
 ===========================================
 
-.. py:function:: t3toolbox.OLD_uniform.are_ut3_ranks_minimal(masks: UniformEdgeWeights) -> bool
+.. py:function:: t3toolbox.OLD_uniform.are_ut3_ranks_minimal(masks)
 
    Checks if the ranks of a uniform Tucker train are minimal.
 

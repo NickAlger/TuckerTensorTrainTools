@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__
-=======================================================
+TuckerTensorTrain.__add__
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__(other)
+.. py:method:: TuckerTensorTrain.__add__(other)
 
    Add Tucker tensor trains x and y, yielding a Tucker tensor train x+y with summed ranks.
 

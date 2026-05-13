@@ -1,7 +1,7 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.norm
-=====================================================================
+WeightedTuckerTensorTrain.norm
+==============================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.norm(use_orthogonalization: bool = True, use_jax: bool = False)
+.. py:method:: WeightedTuckerTensorTrain.norm(use_orthogonalization = True, use_jax = False)
 
    Computes the Hilbert-Schmidt norm of the weighted Tucker tensor train.
 

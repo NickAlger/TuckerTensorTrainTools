@@ -1,4 +1,4 @@
-t3toolbox.weighted_tucker_tensor_train.EdgeVectors.d
-====================================================
+EdgeVectors.d
+=============
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.d() -> int
+.. py:method:: EdgeVectors.d()

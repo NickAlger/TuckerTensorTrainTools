@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack
-=====================================================
+TuckerTensorTrain.stack
+=======================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack(xx, use_jax: bool = False) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.stack(xx, use_jax = False)
    :staticmethod:
 
 

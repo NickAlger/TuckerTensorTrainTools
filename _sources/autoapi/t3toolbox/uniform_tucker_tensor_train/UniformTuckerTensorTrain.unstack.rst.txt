@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.unstack
-======================================================================
+UniformTuckerTensorTrain.unstack
+================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.unstack()
+.. py:method:: UniformTuckerTensorTrain.unstack()
 
    Unstacks this UniformTuckerTensorTrain into an array-like tree
    of nested Tuples containing UniformTuckerTensorTrains as leaf nodes.

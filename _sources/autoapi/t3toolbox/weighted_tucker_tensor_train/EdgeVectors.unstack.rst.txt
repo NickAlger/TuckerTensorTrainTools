@@ -1,7 +1,7 @@
-t3toolbox.weighted_tucker_tensor_train.EdgeVectors.unstack
-==========================================================
+EdgeVectors.unstack
+===================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.unstack()
+.. py:method:: EdgeVectors.unstack()
 
    Unstack into an array-like tree.
 

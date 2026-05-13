@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.n
-================================================================
+UniformTuckerTensorTrain.n
+==========================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.n() -> int
+.. py:method:: UniformTuckerTensorTrain.n()
 
    Padded Tucker rank. n >= max(n0,...,n(d-1)), where ni are the original (unpadded) Tucker ranks.
 

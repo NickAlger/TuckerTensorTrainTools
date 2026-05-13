@@ -1,7 +1,7 @@
 t3toolbox.corewise.corewise_add
 ===============================
 
-.. py:function:: t3toolbox.corewise.corewise_add(X: NDArrayTree, Y: NDArrayTree) -> NDArrayTree
+.. py:function:: t3toolbox.corewise.corewise_add(X, Y)
 
    Add nested objects, X,Y -> X+Y.
 

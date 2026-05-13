@@ -1,7 +1,7 @@
 t3toolbox.uniform_tucker_tensor_train.ut3_add
 =============================================
 
-.. py:function:: t3toolbox.uniform_tucker_tensor_train.ut3_add(x: UniformTuckerTensorTrain, y: UniformTuckerTensorTrain, squash: bool = True, use_jax: bool = False) -> UniformTuckerTensorTrain
+.. py:function:: t3toolbox.uniform_tucker_tensor_train.ut3_add(x, y, squash = True, use_jax = False)
 
    Add two UniformTuckerTensorTrains, x,y -> x+y.
 

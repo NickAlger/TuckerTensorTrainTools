@@ -1,7 +1,7 @@
-t3toolbox.basis_variations_format.T3Basis.variation_shapes
-==========================================================
+T3Basis.variation_shapes
+========================
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.variation_shapes() -> Tuple[Tuple[Tuple[int, Ellipsis], Ellipsis], Tuple[Tuple[int, Ellipsis], Ellipsis]]
+.. py:method:: T3Basis.variation_shapes()
 
    T3Variations shapes that fit with this T3Basis.
 

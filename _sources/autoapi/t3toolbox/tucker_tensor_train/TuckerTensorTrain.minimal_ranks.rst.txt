@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks
-=============================================================
+TuckerTensorTrain.minimal_ranks
+===============================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks() -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: TuckerTensorTrain.minimal_ranks()
 
    Ranks of the smallest possible Tucker tensor train that represents the same tensor.
    Tucker tensor trains may be made to have minimal ranks using T3-SVD.

@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.squash
-======================================================
+TuckerTensorTrain.squash
+========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.squash() -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.squash()
 
    Make leading and trailing TT ranks equal to 1 (r0=rd=1), without changing tensor being represented.
 

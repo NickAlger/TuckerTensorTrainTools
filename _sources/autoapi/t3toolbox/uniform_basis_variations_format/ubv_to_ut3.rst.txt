@@ -1,7 +1,7 @@
 t3toolbox.uniform_basis_variations_format.ubv_to_ut3
 ====================================================
 
-.. py:function:: t3toolbox.uniform_basis_variations_format.ubv_to_ut3(ii: int, use_tt_variation: bool, basis: UT3Basis, variations: UT3Variations) -> t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain
+.. py:function:: t3toolbox.uniform_basis_variations_format.ubv_to_ut3(ii, use_tt_variation, basis, variations)
 
    Convert basis-variations representation to TuckerTensorTrain.
 

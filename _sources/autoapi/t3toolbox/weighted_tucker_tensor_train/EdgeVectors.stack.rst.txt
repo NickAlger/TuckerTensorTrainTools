@@ -1,7 +1,7 @@
-t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack
-========================================================
+EdgeVectors.stack
+=================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.stack(xx, use_jax: bool = False)
+.. py:method:: EdgeVectors.stack(xx, use_jax = False)
    :staticmethod:
 
 

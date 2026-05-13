@@ -1,7 +1,7 @@
 t3toolbox.corewise.corewise_scale
 =================================
 
-.. py:function:: t3toolbox.corewise.corewise_scale(X: NDArrayTree, s) -> NDArrayTree
+.. py:function:: t3toolbox.corewise.corewise_scale(X, s)
 
    Scale nested objects, X,s -> s*X.
 

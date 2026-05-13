@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.stack
-====================================================================
+UniformTuckerTensorTrain.stack
+==============================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.stack(uxx, use_jax: bool = False) -> UniformTuckerTensorTrain
+.. py:method:: UniformTuckerTensorTrain.stack(uxx, use_jax = False)
    :staticmethod:
 
 

@@ -1,4 +1,4 @@
-t3toolbox.uniform_basis_variations_format.UT3Basis.uniform_variation_shapes
-===========================================================================
+UT3Basis.uniform_variation_shapes
+=================================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Basis.uniform_variation_shapes() -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: UT3Basis.uniform_variation_shapes()

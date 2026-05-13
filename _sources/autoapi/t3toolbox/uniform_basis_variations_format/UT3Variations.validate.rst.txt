@@ -1,7 +1,7 @@
-t3toolbox.uniform_basis_variations_format.UT3Variations.validate
-================================================================
+UT3Variations.validate
+======================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Variations.validate() -> None
+.. py:method:: UT3Variations.validate()
 
    Check rank and shape consistency of uniform Tucker tensor train basis (`UT3Basis`).
 

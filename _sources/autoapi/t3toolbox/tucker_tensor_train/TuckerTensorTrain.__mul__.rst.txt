@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__
-=======================================================
+TuckerTensorTrain.__mul__
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__(other, use_jax: bool = None)
+.. py:method:: TuckerTensorTrain.__mul__(other, use_jax = None)
 
    Pointwise multiplication of a Tucker tensor train.
 

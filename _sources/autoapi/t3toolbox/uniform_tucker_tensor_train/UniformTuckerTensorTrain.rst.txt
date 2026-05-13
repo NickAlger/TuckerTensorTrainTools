@@ -1,5 +1,5 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain
-==============================================================
+UniformTuckerTensorTrain
+========================
 
 .. toctree::
    :hidden:
@@ -35,7 +35,7 @@ t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain
    /autoapi/t3toolbox/uniform_tucker_tensor_train/UniformTuckerTensorTrain.unstack
    /autoapi/t3toolbox/uniform_tucker_tensor_train/UniformTuckerTensorTrain.stack
 
-.. py:class:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain
+.. py:class:: UniformTuckerTensorTrain
 
    Uniform Tucker tensor train.
 

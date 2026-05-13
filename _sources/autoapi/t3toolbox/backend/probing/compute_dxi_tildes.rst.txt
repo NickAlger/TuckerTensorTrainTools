@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.compute_dxi_tildes
 ============================================
 
-.. py:function:: t3toolbox.backend.probing.compute_dxi_tildes(sigma_tildes: Union[Sequence[NDArray], NDArray], tau_tildes: Union[Sequence[NDArray], NDArray], outer_tt_cores: Union[Sequence[NDArray], NDArray], mus: Union[Sequence[NDArray], NDArray], nus: Union[Sequence[NDArray], NDArray], outer_tucker_weights: Union[Sequence[NDArray], NDArray] = None, use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.compute_dxi_tildes(sigma_tildes, tau_tildes, outer_tt_cores, mus, nus, outer_tucker_weights = None, use_jax = False)
 
    Adjoint-var-downward edge variables dxi_tilde.
    Used for computing transpose of mapping from a Tucker tensor train tangent vector to its actions.

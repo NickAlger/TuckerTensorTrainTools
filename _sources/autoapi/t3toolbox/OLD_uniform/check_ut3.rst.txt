@@ -1,7 +1,7 @@
 t3toolbox.OLD_uniform.check_ut3
 ===============================
 
-.. py:function:: t3toolbox.OLD_uniform.check_ut3(cores: UniformTuckerTensorTrain, masks: UniformEdgeWeights) -> None
+.. py:function:: t3toolbox.OLD_uniform.check_ut3(cores, masks)
 
    Check internal shape consistency of UniformTuckerTensorTrain.
 

@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__sub__
-======================================================================
+UniformTuckerTensorTrain.__sub__
+================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.__sub__(other: UniformTuckerTensorTrain, squash: bool = True, use_jax: bool = False) -> UniformTuckerTensorTrain
+.. py:method:: UniformTuckerTensorTrain.__sub__(other, squash = True, use_jax = False)
 
    Subtract two UniformTuckerTensorTrains, x,y -> x-y.
 

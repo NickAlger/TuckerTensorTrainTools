@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.squash_tails
-===========================================================================
+UniformTuckerTensorTrain.squash_tails
+=====================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.squash_tails(use_jax: bool = False) -> UniformTuckerTensorTrain
+.. py:method:: UniformTuckerTensorTrain.squash_tails(use_jax = False)
 
    Make the first index of the first TT supercore
    and the last index of the last TT-supercore equal to 1 by summing.

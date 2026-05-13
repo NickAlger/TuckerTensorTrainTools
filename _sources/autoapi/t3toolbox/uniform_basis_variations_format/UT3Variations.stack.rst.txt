@@ -1,7 +1,7 @@
-t3toolbox.uniform_basis_variations_format.UT3Variations.stack
-=============================================================
+UT3Variations.stack
+===================
 
-.. py:method:: t3toolbox.uniform_basis_variations_format.UT3Variations.stack(xx, use_jax: bool = False)
+.. py:method:: UT3Variations.stack(xx, use_jax = False)
    :staticmethod:
 
 

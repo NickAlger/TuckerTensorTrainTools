@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Variations.d
-================================================
+T3Variations.d
+==============
 
-.. py:method:: t3toolbox.basis_variations_format.T3Variations.d() -> int
+.. py:method:: T3Variations.d()

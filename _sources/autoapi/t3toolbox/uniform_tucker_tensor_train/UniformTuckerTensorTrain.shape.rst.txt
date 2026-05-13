@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.shape
-====================================================================
+UniformTuckerTensorTrain.shape
+==============================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.shape() -> Tuple[int, Ellipsis]
+.. py:method:: UniformTuckerTensorTrain.shape()
 
    Get the original shapes, not including portions of the tensors that are unmasked.
 

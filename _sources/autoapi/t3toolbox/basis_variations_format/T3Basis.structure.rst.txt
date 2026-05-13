@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Basis.structure
-===================================================
+T3Basis.structure
+=================
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.structure() -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis], Tuple[int, Ellipsis], Tuple[int, Ellipsis], Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: T3Basis.structure()

@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.probe_tangent
 =======================================
 
-.. py:function:: t3toolbox.backend.probing.probe_tangent(ww: Union[Sequence[NDArray], NDArray], variation: Union[Tuple[Sequence[NDArray], Sequence[NDArray]], Tuple[NDArray, NDArray]], base: Union[Tuple[Sequence[NDArray], Sequence[NDArray], Sequence[NDArray], Sequence[NDArray]], Tuple[NDArray, NDArray, NDArray, NDArray]], edge_weights: Union[Tuple[Sequence[NDArray], Sequence[NDArray], Sequence[NDArray], Sequence[NDArray], Sequence[NDArray]], Tuple[NDArray, NDArray, NDArray, NDArray, NDArray]] = (None, None, None, None, None), use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.probe_tangent(ww, variation, base, edge_weights = (None, None, None, None, None), use_jax = False)
 
    Probe a tangent vector.
 

@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__
-=======================================================
+TuckerTensorTrain.__sub__
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__(other) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.__sub__(other)
 
    Subtract Tucker tensor trains, x - y, yielding a Tucker tensor train with summed ranks.
 

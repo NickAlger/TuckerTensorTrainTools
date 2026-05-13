@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Basis.stack_shape
-=====================================================
+T3Basis.stack_shape
+===================
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.stack_shape() -> Tuple[int, Ellipsis]
+.. py:method:: T3Basis.stack_shape()

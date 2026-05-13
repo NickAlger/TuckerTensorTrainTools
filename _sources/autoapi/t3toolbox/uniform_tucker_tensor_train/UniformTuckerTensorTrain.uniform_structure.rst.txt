@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.uniform_structure
-================================================================================
+UniformTuckerTensorTrain.uniform_structure
+==========================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.uniform_structure() -> Tuple[int, int, int, int, Tuple[int, Ellipsis]]
+.. py:method:: UniformTuckerTensorTrain.uniform_structure()
 
    d, N, n, r, stack_shape
 

@@ -1,7 +1,7 @@
 t3toolbox.weighted_tucker_tensor_train.wt3_inner_product
 ========================================================
 
-.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_inner_product(A: WeightedTuckerTensorTrain, B: WeightedTuckerTensorTrain, use_orthogonalization: bool = True, use_jax: bool = False)
+.. py:function:: t3toolbox.weighted_tucker_tensor_train.wt3_inner_product(A, B, use_orthogonalization = True, use_jax = False)
 
    Computes the Hilbert-Schmidt inner product between two Tucker tensor trains.
 

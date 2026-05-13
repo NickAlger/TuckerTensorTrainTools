@@ -1,5 +1,5 @@
-t3toolbox.basis_variations_format.T3Basis
-=========================================
+T3Basis
+=======
 
 .. toctree::
    :hidden:
@@ -19,7 +19,7 @@ t3toolbox.basis_variations_format.T3Basis
    /autoapi/t3toolbox/basis_variations_format/T3Basis.unstack
    /autoapi/t3toolbox/basis_variations_format/T3Basis.stack
 
-.. py:class:: t3toolbox.basis_variations_format.T3Basis
+.. py:class:: T3Basis
 
    Basis for basis-variations representation of TuckerTensorTrains
 

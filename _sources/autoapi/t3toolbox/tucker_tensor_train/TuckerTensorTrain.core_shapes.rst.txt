@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes
-===========================================================
+TuckerTensorTrain.core_shapes
+=============================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes() -> Tuple[Tuple[Tuple[int, Ellipsis], Ellipsis], Tuple[Tuple[int, Ellipsis], Ellipsis]]
+.. py:method:: TuckerTensorTrain.core_shapes()
 
    Shapes of the Tucker and TT cores.
 

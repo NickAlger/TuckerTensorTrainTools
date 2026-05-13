@@ -1,7 +1,7 @@
 t3toolbox.backend.common.xprepend
 =================================
 
-.. py:function:: t3toolbox.backend.common.xprepend(x, S: Union[NDArray, Sequence]) -> Union[NDArray, Tuple]
+.. py:function:: t3toolbox.backend.common.xprepend(x, S)
 
    Prepend slice to array or element to sequence
 

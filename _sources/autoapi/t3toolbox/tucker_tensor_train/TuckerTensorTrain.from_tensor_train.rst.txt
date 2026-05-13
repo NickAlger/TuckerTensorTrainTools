@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_tensor_train
-=================================================================
+TuckerTensorTrain.from_tensor_train
+===================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_tensor_train(tt_cores: collections.abc.Sequence[t3toolbox.backend.common.NDArray]) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.from_tensor_train(tt_cores)
    :staticmethod:
 
 

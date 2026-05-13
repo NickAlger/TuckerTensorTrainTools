@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks
-=================================================================
+TuckerTensorTrain.has_minimal_ranks
+===================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks() -> bool
+.. py:method:: TuckerTensorTrain.has_minimal_ranks()
 
    True if this Tucker tensor train's ranks equal the minimal ranks, False otherwise.
 

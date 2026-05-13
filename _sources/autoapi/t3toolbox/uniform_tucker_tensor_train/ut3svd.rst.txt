@@ -1,7 +1,7 @@
 t3toolbox.uniform_tucker_tensor_train.ut3svd
 ============================================
 
-.. py:function:: t3toolbox.uniform_tucker_tensor_train.ut3svd(x: UniformTuckerTensorTrain, max_tucker_ranks: NDArray = None, max_tt_ranks: NDArray = None, use_jax: bool = False) -> Tuple[UniformTuckerTensorTrain, NDArray, NDArray]
+.. py:function:: t3toolbox.uniform_tucker_tensor_train.ut3svd(x, max_tucker_ranks = None, max_tt_ranks = None, use_jax = False)
 
    Compute T3-SVD of uniform Tucker tensor train.
 

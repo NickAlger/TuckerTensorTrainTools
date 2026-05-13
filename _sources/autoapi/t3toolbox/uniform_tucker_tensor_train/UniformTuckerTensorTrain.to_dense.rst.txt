@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.to_dense
-=======================================================================
+UniformTuckerTensorTrain.to_dense
+=================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.to_dense(use_jax: bool = False) -> NDArray
+.. py:method:: UniformTuckerTensorTrain.to_dense(use_jax = False)
 
    Convert uniform Tucker tensor train to dense array.
 

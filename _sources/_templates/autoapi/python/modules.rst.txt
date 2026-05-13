@@ -1,7 +1,7 @@
 {{ name | escape | underline}}
 
 
-.. automodule:: {{ name }}
+.. automodule:: {{ fullname }}
 
    {% block attributes %}
    {% if attributes %}

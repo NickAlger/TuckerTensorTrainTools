@@ -1,7 +1,7 @@
 t3toolbox.backend.probing.compute_sigma_tildes
 ==============================================
 
-.. py:function:: t3toolbox.backend.probing.compute_sigma_tildes(deta_tildes: Union[Sequence[NDArray], NDArray], right_tt_cores: Union[Sequence[NDArray], NDArray], xis: Union[Sequence[NDArray], NDArray], nus: Union[Sequence[NDArray], NDArray], right_tt_weights: Union[Sequence[NDArray], NDArray] = None, use_jax: bool = False) -> Union[Sequence[NDArray], NDArray]
+.. py:function:: t3toolbox.backend.probing.compute_sigma_tildes(deta_tildes, right_tt_cores, xis, nus, right_tt_weights = None, use_jax = False)
 
    Adjoint-var-leftward edge variables sigma_tilde.
    Used for computing transpose of mapping from a Tucker tensor train tangent vector to its actions.

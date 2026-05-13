@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Variations.data
-===================================================
+T3Variations.data
+=================
 
-.. py:method:: t3toolbox.basis_variations_format.T3Variations.data() -> Tuple[Tuple[NDArray, Ellipsis], Tuple[NDArray, Ellipsis]]
+.. py:method:: T3Variations.data()

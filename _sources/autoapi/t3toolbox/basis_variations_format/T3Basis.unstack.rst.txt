@@ -1,7 +1,7 @@
-t3toolbox.basis_variations_format.T3Basis.unstack
-=================================================
+T3Basis.unstack
+===============
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.unstack()
+.. py:method:: T3Basis.unstack()
 
    Unstack into an array-like tree.
 

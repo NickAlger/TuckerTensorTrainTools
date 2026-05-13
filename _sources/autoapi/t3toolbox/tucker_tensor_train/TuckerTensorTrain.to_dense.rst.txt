@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_dense
-========================================================
+TuckerTensorTrain.to_dense
+==========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_dense(squash_tails: bool = True) -> t3toolbox.backend.common.NDArray
+.. py:method:: TuckerTensorTrain.to_dense(squash_tails = True)
 
    Contract a Tucker tensor train to form the dense tensor it represents.
 

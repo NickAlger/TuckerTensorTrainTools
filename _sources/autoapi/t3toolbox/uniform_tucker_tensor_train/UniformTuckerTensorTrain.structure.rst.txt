@@ -1,7 +1,7 @@
-t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.structure
-========================================================================
+UniformTuckerTensorTrain.structure
+==================================
 
-.. py:method:: t3toolbox.uniform_tucker_tensor_train.UniformTuckerTensorTrain.structure() -> Tuple[Tuple[int, Ellipsis], NDArray, NDArray, NDArray]
+.. py:method:: UniformTuckerTensorTrain.structure()
 
    Structure of the original tensor.
 

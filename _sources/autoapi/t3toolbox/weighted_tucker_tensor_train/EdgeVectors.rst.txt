@@ -1,5 +1,5 @@
-t3toolbox.weighted_tucker_tensor_train.EdgeVectors
-==================================================
+EdgeVectors
+===========
 
 .. toctree::
    :hidden:
@@ -15,7 +15,7 @@ t3toolbox.weighted_tucker_tensor_train.EdgeVectors
    /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.unstack
    /autoapi/t3toolbox/weighted_tucker_tensor_train/EdgeVectors.stack
 
-.. py:class:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors
+.. py:class:: EdgeVectors
 
    Vectors that "live" on edges in a T3 tensor network.
 

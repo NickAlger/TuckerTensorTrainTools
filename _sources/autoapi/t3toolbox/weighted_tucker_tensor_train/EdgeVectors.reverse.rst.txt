@@ -1,7 +1,7 @@
-t3toolbox.weighted_tucker_tensor_train.EdgeVectors.reverse
-==========================================================
+EdgeVectors.reverse
+===================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.EdgeVectors.reverse() -> EdgeVectors
+.. py:method:: EdgeVectors.reverse()
 
    Reverse edge vector ordering.
 

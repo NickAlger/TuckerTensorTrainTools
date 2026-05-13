@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks
-=================================================================
+TuckerTensorTrain.get_minimal_ranks
+===================================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks(shape: collections.abc.Sequence[int], tucker_ranks: collections.abc.Sequence[int], tt_ranks: collections.abc.Sequence[int]) -> Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
+.. py:method:: TuckerTensorTrain.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
    :staticmethod:
 
 

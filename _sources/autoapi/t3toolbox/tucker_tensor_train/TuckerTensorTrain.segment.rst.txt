@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.segment
-=======================================================
+TuckerTensorTrain.segment
+=========================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.segment(start: int, stop: int) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.segment(start, stop)
 
    Extract contiguous segment of TuckerTensorTrain. Requires stop > start.
 

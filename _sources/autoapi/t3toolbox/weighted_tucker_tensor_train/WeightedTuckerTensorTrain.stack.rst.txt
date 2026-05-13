@@ -1,7 +1,7 @@
-t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.stack
-======================================================================
+WeightedTuckerTensorTrain.stack
+===============================
 
-.. py:method:: t3toolbox.weighted_tucker_tensor_train.WeightedTuckerTensorTrain.stack(xx, use_jax: bool = False)
+.. py:method:: WeightedTuckerTensorTrain.stack(xx, use_jax = False)
    :staticmethod:
 
 

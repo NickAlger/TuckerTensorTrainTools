@@ -1,7 +1,7 @@
-t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_vector
-===========================================================
+TuckerTensorTrain.from_vector
+=============================
 
-.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_vector(x_flat: t3toolbox.backend.common.NDArray, shape: collections.abc.Sequence[int], tucker_ranks: collections.abc.Sequence[int], tt_ranks: collections.abc.Sequence[int], stack_shape: collections.abc.Sequence[int] = ()) -> TuckerTensorTrain
+.. py:method:: TuckerTensorTrain.from_vector(x_flat, shape, tucker_ranks, tt_ranks, stack_shape = ())
    :staticmethod:
 
 

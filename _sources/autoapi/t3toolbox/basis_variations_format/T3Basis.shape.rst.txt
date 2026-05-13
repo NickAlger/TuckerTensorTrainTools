@@ -1,4 +1,4 @@
-t3toolbox.basis_variations_format.T3Basis.shape
-===============================================
+T3Basis.shape
+=============
 
-.. py:method:: t3toolbox.basis_variations_format.T3Basis.shape() -> Tuple[int, Ellipsis]
+.. py:method:: T3Basis.shape()

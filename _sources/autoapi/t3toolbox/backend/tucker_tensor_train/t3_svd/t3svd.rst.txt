@@ -1,7 +1,7 @@
 t3toolbox.backend.tucker_tensor_train.t3_svd.t3svd
 ==================================================
 
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_svd.t3svd(x: t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]], max_tt_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, max_tucker_ranks: t3toolbox.backend.common.typ.Sequence[int] = None, rtol: float = None, atol: float = None) -> t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis], t3toolbox.backend.common.typ.Tuple[t3toolbox.backend.common.NDArray, Ellipsis]]
+.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_svd.t3svd(x, max_tt_ranks = None, max_tucker_ranks = None, rtol = None, atol = None)
 
    Compute (truncated) T3-SVD of TuckerTensorTrain.
 
