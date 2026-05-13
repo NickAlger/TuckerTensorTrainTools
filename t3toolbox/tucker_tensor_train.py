@@ -67,6 +67,7 @@ class TuckerTensorTrain:
 
     Related attributes and methods:
 
+    - :py:attr:`.TuckerTensorTrain.data` Tuple containing Tucker cores and TT cores.
     - :py:attr:`.TuckerTensorTrain.core_shapes` Shapes of all Tucker and TT cores.
     - :py:meth:`.TuckerTensorTrain.get_core_shapes` Core shapes of hypothetical TuckerTensorTrain.
     - :py:attr:`.TuckerTensorTrain.size` Combined size of all cores.
@@ -80,6 +81,8 @@ class TuckerTensorTrain:
     >>> x = t3.TuckerTensorTrain(tucker_cores, tt_cores) # TuckerTensorTrain, cores filled with zeros
     >>> print(x.core_shapes)
     (((4, 14), (5, 15), (6, 16)), ((1, 4, 3), (3, 5, 2), (2, 6, 1)))
+    >>> print(x.data == (tucker_cores, tt_cores))
+    True
 
     Shape and ranks:
     ----------------

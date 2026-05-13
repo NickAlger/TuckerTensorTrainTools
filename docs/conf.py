@@ -9,38 +9,43 @@ release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 extensions = [
-    #'sphinx.ext.autodoc',
+    'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'autoapi.extension',
     'sphinx.ext.githubpages',
 ]
 
-# 1. HIDE MODULE NAMES IN SIGNATURES (CRITICAL)
-# This prevents Sphinx from prefixing every class/function with its module path.
 add_module_names = False
 typehints_fully_qualified = False
 python_use_unqualified_type_names = True
 toc_object_entries_show_parents = 'hide'
+
+autodoc_typehints = 'description'
+
+html_favicon = 'favicon.ico'
 
 # -- AutoAPI configuration ---------------------------------------------------
 autoapi_dirs = ['../t3toolbox']  # Path to your source code
 autoapi_template_dir = '_templates/autoapi'
 autoapi_type = 'python'
 
-# 2. PREVENT FULL NAMES IN SIDEBAR/TOC
-# By default, AutoAPI might include the full path in titles.
-autoapi_add_toctree_entry = True
-autoapi_options = [
-    'members',
-    'undoc-members',
-    'show-inheritance',
-    'show-module-summary',
-    'special-members',
-    'imported-members',
-]
+#autoapi_add_toctree_entry = True
 
 autoapi_own_page_level = 'method'
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'pydata_sphinx_theme'
 
+####
+
+def autoapi_prepare_jinja_env(jinja_env):
+    def get_class_and_method(obj_id):
+        parts = obj_id.split('.')
+        if len(parts) >= 2:
+            return f"{parts[-2]}.{parts[-1]}"
+        return obj_id
+
+    jinja_env.filters["class_method_format"] = get_class_and_method
+    
+# Ensure the hook is configured
+# autoapi_prepare_jinja_env = autoapi_prepare_jinja_env
