@@ -5,4 +5,8 @@ TuckerTensorTrain.to_numpy
 
    Convert arrays defining TuckerTensorTrain into Numpy arrays.
 
+   :returns: * *TuckerTensorTrain* -- Tucker tensor train where ``tucker_cores`` and ``tt_cores`` are numpy arrays.
+             * *See Also*
+             * *---------*
+             * :py:meth:`.TuckerTensorTrain.to_jax`
 

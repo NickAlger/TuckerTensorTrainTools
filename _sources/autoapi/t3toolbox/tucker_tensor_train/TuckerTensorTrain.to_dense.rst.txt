@@ -3,16 +3,14 @@ TuckerTensorTrain.to_dense
 
 .. py:method:: TuckerTensorTrain.to_dense(squash_tails = True)
 
-   Contract a Tucker tensor train to form the dense tensor it represents.
+   Form dense tensor from this TuckerTensorTrain.
 
-   :param self: The Tucker tensor train to convert to a dense array
-   :type self: TuckerTensorTrain
-   :param squash_tails: Whether to contract the leading and trailing 1s with the first and last TT indices.
-   :type squash_tails: bool, defaults to True
+   :param squash_tails: Whether to contract the leading and trailing 1s with the first and last TT indices. (Default: True)
+   :type squash_tails: bool, optional
 
-   :returns: **dense_x** -- Dense tensor represented by x,
-             which has shape (N0, ..., N(d-1)) if squash_tails=True,
-             or (r0,N0,...,N(d-1),rd) if squash_tails=False.
+   :returns: Dense tensor represented by this TuckerTensorTrain,
+             which has ``shape=stack_shape+(N0, ..., N(d-1))`` if ``squash_tails=True``,
+             or ``shape=stack_shape+(r0,N0,...,N(d-1),rd)`` if ``squash_tails=False``.
    :rtype: NDArray
 
    .. rubric:: Examples

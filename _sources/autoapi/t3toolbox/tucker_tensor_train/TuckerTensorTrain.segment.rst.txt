@@ -3,7 +3,19 @@ TuckerTensorTrain.segment
 
 .. py:method:: TuckerTensorTrain.segment(start, stop)
 
-   Extract contiguous segment of TuckerTensorTrain. Requires stop > start.
+   Extract contiguous segment of this TuckerTensorTrain. Segments must have length at least one.
+
+   :param start: Starting index for segment. Requires ``stop > start``.
+   :type start: int
+   :param stop: Stopping index for segment. Requires ``stop > start``.
+   :type stop: int
+
+   :returns: Segment of this TuckerTensorTrain, with ``shape=(N(start), ..., N(stop-1))``.
+   :rtype: TuckerTensorTrain
+
+   :raises ValueError: If ``stop <= start``.
+
+   .. seealso:: :py:method:`.TuckerTensorTrain.concatenate`
 
    .. rubric:: Examples
 

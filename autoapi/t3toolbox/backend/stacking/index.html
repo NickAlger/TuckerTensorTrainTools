@@ -486,20 +486,8 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../tucker_tensor_train/index.html">t3toolbox.tucker_tensor_train</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.html">TuckerTensorTrain</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.data.html">TuckerTensorTrain.data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.d.html">TuckerTensorTrain.d</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.stack_shape.html">TuckerTensorTrain.stack_shape</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.shape.html">TuckerTensorTrain.shape</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.tucker_ranks.html">TuckerTensorTrain.tucker_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.tt_ranks.html">TuckerTensorTrain.tt_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.ranks.html">TuckerTensorTrain.ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.structure.html">TuckerTensorTrain.structure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.get_core_shapes.html">TuckerTensorTrain.get_core_shapes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.core_shapes.html">TuckerTensorTrain.core_shapes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.size.html">TuckerTensorTrain.size</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.get_minimal_ranks.html">TuckerTensorTrain.get_minimal_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.minimal_ranks.html">TuckerTensorTrain.minimal_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.has_minimal_ranks.html">TuckerTensorTrain.has_minimal_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.validate.html">TuckerTensorTrain.validate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.__post_init__.html">TuckerTensorTrain.__post_init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.to_dense.html">TuckerTensorTrain.to_dense</a></li>
@@ -510,7 +498,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.resize.html">TuckerTensorTrain.resize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.to_jax.html">TuckerTensorTrain.to_jax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.to_numpy.html">TuckerTensorTrain.to_numpy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.contains_jax.html">TuckerTensorTrain.contains_jax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.copy.html">TuckerTensorTrain.copy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.unstack.html">TuckerTensorTrain.unstack</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../tucker_tensor_train/TuckerTensorTrain.stack.html">TuckerTensorTrain.stack</a></li>
@@ -781,7 +768,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="apply_func_to_leaf_subtrees.html#t3toolbox.backend.stacking.apply_func_to_leaf_subtrees" title="t3toolbox.backend.stacking.apply_func_to_leaf_subtrees"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_func_to_leaf_subtrees</span></code></a>(tree, func, leaf_structure)</p></td>
 <td><p>Apply a function to all &quot;leafs&quot; in a tree.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="stack.html#t3toolbox.backend.stacking.stack" title="t3toolbox.backend.stacking.stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stack</span></code></a>(T, axes[, use_jax])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="stack.html#t3toolbox.backend.stacking.stack" title="t3toolbox.backend.stacking.stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stack</span></code></a>(T, axes)</p></td>
 <td><p>Stack array-like nested tree structure.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="unstack.html#t3toolbox.backend.stacking.unstack" title="t3toolbox.backend.stacking.unstack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unstack</span></code></a>(S, axes)</p></td>
@@ -793,13 +780,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="basic_ragged_unstack.html#t3toolbox.backend.stacking.basic_ragged_unstack" title="t3toolbox.backend.stacking.basic_ragged_unstack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_ragged_unstack</span></code></a>(x, first_leaf_num_nonstacking_axes)</p></td>
 <td><p>Unstack stacked ragged array tuple into array-like tree</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="basic_ragged_stack.html#t3toolbox.backend.stacking.basic_ragged_stack" title="t3toolbox.backend.stacking.basic_ragged_stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_ragged_stack</span></code></a>(xx[, use_jax])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="basic_ragged_stack.html#t3toolbox.backend.stacking.basic_ragged_stack" title="t3toolbox.backend.stacking.basic_ragged_stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_ragged_stack</span></code></a>(xx)</p></td>
 <td><p>Stack array-like tree of ragged array tuples into single ragged array tuple.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="basic_uniform_unstack.html#t3toolbox.backend.stacking.basic_uniform_unstack" title="t3toolbox.backend.stacking.basic_uniform_unstack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_uniform_unstack</span></code></a>(x, first_leaf_num_nonstacking_axes)</p></td>
 <td><p>Unstack stacked uniform array tuple into array-like tree</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="basic_uniform_stack.html#t3toolbox.backend.stacking.basic_uniform_stack" title="t3toolbox.backend.stacking.basic_uniform_stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_uniform_stack</span></code></a>(xx[, use_jax])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="basic_uniform_stack.html#t3toolbox.backend.stacking.basic_uniform_stack" title="t3toolbox.backend.stacking.basic_uniform_stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_uniform_stack</span></code></a>(xx)</p></td>
 <td><p>Stack array-like tree of uniform array tuples into single ragged array tuple.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="tree_zip.html#t3toolbox.backend.stacking.tree_zip" title="t3toolbox.backend.stacking.tree_zip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tree_zip</span></code></a>(T1, T2)</p></td>

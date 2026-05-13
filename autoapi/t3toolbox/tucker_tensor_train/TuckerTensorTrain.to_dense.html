@@ -486,20 +486,8 @@
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">t3toolbox.tucker_tensor_train</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="TuckerTensorTrain.html">TuckerTensorTrain</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.data.html">TuckerTensorTrain.data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.d.html">TuckerTensorTrain.d</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.stack_shape.html">TuckerTensorTrain.stack_shape</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.shape.html">TuckerTensorTrain.shape</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.tucker_ranks.html">TuckerTensorTrain.tucker_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.tt_ranks.html">TuckerTensorTrain.tt_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.ranks.html">TuckerTensorTrain.ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.structure.html">TuckerTensorTrain.structure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_core_shapes.html">TuckerTensorTrain.get_core_shapes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.core_shapes.html">TuckerTensorTrain.core_shapes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.size.html">TuckerTensorTrain.size</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_minimal_ranks.html">TuckerTensorTrain.get_minimal_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.minimal_ranks.html">TuckerTensorTrain.minimal_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.has_minimal_ranks.html">TuckerTensorTrain.has_minimal_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.validate.html">TuckerTensorTrain.validate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.__post_init__.html">TuckerTensorTrain.__post_init__</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">TuckerTensorTrain.to_dense</a></li>
@@ -510,7 +498,6 @@
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.resize.html">TuckerTensorTrain.resize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.to_jax.html">TuckerTensorTrain.to_jax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.to_numpy.html">TuckerTensorTrain.to_numpy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.contains_jax.html">TuckerTensorTrain.contains_jax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.copy.html">TuckerTensorTrain.copy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.unstack.html">TuckerTensorTrain.unstack</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.stack.html">TuckerTensorTrain.stack</a></li>
@@ -769,18 +756,15 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="TuckerTensorTrain.to_dense">
 <span class="sig-prename descclassname"><span class="pre">TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">to_dense</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">squash_tails</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TuckerTensorTrain.to_dense" title="Link to this definition">#</a></dt>
-<dd><p>Contract a Tucker tensor train to form the dense tensor it represents.</p>
+<dd><p>Form dense tensor from this TuckerTensorTrain.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – The Tucker tensor train to convert to a dense array</p></li>
-<li><p><strong>squash_tails</strong> (<em>bool</em><em>, </em><em>defaults to True</em>) – Whether to contract the leading and trailing 1s with the first and last TT indices.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>squash_tails</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to contract the leading and trailing 1s with the first and last TT indices. (Default: True)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>dense_x</strong> – Dense tensor represented by x,
-which has shape (N0, …, N(d-1)) if squash_tails=True,
-or (r0,N0,…,N(d-1),rd) if squash_tails=False.</p>
+<dd class="field-even"><p>Dense tensor represented by this TuckerTensorTrain,
+which has <code class="docutils literal notranslate"><span class="pre">shape=stack_shape+(N0,</span> <span class="pre">...,</span> <span class="pre">N(d-1))</span></code> if <code class="docutils literal notranslate"><span class="pre">squash_tails=True</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">shape=stack_shape+(r0,N0,...,N(d-1),rd)</span></code> if <code class="docutils literal notranslate"><span class="pre">squash_tails=False</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><em>NDArray</em></a></p>

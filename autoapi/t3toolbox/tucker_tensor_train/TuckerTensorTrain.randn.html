@@ -486,20 +486,8 @@
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">t3toolbox.tucker_tensor_train</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="TuckerTensorTrain.html">TuckerTensorTrain</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.data.html">TuckerTensorTrain.data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.d.html">TuckerTensorTrain.d</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.stack_shape.html">TuckerTensorTrain.stack_shape</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.shape.html">TuckerTensorTrain.shape</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.tucker_ranks.html">TuckerTensorTrain.tucker_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.tt_ranks.html">TuckerTensorTrain.tt_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.ranks.html">TuckerTensorTrain.ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.structure.html">TuckerTensorTrain.structure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_core_shapes.html">TuckerTensorTrain.get_core_shapes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.core_shapes.html">TuckerTensorTrain.core_shapes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.size.html">TuckerTensorTrain.size</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_minimal_ranks.html">TuckerTensorTrain.get_minimal_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.minimal_ranks.html">TuckerTensorTrain.minimal_ranks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.has_minimal_ranks.html">TuckerTensorTrain.has_minimal_ranks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.validate.html">TuckerTensorTrain.validate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.__post_init__.html">TuckerTensorTrain.__post_init__</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.to_dense.html">TuckerTensorTrain.to_dense</a></li>
@@ -510,7 +498,6 @@
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.resize.html">TuckerTensorTrain.resize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.to_jax.html">TuckerTensorTrain.to_jax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.to_numpy.html">TuckerTensorTrain.to_numpy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.contains_jax.html">TuckerTensorTrain.contains_jax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.copy.html">TuckerTensorTrain.copy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.unstack.html">TuckerTensorTrain.unstack</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.stack.html">TuckerTensorTrain.stack</a></li>
@@ -769,26 +756,27 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="TuckerTensorTrain.randn">
 <span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">randn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tucker_ranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tt_ranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_jax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TuckerTensorTrain.randn" title="Link to this definition">#</a></dt>
-<dd><p>Construct a Tucker tensor train with random cores.</p>
+<dd><p>Construct a Tucker tensor train with random cores. Core entries are i.i.d. draws from N(0,1).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>structure</strong> (<em>T3Structure</em>) – Tucker tensor train structure
-(shape, tucker_ranks, tt_ranks)=((N0,…,N(d-1)), (n0,…,n(d-1)), (1,r1,…,r(d-1),1))).</p></li>
-<li><p><strong>randn</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>, </em><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><em>NDArray</em></a><em>]</em>) – Function for creating random arrays. Arguments are a sequence of ints defining the shape of the array.
-Default: np.random.randn (numpy)</p></li>
+<li><p><strong>shape</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – Shape of the TuckerTensorTrain. <code class="docutils literal notranslate"><span class="pre">len(shape)=d</span></code>.</p></li>
+<li><p><strong>tucker_ranks</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Tucker ranks. <code class="docutils literal notranslate"><span class="pre">len(tucker_ranks)=d</span></code>. Default (<code class="docutils literal notranslate"><span class="pre">tucker_ranks=None</span></code>): all Tucker ranks equal 1 .</p></li>
+<li><p><strong>tt_ranks</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – TT ranks. <code class="docutils literal notranslate"><span class="pre">len(tt_ranks)=d+1</span></code>. Default (<code class="docutils literal notranslate"><span class="pre">tt_ranks=None</span></code>): all TT ranks equal 1.</p></li>
+<li><p><strong>stack_shape</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Stack shape. Default (<code class="docutils literal notranslate"><span class="pre">stack_shape=()</span></code>): No stacking.</p></li>
+<li><p><strong>use_jax</strong> (<em>bool</em><em>, </em><em>optional</em>) – Cores are jax arrays if True, and numpy arrays if False. (default: <code class="docutils literal notranslate"><span class="pre">use_jax=False</span></code>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dense tensor represented by x, which has shape (N0, …, N(d-1))</p>
+<dd class="field-even"><p>Random TuckerTensorTrain with the desired shape and ranks.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../backend/common/index.html#id1" title="t3toolbox.backend.common.NDArray"><em>NDArray</em></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">T3Structure</span></code></p>
+<p><a class="reference internal" href="TuckerTensorTrain.zeros.html#TuckerTensorTrain.zeros" title="TuckerTensorTrain.zeros"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.zeros()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.ones.html#TuckerTensorTrain.ones" title="TuckerTensorTrain.ones"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.ones()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">t3toolbox</span> <span class="kn">import</span> <span class="o">*</span>

@@ -3,18 +3,12 @@ TuckerTensorTrain.squash
 
 .. py:method:: TuckerTensorTrain.squash()
 
-   Make leading and trailing TT ranks equal to 1 (r0=rd=1), without changing tensor being represented.
+   Make leading and trailing TT ranks equal to 1 (``r0=rd=1``), without changing represented dense tensor.
 
-   :param self: Tucker tensor train with tt_ranks=(r0,r1,...,r(d-1),rd).
-   :type self: TuckerTensorTrain
-   :param use_jax: Whether to use Jax for linear algebra. Default: False (use numpy).
-   :type use_jax: bool, defaults to False
-
-   :returns: * **squashed_x** (*TuckerTensorTrain*) -- Tucker tensor train with tt_ranks=(1,r1,...,r(d-1),1).
+   :returns: * *TuckerTensorTrain* -- Tucker tensor train with ``tt_ranks=(1,r1,...,r(d-1),1)``.
              * *See Also*
              * *---------*
-             * *TuckerTensorTrain*
-             * *T3Structure*
+             * :py:attr:`.TuckerTensorTrain.tt_ranks`
 
    .. rubric:: Examples
 

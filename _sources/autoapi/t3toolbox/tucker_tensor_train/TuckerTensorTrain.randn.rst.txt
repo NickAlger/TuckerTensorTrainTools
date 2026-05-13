@@ -5,19 +5,23 @@ TuckerTensorTrain.randn
    :staticmethod:
 
 
-   Construct a Tucker tensor train with random cores.
+   Construct a Tucker tensor train with random cores. Core entries are i.i.d. draws from N(0,1).
 
-   :param structure: Tucker tensor train structure
-                     (shape, tucker_ranks, tt_ranks)=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...,r(d-1),1))).
-   :type structure: T3Structure
-   :param randn: Function for creating random arrays. Arguments are a sequence of ints defining the shape of the array.
-                 Default: np.random.randn (numpy)
-   :type randn: Callable[[..., NDArray]
+   :param shape: Shape of the TuckerTensorTrain. ``len(shape)=d``.
+   :type shape: Sequence[int]
+   :param tucker_ranks: Tucker ranks. ``len(tucker_ranks)=d``. Default (``tucker_ranks=None``): all Tucker ranks equal 1 .
+   :type tucker_ranks: Sequence[int], optional
+   :param tt_ranks: TT ranks. ``len(tt_ranks)=d+1``. Default (``tt_ranks=None``): all TT ranks equal 1.
+   :type tt_ranks: Sequence[int], optional
+   :param stack_shape: Stack shape. Default (``stack_shape=()``): No stacking.
+   :type stack_shape: Sequence[int], optional
+   :param use_jax: Cores are jax arrays if True, and numpy arrays if False. (default: ``use_jax=False``)
+   :type use_jax: bool, optional
 
-   :returns: Dense tensor represented by x, which has shape (N0, ..., N(d-1))
-   :rtype: NDArray
+   :returns: Random TuckerTensorTrain with the desired shape and ranks.
+   :rtype: TuckerTensorTrain
 
-   .. seealso:: :py:obj:`TuckerTensorTrain`, :py:obj:`T3Structure`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.zeros`, :py:meth:`.TuckerTensorTrain.ones`
 
    .. rubric:: Examples
 

@@ -3,7 +3,13 @@ TuckerTensorTrain.resize
 
 .. py:method:: TuckerTensorTrain.resize(new_shape, new_tucker_ranks, new_tt_ranks)
 
-   Change cores shapes via zero padding to make cores bigger or truncation to make cores smaller.
+   Change shape and ranks by resizing cores. Makes cores bigger via zero padding. Makes cores smaller via truncation.
+
+   :returns: Tucker tensor train with cores resized so that
+             ``shape=new_shape``,
+             ``tucker_ranks=new_tucker_ranks``,
+             ``tt_ranks=new_tt_ranks``.
+   :rtype: TuckerTensorTrain
 
    .. rubric:: Examples
 
