@@ -1391,6 +1391,28 @@ class TuckerTensorTrain:
     ) -> 'TuckerTensorTrain':
         """Constructs TuckerTensorTrain from Canonical decomposition.
 
+        Canonical decomposition represents a tensor X as a sum of rank-1 tensors of the form
+
+            X[i1, ..., id] = sum_j F0[j,i1] * ... * F(d-1)[j,id],
+
+        where F0,...,F(d-1) are the canonical factor matrices.
+
+        Parameters
+        ----------
+        factors: Sequence[NDArray]
+            Canonical factors. ``len(factors)=d``, ``factors[ii].shape=stack_shape+(canonical_rank, Ni)``.
+
+        Returns
+        -------
+        T: TuckerTensorTrain
+            TuckerTensorTrain representation of dense tensor which is represented by provided canonical decomposition.
+            ``T.to_dense()[S,i1,...,id] = sum(factors[S,:,i1]*...*factors[S,:,id])``. Here ``S`` is a stack index.
+
+        Raises
+        ------
+        ValueError
+            If factor matrices in factors have inconsistent shapes.
+
         Examples
         --------
         >>> import numpy as np
@@ -1399,7 +1421,7 @@ class TuckerTensorTrain:
         >>> shape = (5,6,7)
         >>> stack_shape = (2,3)
         >>> FF = [np.random.randn(*(stack_shape+(rank, N))) for N in shape]
-        >>> x = t3.TuckerTensorTrain.t3_from_canonical(FF)
+        >>> x = t3.TuckerTensorTrain.from_canonical(FF)
         >>> x_dense = x.to_dense()
         >>> x_dense2 = np.einsum('abri,abrj,abrk->abijk', FF[0], FF[1], FF[2])
         >>> print(np.linalg.norm(x_dense - x_dense2))
@@ -1436,13 +1458,27 @@ class TuckerTensorTrain:
     ) -> 'TuckerTensorTrain':
         """Convert tensor train into Tucker tensor train by using identity matrices for Tucker bases.
 
+        Parameters
+        ----------
+        tt_cores: Sequence[NDArray]
+            Tensor train cores. ``len(tt_cores)=d``, ``tt_cores[ii].shape=stack_shape+(ri, Ni, r(i+1))``.
+
+        Returns
+        -------
+        T: TuckerTensorTrain
+            Input tensor train, converted to TuckerTensorTrain format.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.to_tensor_train`
+
         Examples
         --------
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> randn = np.random.randn
         >>> tt_cores = [randn(4,14,5), randn(5,15,3), randn(3,16,2)]
-        >>> x = t3.TuckerTensorTrain.t3_from_tensor_train(tt_cores)
+        >>> x = t3.TuckerTensorTrain.from_tensor_train(tt_cores)
         >>> x_dense = x.to_dense()
         >>> x_dense2 = np.einsum('...aib,...bjc,...ckd->...ijk', *tt_cores)
         >>> print(np.linalg.norm(x_dense - x_dense2))
@@ -1453,14 +1489,23 @@ class TuckerTensorTrain:
     def to_tensor_train(
             self,
     ) -> Tuple[NDArray,...]: # tt_cores
-        """Convert TuckerTensorTrain to tensor train by contracting Tucker bases with TT cores.
+        """Convert this TuckerTensorTrain to a tensor train by contracting Tucker bases with TT cores.
+
+        Returns
+        -------
+        tt_cores: Sequence[NDArray]
+            Tensor train cores. ``len(tt_cores)=d``, ``tt_cores[ii].shape=stack_shape+(ri, Ni, r(i+1))``.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.from_tensor_train`
 
         Examples
         --------
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> x = t3.TuckerTensorTrain.randn((14,15,16), (5,6,7), (2,3,4,1), (2,3))
-        >>> big_tt_cores = x.t3_to_tensor_train()
+        >>> big_tt_cores = x.to_tensor_train()
         >>> x_dense = np.einsum('...aib,...bjc,...ckd->...ijk', *big_tt_cores)
         >>> x_dense2 = x.to_dense()
         >>> print(np.linalg.norm(x_dense - x_dense2))
@@ -1476,6 +1521,15 @@ class TuckerTensorTrain:
             self,
     ) -> NDArray:
         """Converts a TuckerTensorTrain into a 1D vector containing the core entries.
+
+        Returns
+        -------
+        NDArray
+            The vector of all core entries. ``shape=(self.data_size,)``
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.from_vector`
 
         Examples
         --------
@@ -1499,6 +1553,31 @@ class TuckerTensorTrain:
             stack_shape: Sequence[int] = (),
     ) -> 'TuckerTensorTrain':
         """Constructs a TuckerTensorTrain from a 1D vector containing the core entries.
+
+        Parameters
+        ----------
+        x_flat: NDArray
+            The flattened vector of core entries. ``x_flat.shape=(data_size,)``
+        shape: Sequence[int]
+            Shape of the tensor.
+        tucker_ranks: Sequence[int]
+            Tucker ranks of the tensor.
+        tt_ranks: Sequence[int]
+            TT ranks.
+        stack_shape: Sequence[int], optional
+            Stack shape. Default (``stack_shape=()``): No stacking.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.to_vector`
+
+        Returns
+        -------
+        T: TuckerTensorTrain
+            TuckerTensorTrain constructed from the vector of all core entries.
+            ``T.data_size=len(x_flat)``,
+            ``T.shape=shape``, ``T.tucker_ranks=tucker_ranks``, ``T.tt_ranks=tt_ranks``,
+            ``T.stack_shape=stack_shape``.
 
         Examples
         --------
@@ -1533,21 +1612,18 @@ class TuckerTensorTrain:
             where the data will be saved. If file is a string or a Path, the
             ``.npz`` extension will be appended to the filename if it is not
             already there.
-        x: TuckerTensorTrain
-            The Tucker tensor train to save
 
         Raises
         ------
         ValueError
-            Error raised if the Tucker tensor train is inconsistent
+            If the Tucker tensor train is inconsistent
         RuntimeError
-            Error raised if the Tucker tensor train fails to save.
+            If the Tucker tensor train fails to save.
 
         See Also
         --------
-        TuckerTensorTrain
-        t3_load
-        check_t3
+        :py:meth:`.TuckerTensorTrain.load`
+
 
         Examples
         --------
@@ -1587,8 +1663,9 @@ class TuckerTensorTrain:
             where the data will be saved. If file is a string or a Path, the
             ``.npz`` extension will be appended to the filename if it is not
             already there.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+        use_jax: bool, optional
+            If True, TuckerTensorTrain cores are jax arrays. If False, they are numpy arrays.
+            Default (``use_jax=False``): use numpy arrays.
 
         Returns
         -------
@@ -1604,18 +1681,16 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        TuckerTensorTrain
-        t3_save
-        check_t3
+        :py:meth:`.TuckerTensorTrain.save`
 
         Examples
         --------
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
-        >>> x = t3.t3_corewise_randn((14,15,16), (4,5,6), (1,3,2,1))
+        >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (1,3,2,1))
         >>> fname = 't3_file'
-        >>> t3.t3_save(fname, x) # Save to file 't3_file.npz'
-        >>> x2 = t3.t3_load(fname) # Load from file
+        >>> x.save(fname) # Save to file 't3_file.npz'
+        >>> x2 = t3.TuckerTensorTrain.load(fname) # Load from file
         >>> tucker_cores, tt_cores = x.data
         >>> tucker_cores2, tt_cores2 = x2.data
         >>> print([np.linalg.norm(B - B2) for B, B2 in zip(tucker_cores, tucker_cores2)])
@@ -1653,16 +1728,47 @@ class TuckerTensorTrain:
             self,
             other,
     ):
-        """Add Tucker tensor trains x and y, yielding a Tucker tensor train x+y with summed ranks.
+        """Add Tucker tensor trains x and y, yielding a Tucker tensor train z=x+y with summed ranks.
 
-        Addition is defined with respect to the dense N0 x ... x N(d-1) tensors that
+        Addition is defined with respect to the dense ``N0 x ... x N(d-1)`` tensors that
         are *represented* by the Tucker tensor trains.
 
         For corewise addition, see :func:`t3toolbox.corewise.corewise_add`
 
-        T3 + T3 -> T3
-        T3 + dense -> dense
-        T3 + scalar -> T3
+        Return types are as follows:
+
+        - ``TuckerTensorTrain + TuckerTensorTrain   -> TuckerTensorTrain``
+        - ``TuckerTensorTrain + NDArray             -> NDArray``
+        - ``TuckerTensorTrain + scalar              -> TuckerTensorTrain``
+
+        Parameters
+        ----------
+        other: TuckerTensorTrain or NDArray or scalar
+            Other tensor to be added to this TuckerTensorTrain.
+            If TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
+            If NDArray, requires ``other.shape=self.stack_shape+self.shape``.
+
+        Returns
+        -------
+        z: TuckerTensorTrain or NDArray
+            Sum of this TuckerTensorTrain with other tensor.
+            If other is TuckerTensorTrain or scalar, ``z.shape=self.shape``, ``z.stack_shape=self.stack_shape``.
+            If other is NDArray, ``z.shape=self.stack_shape+self.shape``.
+
+        Raises
+        ------
+        ValueError
+            If shapes and/or stack shapes of self and other are inconsistent.
+
+        See Also
+        --------
+        :func:`t3toolbox.corewise.corewise_add`
+        :py:meth:`.TuckerTensorTrain.__sub__`
+        :py:meth:`.TuckerTensorTrain.__neg__`
+        :py:meth:`.TuckerTensorTrain.__mul__`
+        :py:meth:`.TuckerTensorTrain.inner`
+        :py:meth:`.TuckerTensorTrain.norm`
+        :py:meth:`.TuckerTensorTrain.sum`
 
         Examples
         --------
