@@ -9,7 +9,7 @@ release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 extensions = [
-    'sphinx.ext.autodoc',
+    #'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'autoapi.extension',
     'sphinx.ext.githubpages',
