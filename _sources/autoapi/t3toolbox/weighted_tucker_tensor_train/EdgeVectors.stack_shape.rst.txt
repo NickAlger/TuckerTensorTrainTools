@@ -1,4 +1,0 @@
-EdgeVectors.stack_shape
-=======================
-
-.. py:method:: EdgeVectors.stack_shape()

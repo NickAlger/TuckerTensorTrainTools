@@ -1,4 +1,0 @@
-UniformTuckerTensorTrain.masks
-==============================
-
-.. py:method:: UniformTuckerTensorTrain.masks()

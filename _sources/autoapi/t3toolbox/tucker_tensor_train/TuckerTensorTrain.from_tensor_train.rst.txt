@@ -1,7 +1,7 @@
 TuckerTensorTrain.from_tensor_train
 ===================================
 
-.. py:method:: TuckerTensorTrain.from_tensor_train(tt_cores)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_tensor_train(tt_cores)
    :staticmethod:
 
 

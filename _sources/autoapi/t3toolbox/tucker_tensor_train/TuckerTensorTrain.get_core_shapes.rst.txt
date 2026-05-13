@@ -1,11 +1,21 @@
 TuckerTensorTrain.get_core_shapes
 =================================
 
-.. py:method:: TuckerTensorTrain.get_core_shapes(shape, tucker_ranks, tt_ranks, stack_shape = ())
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes(shape, tucker_ranks, tt_ranks, stack_shape = ())
    :staticmethod:
 
 
    Compute the Tucker and TT core shapes for a Tucker tensor train.
+
+   :param shape: Shape of hypothetical TuckerTensorTrain. ``len(shape)=d``.
+   :type shape: Sequence[int]
+   :param tucker_ranks: Tucker ranks of hypothetical TuckerTensorTrain. ``len(tucker_ranks)=d``.
+   :type tucker_ranks: Sequence[int]
+   :param tt_ranks: TT ranks of hypothetical TuckerTensorTrain. ``len(tt_ranks)=d+1``
+   :type tt_ranks: Sequence[int]
+
+   :returns: **(tucker_core_shapes, t_core_shapes)** -- Tucker and TT core shapes for hypothetical TuckerTensorTrain with given shape and ranks.
+   :rtype: Tuple[Tuple[int,...], Tuple[int,...]]
 
    .. rubric:: Examples
 

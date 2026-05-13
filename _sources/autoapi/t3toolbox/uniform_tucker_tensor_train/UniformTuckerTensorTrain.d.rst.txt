@@ -1,8 +1,0 @@
-UniformTuckerTensorTrain.d
-==========================
-
-.. py:method:: UniformTuckerTensorTrain.d()
-
-   Number of indices of the tensor.
-
-

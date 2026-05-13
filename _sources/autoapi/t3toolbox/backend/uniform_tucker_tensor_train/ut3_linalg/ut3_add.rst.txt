@@ -1,8 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_linalg.ut3_add
-================================================================
-
-.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_linalg.ut3_add(x, y, use_jax = False)
-
-   Add two UniformTuckerTensorTrains, x,y -> x+y.
-
-

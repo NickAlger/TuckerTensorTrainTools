@@ -1,4 +1,0 @@
-UT3Basis.right_ranks
-====================
-
-.. py:method:: UT3Basis.right_ranks()

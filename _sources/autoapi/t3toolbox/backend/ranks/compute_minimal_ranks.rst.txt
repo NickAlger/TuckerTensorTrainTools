@@ -1,8 +1,0 @@
-t3toolbox.backend.ranks.compute_minimal_ranks
-=============================================
-
-.. py:function:: t3toolbox.backend.ranks.compute_minimal_ranks(shape, tucker_ranks, tt_ranks, use_jax = False)
-
-   Find minimal ranks for a generic Tucker tensor train with a given structure.
-
-

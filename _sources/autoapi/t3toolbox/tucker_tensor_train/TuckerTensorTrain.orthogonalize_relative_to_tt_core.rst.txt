@@ -1,7 +1,7 @@
 TuckerTensorTrain.orthogonalize_relative_to_tt_core
 ===================================================
 
-.. py:method:: TuckerTensorTrain.orthogonalize_relative_to_tt_core(ii)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.orthogonalize_relative_to_tt_core(ii)
 
    Orthogonalize all cores in the TuckerTensorTrain except for the ith TT-core.
 

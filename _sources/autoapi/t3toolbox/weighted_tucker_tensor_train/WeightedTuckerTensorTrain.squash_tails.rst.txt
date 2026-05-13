@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.squash_tails
-======================================
-
-.. py:method:: WeightedTuckerTensorTrain.squash_tails(use_jax = False)

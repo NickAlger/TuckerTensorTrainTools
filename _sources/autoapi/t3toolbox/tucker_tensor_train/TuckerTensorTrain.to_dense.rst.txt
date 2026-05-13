@@ -1,7 +1,7 @@
 TuckerTensorTrain.to_dense
 ==========================
 
-.. py:method:: TuckerTensorTrain.to_dense(squash_tails = True)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_dense(squash_tails = True)
 
    Form dense tensor from this TuckerTensorTrain.
 

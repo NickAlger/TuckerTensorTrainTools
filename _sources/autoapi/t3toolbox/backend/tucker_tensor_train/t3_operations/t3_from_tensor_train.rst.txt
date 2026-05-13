@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_operations.t3_from_tensor_train
-========================================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_operations.t3_from_tensor_train(tt_cores)
-
-   Convert tensor train into Tucker tensor train by using identity matrices for Tucker bases.
-
-

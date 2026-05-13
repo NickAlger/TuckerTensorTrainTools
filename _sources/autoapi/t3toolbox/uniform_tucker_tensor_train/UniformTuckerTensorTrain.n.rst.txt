@@ -1,8 +1,0 @@
-UniformTuckerTensorTrain.n
-==========================
-
-.. py:method:: UniformTuckerTensorTrain.n()
-
-   Padded Tucker rank. n >= max(n0,...,n(d-1)), where ni are the original (unpadded) Tucker ranks.
-
-

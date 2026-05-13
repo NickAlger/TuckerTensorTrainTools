@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.__post_init__
-=======================================
-
-.. py:method:: WeightedTuckerTensorTrain.__post_init__()

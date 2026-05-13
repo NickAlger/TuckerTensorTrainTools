@@ -1,4 +1,0 @@
-UT3Basis.N
-==========
-
-.. py:method:: UT3Basis.N()

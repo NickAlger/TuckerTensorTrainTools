@@ -1,4 +1,0 @@
-UT3Basis.nU
-===========
-
-.. py:method:: UT3Basis.nU()

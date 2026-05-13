@@ -1,6 +1,0 @@
-t3toolbox.backend.uniform_basis_variations_format.ubv_conversions
-=================================================================
-
-.. py:module:: t3toolbox.backend.uniform_basis_variations_format.ubv_conversions
-
-

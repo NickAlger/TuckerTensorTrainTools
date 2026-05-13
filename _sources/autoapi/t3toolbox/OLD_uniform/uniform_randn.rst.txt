@@ -1,8 +1,0 @@
-t3toolbox.OLD_uniform.uniform_randn
-===================================
-
-.. py:function:: t3toolbox.OLD_uniform.uniform_randn(structure, masks = None, use_jax = False)
-
-   Makes a uniform Tucker tensor train with random cores.
-
-

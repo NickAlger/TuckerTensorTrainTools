@@ -1,8 +1,0 @@
-t3toolbox.backend.common.xprepend
-=================================
-
-.. py:function:: t3toolbox.backend.common.xprepend(x, S)
-
-   Prepend slice to array or element to sequence
-
-

@@ -1,8 +1,0 @@
-t3toolbox.OLD_uniform.apply_masks_to_variation
-==============================================
-
-.. py:function:: t3toolbox.OLD_uniform.apply_masks_to_variation(variation, masks, use_jax = False)
-
-   Apply masks to uniform Tucker tensor train variation.
-
-

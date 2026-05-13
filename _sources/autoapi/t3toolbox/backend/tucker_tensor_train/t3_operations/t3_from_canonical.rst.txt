@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_operations.t3_from_canonical
-=====================================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_operations.t3_from_canonical(factors)
-
-   Constructs Tucker tensor train from Canonical decomposition.
-
-

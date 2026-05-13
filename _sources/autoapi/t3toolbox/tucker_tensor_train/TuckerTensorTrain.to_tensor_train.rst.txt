@@ -1,7 +1,7 @@
 TuckerTensorTrain.to_tensor_train
 =================================
 
-.. py:method:: TuckerTensorTrain.to_tensor_train()
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_tensor_train()
 
    Convert TuckerTensorTrain to tensor train by contracting Tucker bases with TT cores.
 

@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_operations.change_tt_core_shapes
-=========================================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_operations.change_tt_core_shapes(tt_cores, new_tucker_ranks, new_tt_ranks)
-
-   Increase/decrease Tucker and/or TT ranks for TT cores using zero padding/truncation.
-
-

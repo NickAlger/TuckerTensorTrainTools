@@ -1,7 +1,7 @@
 TuckerTensorTrain.down_orthogonalize_tucker_cores
 =================================================
 
-.. py:method:: TuckerTensorTrain.down_orthogonalize_tucker_cores()
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_orthogonalize_tucker_cores()
 
    Orthogonalize Tucker cores upwards, pushing remainders onto TT cores above.
 

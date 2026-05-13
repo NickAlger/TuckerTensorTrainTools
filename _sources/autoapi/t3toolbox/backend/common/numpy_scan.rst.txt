@@ -1,8 +1,0 @@
-t3toolbox.backend.common.numpy_scan
-===================================
-
-.. py:function:: t3toolbox.backend.common.numpy_scan(f, init, xs)
-
-   Similar to jax.lax.scan, except returns numpy arrays instead of jax arrays.
-
-

@@ -1,4 +1,0 @@
-EdgeVectors.data
-================
-
-.. py:method:: EdgeVectors.data()

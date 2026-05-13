@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_operations.t3_core_shapes
-==================================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_operations.t3_core_shapes(shape, tucker_ranks, tt_ranks, stack_shape = ())
-
-   Determines the shapes of the T3 cores based on the ranks.
-
-

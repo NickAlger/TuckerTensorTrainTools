@@ -1,4 +1,0 @@
-t3toolbox.backend.common.get_backend
-====================================
-
-.. py:function:: t3toolbox.backend.common.get_backend(is_uniform, use_jax)

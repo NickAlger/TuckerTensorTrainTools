@@ -1,7 +1,7 @@
 TuckerTensorTrain.sum
 =====================
 
-.. py:method:: TuckerTensorTrain.sum(axis=None)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum(axis=None)
 
    Sum over axes of TuckerTensorTrain.
 

@@ -1,4 +1,0 @@
-t3toolbox.OLD_orthogonalization.right_orthogonalize_tt_cores
-============================================================
-
-.. py:function:: t3toolbox.OLD_orthogonalization.right_orthogonalize_tt_cores(tt_cores, return_variation_cores = False, use_jax = False)

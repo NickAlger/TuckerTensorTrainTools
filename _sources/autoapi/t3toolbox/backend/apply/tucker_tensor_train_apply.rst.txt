@@ -1,8 +1,0 @@
-t3toolbox.backend.apply.tucker_tensor_train_apply
-=================================================
-
-.. py:function:: t3toolbox.backend.apply.tucker_tensor_train_apply(x, vecs)
-
-   Contract a Tucker tensor train with vectors in all indices.
-
-

@@ -1,4 +1,0 @@
-T3Variations.data
-=================
-
-.. py:method:: T3Variations.data()

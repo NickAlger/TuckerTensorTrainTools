@@ -1,4 +1,0 @@
-UT3Basis.uniform_variation_shapes
-=================================
-
-.. py:method:: UT3Basis.uniform_variation_shapes()

@@ -1,4 +1,0 @@
-T3Basis.structure
-=================
-
-.. py:method:: T3Basis.structure()

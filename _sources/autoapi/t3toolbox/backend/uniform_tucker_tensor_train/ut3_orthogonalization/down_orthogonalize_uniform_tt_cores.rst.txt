@@ -1,8 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_orthogonalization.down_orthogonalize_uniform_tt_cores
-=======================================================================================================
-
-.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_orthogonalization.down_orthogonalize_uniform_tt_cores(tucker_supercore, tt_supercore, use_jax = False)
-
-   Outer orthogonalize TT cores, pushing remainders downward onto tucker cores below.
-
-

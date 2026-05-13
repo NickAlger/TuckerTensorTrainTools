@@ -1,7 +1,7 @@
 TuckerTensorTrain.t3svd_dense
 =============================
 
-.. py:method:: TuckerTensorTrain.t3svd_dense(T, stack_shape = (), max_tucker_ranks = None, max_tt_ranks = None, rtol = None, atol = None)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd_dense(T, stack_shape = (), max_tucker_ranks = None, max_tt_ranks = None, rtol = None, atol = None)
    :staticmethod:
 
 

@@ -1,8 +1,0 @@
-t3toolbox.backend.contractions.dGFa_dGaib_dGFb_to_dGFi
-======================================================
-
-.. py:function:: t3toolbox.backend.contractions.dGFa_dGaib_dGFb_to_dGFi(dGFa, dGaib, dGFb)
-
-   Computes named contraction. Capital letters indicate grouped indices, which may be empty.
-
-

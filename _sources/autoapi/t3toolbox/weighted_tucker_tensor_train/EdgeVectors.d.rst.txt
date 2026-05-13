@@ -1,4 +1,0 @@
-EdgeVectors.d
-=============
-
-.. py:method:: EdgeVectors.d()

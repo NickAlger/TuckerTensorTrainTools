@@ -1,4 +1,0 @@
-T3Variations.d
-==============
-
-.. py:method:: T3Variations.d()

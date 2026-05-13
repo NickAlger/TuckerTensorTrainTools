@@ -1,4 +1,0 @@
-t3toolbox.backend.stacking.tree_depth
-=====================================
-
-.. py:function:: t3toolbox.backend.stacking.tree_depth(t)

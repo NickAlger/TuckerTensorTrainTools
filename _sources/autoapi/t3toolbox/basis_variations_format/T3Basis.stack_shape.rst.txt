@@ -1,4 +1,0 @@
-T3Basis.stack_shape
-===================
-
-.. py:method:: T3Basis.stack_shape()

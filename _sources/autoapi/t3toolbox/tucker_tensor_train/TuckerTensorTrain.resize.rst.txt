@@ -1,7 +1,7 @@
 TuckerTensorTrain.resize
 ========================
 
-.. py:method:: TuckerTensorTrain.resize(new_shape, new_tucker_ranks, new_tt_ranks)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.resize(new_shape, new_tucker_ranks, new_tt_ranks)
 
    Change shape and ranks by resizing cores. Makes cores bigger via zero padding. Makes cores smaller via truncation.
 

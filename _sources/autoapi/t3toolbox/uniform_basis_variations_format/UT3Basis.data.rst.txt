@@ -1,4 +1,0 @@
-UT3Basis.data
-=============
-
-.. py:method:: UT3Basis.data()

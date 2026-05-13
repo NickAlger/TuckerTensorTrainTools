@@ -1,4 +1,0 @@
-T3Variations.stack_shape
-========================
-
-.. py:method:: T3Variations.stack_shape()

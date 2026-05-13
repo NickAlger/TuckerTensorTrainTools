@@ -1,7 +1,7 @@
 TuckerTensorTrain.entries
 =========================
 
-.. py:method:: TuckerTensorTrain.entries(index)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.entries(index)
 
    Compute an entry (or multiple entries) of a Tucker tensor train.
 

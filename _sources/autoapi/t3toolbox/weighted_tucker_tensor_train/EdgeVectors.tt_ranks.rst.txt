@@ -1,4 +1,0 @@
-EdgeVectors.tt_ranks
-====================
-
-.. py:method:: EdgeVectors.tt_ranks()

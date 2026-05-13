@@ -1,4 +1,0 @@
-t3toolbox.backend.weighted_tucker_tensor_train.wt3_operations.reverse_edge_vectors
-==================================================================================
-
-.. py:function:: t3toolbox.backend.weighted_tucker_tensor_train.wt3_operations.reverse_edge_vectors(edge_vectors)

@@ -1,4 +1,0 @@
-UT3Variations.data
-==================
-
-.. py:method:: UT3Variations.data()

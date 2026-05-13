@@ -1,4 +1,0 @@
-UT3Basis.down_ranks
-===================
-
-.. py:method:: UT3Basis.down_ranks()

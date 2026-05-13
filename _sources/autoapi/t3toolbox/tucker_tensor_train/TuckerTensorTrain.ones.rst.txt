@@ -1,7 +1,7 @@
 TuckerTensorTrain.ones
 ======================
 
-.. py:method:: TuckerTensorTrain.ones(shape, stack_shape = (), use_jax = False)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.ones(shape, stack_shape = (), use_jax = False)
    :staticmethod:
 
 

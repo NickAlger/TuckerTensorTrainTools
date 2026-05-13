@@ -1,4 +1,0 @@
-UT3Variations.nU
-================
-
-.. py:method:: UT3Variations.nU()

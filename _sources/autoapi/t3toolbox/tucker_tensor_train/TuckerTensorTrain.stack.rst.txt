@@ -1,7 +1,7 @@
 TuckerTensorTrain.stack
 =======================
 
-.. py:method:: TuckerTensorTrain.stack(xx)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack(xx)
    :staticmethod:
 
 

@@ -1,4 +1,0 @@
-UT3Variations.__post_init__
-===========================
-
-.. py:method:: UT3Variations.__post_init__()

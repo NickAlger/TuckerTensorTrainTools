@@ -1,8 +1,0 @@
-UT3Basis.apply_masks
-====================
-
-.. py:method:: UT3Basis.apply_masks()
-
-   Apply masks to the basis supercores, zeroing out unmasked entries.
-
-

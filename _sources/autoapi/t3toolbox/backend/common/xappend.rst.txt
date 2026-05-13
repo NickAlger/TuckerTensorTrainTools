@@ -1,8 +1,0 @@
-t3toolbox.backend.common.xappend
-================================
-
-.. py:function:: t3toolbox.backend.common.xappend(S, x)
-
-   Append slice to array or element to sequence
-
-

@@ -1,8 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_masking.apply_masks_to_cores
-==============================================================================
-
-.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_masking.apply_masks_to_cores(x, use_jax = False)
-
-   Applies masking to supercores, replacing unmasked regions with zeros.
-
-

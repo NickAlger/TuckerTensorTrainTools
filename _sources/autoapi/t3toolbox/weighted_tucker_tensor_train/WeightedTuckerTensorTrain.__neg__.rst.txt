@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.__neg__
-=================================
-
-.. py:method:: WeightedTuckerTensorTrain.__neg__()

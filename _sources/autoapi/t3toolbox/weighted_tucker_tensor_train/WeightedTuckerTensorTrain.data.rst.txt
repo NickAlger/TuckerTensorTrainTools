@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.data
-==============================
-
-.. py:method:: WeightedTuckerTensorTrain.data()

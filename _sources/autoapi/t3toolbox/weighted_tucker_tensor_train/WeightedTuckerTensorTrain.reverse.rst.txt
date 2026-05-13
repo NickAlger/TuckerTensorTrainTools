@@ -1,8 +1,0 @@
-WeightedTuckerTensorTrain.reverse
-=================================
-
-.. py:method:: WeightedTuckerTensorTrain.reverse()
-
-   Reverse the weighted Tucker tensor train.
-
-

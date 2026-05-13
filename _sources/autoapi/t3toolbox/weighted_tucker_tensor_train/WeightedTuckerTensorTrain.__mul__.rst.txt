@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.__mul__
-=================================
-
-.. py:method:: WeightedTuckerTensorTrain.__mul__(other)

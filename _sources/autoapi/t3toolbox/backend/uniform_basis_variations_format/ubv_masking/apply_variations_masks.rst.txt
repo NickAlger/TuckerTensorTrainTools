@@ -1,4 +1,0 @@
-t3toolbox.backend.uniform_basis_variations_format.ubv_masking.apply_variations_masks
-====================================================================================
-
-.. py:function:: t3toolbox.backend.uniform_basis_variations_format.ubv_masking.apply_variations_masks(tucker_variations_supercore, tt_variations_supercore, shape_mask, up_mask, down_mask, variations_left_mask, variations_right_mask)

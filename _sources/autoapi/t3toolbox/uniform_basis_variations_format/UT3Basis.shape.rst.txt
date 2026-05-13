@@ -1,4 +1,0 @@
-UT3Basis.shape
-==============
-
-.. py:method:: UT3Basis.shape()

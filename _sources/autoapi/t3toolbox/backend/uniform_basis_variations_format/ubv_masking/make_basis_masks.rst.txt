@@ -1,4 +1,0 @@
-t3toolbox.backend.uniform_basis_variations_format.ubv_masking.make_basis_masks
-==============================================================================
-
-.. py:function:: t3toolbox.backend.uniform_basis_variations_format.ubv_masking.make_basis_masks(shape, up_ranks, down_ranks, left_ranks, right_ranks, N, nU, nD, rL, rR, use_jax = False)

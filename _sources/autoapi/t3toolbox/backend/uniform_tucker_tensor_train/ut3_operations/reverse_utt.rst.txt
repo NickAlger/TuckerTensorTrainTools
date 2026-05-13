@@ -1,8 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations.reverse_utt
-========================================================================
-
-.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations.reverse_utt(tt_cores)
-
-   Reverse a uniform tensor train (no Tucker).
-
-

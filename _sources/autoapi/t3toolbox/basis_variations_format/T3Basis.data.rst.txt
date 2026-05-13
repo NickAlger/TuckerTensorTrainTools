@@ -1,4 +1,0 @@
-T3Basis.data
-============
-
-.. py:method:: T3Basis.data()

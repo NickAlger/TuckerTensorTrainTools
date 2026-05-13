@@ -1,4 +1,0 @@
-UT3Basis.structure
-==================
-
-.. py:method:: UT3Basis.structure()

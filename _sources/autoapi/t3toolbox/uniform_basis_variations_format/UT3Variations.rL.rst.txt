@@ -1,4 +1,0 @@
-UT3Variations.rL
-================
-
-.. py:method:: UT3Variations.rL()

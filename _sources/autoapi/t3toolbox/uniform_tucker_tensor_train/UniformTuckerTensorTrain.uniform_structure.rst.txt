@@ -1,7 +1,0 @@
-UniformTuckerTensorTrain.uniform_structure
-==========================================
-
-.. py:method:: UniformTuckerTensorTrain.uniform_structure()
-
-   d, N, n, r, stack_shape
-

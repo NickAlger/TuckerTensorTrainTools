@@ -1,4 +1,0 @@
-EdgeVectors.validate
-====================
-
-.. py:method:: EdgeVectors.validate()

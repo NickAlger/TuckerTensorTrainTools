@@ -1,7 +1,7 @@
 TuckerTensorTrain.up_svd_tt_core
 ================================
 
-.. py:method:: TuckerTensorTrain.up_svd_tt_core(ii, min_rank = None, max_rank = None, rtol = None, atol = None)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core(ii, min_rank = None, max_rank = None, rtol = None, atol = None)
 
    Compute SVD of ith TT-core right unfolding and contract non-orthogonal factor down into the tucker core below.
 

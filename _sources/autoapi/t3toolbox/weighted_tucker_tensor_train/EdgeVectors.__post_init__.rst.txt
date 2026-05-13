@@ -1,4 +1,0 @@
-EdgeVectors.__post_init__
-=========================
-
-.. py:method:: EdgeVectors.__post_init__()

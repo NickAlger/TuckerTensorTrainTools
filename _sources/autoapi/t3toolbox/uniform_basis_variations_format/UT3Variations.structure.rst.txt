@@ -1,4 +1,0 @@
-UT3Variations.structure
-=======================
-
-.. py:method:: UT3Variations.structure()

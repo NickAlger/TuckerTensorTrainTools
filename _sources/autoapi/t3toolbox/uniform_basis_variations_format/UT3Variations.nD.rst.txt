@@ -1,4 +1,0 @@
-UT3Variations.nD
-================
-
-.. py:method:: UT3Variations.nD()

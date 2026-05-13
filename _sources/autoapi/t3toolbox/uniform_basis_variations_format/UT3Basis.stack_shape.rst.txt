@@ -1,4 +1,0 @@
-UT3Basis.stack_shape
-====================
-
-.. py:method:: UT3Basis.stack_shape()

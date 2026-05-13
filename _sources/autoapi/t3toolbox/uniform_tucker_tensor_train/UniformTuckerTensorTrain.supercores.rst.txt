@@ -1,4 +1,0 @@
-UniformTuckerTensorTrain.supercores
-===================================
-
-.. py:method:: UniformTuckerTensorTrain.supercores()

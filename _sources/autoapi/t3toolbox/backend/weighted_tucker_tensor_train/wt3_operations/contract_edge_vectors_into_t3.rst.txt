@@ -1,8 +1,0 @@
-t3toolbox.backend.weighted_tucker_tensor_train.wt3_operations.contract_edge_vectors_into_t3
-===========================================================================================
-
-.. py:function:: t3toolbox.backend.weighted_tucker_tensor_train.wt3_operations.contract_edge_vectors_into_t3(x0, edge_vectors, use_jax = False)
-
-   Contract each edge weight into a neighboring backend.
-
-

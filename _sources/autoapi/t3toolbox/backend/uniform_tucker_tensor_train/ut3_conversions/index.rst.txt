@@ -1,6 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_conversions
-=============================================================
-
-.. py:module:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_conversions
-
-

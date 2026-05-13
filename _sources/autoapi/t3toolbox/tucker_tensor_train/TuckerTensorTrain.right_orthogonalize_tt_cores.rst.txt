@@ -1,7 +1,7 @@
 TuckerTensorTrain.right_orthogonalize_tt_cores
 ==============================================
 
-.. py:method:: TuckerTensorTrain.right_orthogonalize_tt_cores(return_variation_cores = False)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.right_orthogonalize_tt_cores(return_variation_cores = False)
 
    Right orthogonalize the TT cores, possibly returning variation cores as well.
 

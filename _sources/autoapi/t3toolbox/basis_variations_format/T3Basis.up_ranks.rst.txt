@@ -1,4 +1,0 @@
-T3Basis.up_ranks
-================
-
-.. py:method:: T3Basis.up_ranks()

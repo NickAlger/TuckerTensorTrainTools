@@ -1,8 +1,0 @@
-t3toolbox.backend.contractions.GFi_Gio_to_GFo
-=============================================
-
-.. py:function:: t3toolbox.backend.contractions.GFi_Gio_to_GFo(GFi, Gio)
-
-   Computes named contraction. Capital letters indicate grouped indices, which may be empty.
-
-

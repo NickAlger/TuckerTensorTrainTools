@@ -63,7 +63,7 @@ TuckerTensorTrain
                 |         |                    |
                 | n0      | n1                 | nd
                 |         |                    |
-                B0        B1                   Bd
+                B0        B1                   B(d-1)
                 |         |                    |
                 | N0      | N1                 | Nd
                 |         |                    |

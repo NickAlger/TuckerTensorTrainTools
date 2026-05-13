@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_svd.t3svd
-==================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_svd.t3svd(x, max_tt_ranks = None, max_tucker_ranks = None, rtol = None, atol = None)
-
-   Compute (truncated) T3-SVD of TuckerTensorTrain.
-
-

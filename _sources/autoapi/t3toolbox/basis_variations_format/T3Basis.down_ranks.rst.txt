@@ -1,4 +1,0 @@
-T3Basis.down_ranks
-==================
-
-.. py:method:: T3Basis.down_ranks()

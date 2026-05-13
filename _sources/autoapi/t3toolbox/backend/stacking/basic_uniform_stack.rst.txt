@@ -1,8 +1,0 @@
-t3toolbox.backend.stacking.basic_uniform_stack
-==============================================
-
-.. py:function:: t3toolbox.backend.stacking.basic_uniform_stack(xx)
-
-   Stack array-like tree of uniform array tuples into single ragged array tuple.
-
-

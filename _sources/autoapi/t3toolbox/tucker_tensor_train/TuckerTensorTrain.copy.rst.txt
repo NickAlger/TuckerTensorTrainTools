@@ -1,7 +1,7 @@
 TuckerTensorTrain.copy
 ======================
 
-.. py:method:: TuckerTensorTrain.copy()
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.copy()
 
    Copy TuckerTensorTrain.
 

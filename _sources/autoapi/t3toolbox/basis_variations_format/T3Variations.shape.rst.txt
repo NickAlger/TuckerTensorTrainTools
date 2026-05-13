@@ -1,4 +1,0 @@
-T3Variations.shape
-==================
-
-.. py:method:: T3Variations.shape()

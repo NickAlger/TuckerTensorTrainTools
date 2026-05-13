@@ -1,4 +1,0 @@
-T3Basis.__post_init__
-=====================
-
-.. py:method:: T3Basis.__post_init__()

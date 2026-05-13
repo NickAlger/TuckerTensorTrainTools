@@ -1,8 +1,0 @@
-UniformTuckerTensorTrain.stack_shape
-====================================
-
-.. py:method:: UniformTuckerTensorTrain.stack_shape()
-
-   If this contains many stacked uniform Tucker tensor trains, this is the stacking shape.
-
-

@@ -1,4 +1,0 @@
-UniformTuckerTensorTrain.data
-=============================
-
-.. py:method:: UniformTuckerTensorTrain.data()

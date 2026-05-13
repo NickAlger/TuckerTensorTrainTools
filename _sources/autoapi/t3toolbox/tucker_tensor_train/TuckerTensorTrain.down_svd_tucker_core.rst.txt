@@ -1,7 +1,7 @@
 TuckerTensorTrain.down_svd_tucker_core
 ======================================
 
-.. py:method:: TuckerTensorTrain.down_svd_tucker_core(ii, min_rank = None, max_rank = None, rtol = None, atol = None)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_svd_tucker_core(ii, min_rank = None, max_rank = None, rtol = None, atol = None)
 
    Compute SVD of ith tucker core and contract non-orthogonal factor into the TT-core above.
 

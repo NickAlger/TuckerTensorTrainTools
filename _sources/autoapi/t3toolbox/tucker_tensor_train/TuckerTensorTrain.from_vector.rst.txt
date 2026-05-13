@@ -1,7 +1,7 @@
 TuckerTensorTrain.from_vector
 =============================
 
-.. py:method:: TuckerTensorTrain.from_vector(x_flat, shape, tucker_ranks, tt_ranks, stack_shape = ())
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_vector(x_flat, shape, tucker_ranks, tt_ranks, stack_shape = ())
    :staticmethod:
 
 

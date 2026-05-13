@@ -1,7 +1,7 @@
 TuckerTensorTrain.to_vector
 ===========================
 
-.. py:method:: TuckerTensorTrain.to_vector()
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_vector()
 
    Converts a TuckerTensorTrain into a 1D vector containing the core entries.
 

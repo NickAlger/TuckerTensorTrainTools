@@ -1,4 +1,0 @@
-t3toolbox.backend.common.tree_contains_jax
-==========================================
-
-.. py:function:: t3toolbox.backend.common.tree_contains_jax(T)

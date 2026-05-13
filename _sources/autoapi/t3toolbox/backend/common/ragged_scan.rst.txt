@@ -1,9 +1,0 @@
-t3toolbox.backend.common.ragged_scan
-====================================
-
-.. py:function:: t3toolbox.backend.common.ragged_scan(f, init, xs)
-
-   Similar to jax.lax.scan, except for ragged-sized arrays
-   https://docs.jax.dev/en/latest/_autosummary/jax.lax.scan.html
-
-

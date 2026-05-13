@@ -1,8 +1,0 @@
-t3toolbox.backend.entries.tucker_tensor_train_entries
-=====================================================
-
-.. py:function:: t3toolbox.backend.entries.tucker_tensor_train_entries(x, index)
-
-   Compute entries of a Tucker tensor train.
-
-

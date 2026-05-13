@@ -1,9 +1,0 @@
-t3toolbox.backend.linalg.right_svd
-==================================
-
-.. py:function:: t3toolbox.backend.linalg.right_svd(G0_i_a_j, min_rank = None, max_rank = None, rtol = None, atol = None)
-
-   Compute (truncated) singular value decomposition of 3-tensor right unfolding.
-
-   Last two indices of the tensor are grouped for the SVD.
-

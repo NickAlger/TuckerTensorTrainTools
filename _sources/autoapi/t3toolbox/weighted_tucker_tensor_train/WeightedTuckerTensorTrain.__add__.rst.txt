@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.__add__
-=================================
-
-.. py:method:: WeightedTuckerTensorTrain.__add__(other, squash = True, use_jax = False)

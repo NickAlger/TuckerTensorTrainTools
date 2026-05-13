@@ -1,6 +1,0 @@
-t3toolbox.backend.basis_variations_format.bv_operations
-=======================================================
-
-.. py:module:: t3toolbox.backend.basis_variations_format.bv_operations
-
-

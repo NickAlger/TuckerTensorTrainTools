@@ -303,11 +303,11 @@
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">{%</span> <span class="pre">if</span> <span class="pre">is_own_page</span> <span class="pre">%}{{</span> <span class="pre">obj.id</span> <span class="pre">|</span> <span class="pre">class_method_format</span> <span class="pre">}}{%</span> <span class="pre">else</span> <span class="pre">%}{{</span> <span class="pre">obj.short_name</span> <span class="pre">}}{%</span> <span class="pre">endif</span> <span class="pre">%}({{</span> <span class="pre">obj.args</span> <span class="pre">}}){%</span> <span class="pre">if</span> <span class="pre">obj.return_annotation</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">none</span> <span class="pre">%}</span> <span class="pre">-&gt;</span> <span class="pre">{{</span> <span class="pre">obj.return_annotation</span> <span class="pre">}}{%</span> <span class="pre">endif</span> <span class="pre">%}</span></span></dt>
+<span class="sig-name descname"><span class="pre">{%</span> <span class="pre">if</span> <span class="pre">is_own_page</span> <span class="pre">%}{{</span> <span class="pre">obj.id</span> <span class="pre">}}{%</span> <span class="pre">else</span> <span class="pre">%}{{</span> <span class="pre">obj.id</span> <span class="pre">|</span> <span class="pre">class_method_format</span> <span class="pre">}}{%</span> <span class="pre">endif</span> <span class="pre">%}({{</span> <span class="pre">obj.args</span> <span class="pre">}}){%</span> <span class="pre">if</span> <span class="pre">obj.return_annotation</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">none</span> <span class="pre">%}</span> <span class="pre">-&gt;</span> <span class="pre">{{</span> <span class="pre">obj.return_annotation</span> <span class="pre">}}{%</span> <span class="pre">endif</span> <span class="pre">%}</span></span></dt>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">{%</span> <span class="pre">for</span> <span class="pre">(args,</span> <span class="pre">return_annotation)</span> <span class="pre">in</span> <span class="pre">obj.overloads</span> <span class="pre">%}</span></span></dt>
 <dd><blockquote>
-<div><p>{%+ if is_own_page %}{{ obj.id | class_method_format }}{% else %}{{ obj.short_name }}{% endif %}({{ args }}){% if return_annotation is not none %} -&gt; {{ return_annotation }}{% endif %}</p>
+<div><p>{%+ if is_own_page %}{{ obj.id }}{% else %}{{ obj.id }}{% endif %}({{ args }}){% if return_annotation is not none %} -&gt; {{ return_annotation }}{% endif %}</p>
 </div></blockquote>
 <p>{% endfor %}
 {% for property in obj.properties %}</p>

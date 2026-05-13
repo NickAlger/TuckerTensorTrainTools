@@ -1,8 +1,0 @@
-t3toolbox.backend.common.xcat
-=============================
-
-.. py:function:: t3toolbox.backend.common.xcat(x, y)
-
-   Concatenate arrays or sequences.
-
-

@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_operations.reverse_tt
-==============================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_operations.reverse_tt(tt_cores)
-
-   Reverse a tensor train (no Tucker).
-
-

@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_linalg.t3_add
-======================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_linalg.t3_add(x, y)
-
-   Add Tucker tensor trains x and y, yielding a Tucker tensor train with summed ranks.
-
-

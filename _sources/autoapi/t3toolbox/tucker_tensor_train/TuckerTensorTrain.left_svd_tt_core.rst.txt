@@ -1,7 +1,7 @@
 TuckerTensorTrain.left_svd_tt_core
 ==================================
 
-.. py:method:: TuckerTensorTrain.left_svd_tt_core(ii, min_rank = None, max_rank = None, rtol = None, atol = None)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.left_svd_tt_core(ii, min_rank = None, max_rank = None, rtol = None, atol = None)
 
    Compute SVD of ith TT-core left unfolding and contract non-orthogonal factor into the TT-core to the right.
 

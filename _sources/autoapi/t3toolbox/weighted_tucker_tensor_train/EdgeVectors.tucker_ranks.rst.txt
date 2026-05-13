@@ -1,4 +1,0 @@
-EdgeVectors.tucker_ranks
-========================
-
-.. py:method:: EdgeVectors.tucker_ranks()

@@ -1,4 +1,0 @@
-UT3Basis.__post_init__
-======================
-
-.. py:method:: UT3Basis.__post_init__()

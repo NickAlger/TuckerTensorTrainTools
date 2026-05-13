@@ -1,7 +1,7 @@
 TuckerTensorTrain.from_canonical
 ================================
 
-.. py:method:: TuckerTensorTrain.from_canonical(factors)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_canonical(factors)
    :staticmethod:
 
 

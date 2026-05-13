@@ -1,4 +1,0 @@
-t3toolbox.OLD_uniform.bv_to_ubv
-===============================
-
-.. py:function:: t3toolbox.OLD_uniform.bv_to_ubv(variation, base, use_jax = False)

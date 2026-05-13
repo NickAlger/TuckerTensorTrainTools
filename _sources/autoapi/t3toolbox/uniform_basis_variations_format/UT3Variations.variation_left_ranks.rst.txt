@@ -1,4 +1,0 @@
-UT3Variations.variation_left_ranks
-==================================
-
-.. py:method:: UT3Variations.variation_left_ranks()

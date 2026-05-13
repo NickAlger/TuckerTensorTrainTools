@@ -1,4 +1,0 @@
-t3toolbox.backend.common.numpy_map
-==================================
-
-.. py:function:: t3toolbox.backend.common.numpy_map(f, xs)

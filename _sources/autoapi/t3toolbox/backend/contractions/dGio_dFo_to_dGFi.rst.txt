@@ -1,8 +1,0 @@
-t3toolbox.backend.contractions.dGio_dFo_to_dGFi
-===============================================
-
-.. py:function:: t3toolbox.backend.contractions.dGio_dFo_to_dGFi(dGio, dFo, use_jax = False)
-
-   Computes named contraction. Capital letters indicate grouped indices, which may be empty.
-
-

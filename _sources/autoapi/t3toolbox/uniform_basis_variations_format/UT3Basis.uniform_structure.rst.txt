@@ -1,4 +1,0 @@
-UT3Basis.uniform_structure
-==========================
-
-.. py:method:: UT3Basis.uniform_structure()

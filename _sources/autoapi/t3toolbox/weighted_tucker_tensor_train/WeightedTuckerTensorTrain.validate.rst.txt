@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.validate
-==================================
-
-.. py:method:: WeightedTuckerTensorTrain.validate()

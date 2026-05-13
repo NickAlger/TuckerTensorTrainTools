@@ -1,4 +1,0 @@
-T3Basis.left_ranks
-==================
-
-.. py:method:: T3Basis.left_ranks()

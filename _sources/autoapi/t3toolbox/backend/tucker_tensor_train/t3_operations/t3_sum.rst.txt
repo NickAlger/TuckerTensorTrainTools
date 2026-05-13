@@ -1,8 +1,0 @@
-t3toolbox.backend.tucker_tensor_train.t3_operations.t3_sum
-==========================================================
-
-.. py:function:: t3toolbox.backend.tucker_tensor_train.t3_operations.t3_sum(x, axis=None)
-
-   Sum over axes of TuckerTensorTrain.
-
-

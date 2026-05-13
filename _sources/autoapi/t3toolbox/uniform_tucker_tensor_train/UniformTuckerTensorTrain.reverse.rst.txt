@@ -1,8 +1,0 @@
-UniformTuckerTensorTrain.reverse
-================================
-
-.. py:method:: UniformTuckerTensorTrain.reverse()
-
-   Reversed a UniformTuckerTensorTrain.
-
-

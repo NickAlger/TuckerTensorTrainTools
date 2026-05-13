@@ -1,7 +1,7 @@
 TuckerTensorTrain.get_minimal_ranks
 ===================================
 
-.. py:method:: TuckerTensorTrain.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
+.. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks(shape, tucker_ranks, tt_ranks)
    :staticmethod:
 
 

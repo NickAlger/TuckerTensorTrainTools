@@ -1,4 +1,0 @@
-T3Basis.shape
-=============
-
-.. py:method:: T3Basis.shape()

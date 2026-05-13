@@ -1,9 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_svd.uniform_t3_svd
-====================================================================
-
-.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_svd.uniform_t3_svd(cores, rank_truncation_masks = (None, None, None), squash_tails_first = True, use_jax = False)
-
-   Compute T3-SVD of uniform Tucker tensor train.
-
-   Only guaranteed to give correct results if ranks are minimal.
-

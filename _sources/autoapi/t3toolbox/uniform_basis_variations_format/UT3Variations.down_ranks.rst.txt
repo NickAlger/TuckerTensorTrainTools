@@ -1,4 +1,0 @@
-UT3Variations.down_ranks
-========================
-
-.. py:method:: UT3Variations.down_ranks()

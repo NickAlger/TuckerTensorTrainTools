@@ -1,4 +1,0 @@
-UniformTuckerTensorTrain.validate
-=================================
-
-.. py:method:: UniformTuckerTensorTrain.validate()

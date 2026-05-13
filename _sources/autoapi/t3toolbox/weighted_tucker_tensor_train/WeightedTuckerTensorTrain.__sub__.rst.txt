@@ -1,4 +1,0 @@
-WeightedTuckerTensorTrain.__sub__
-=================================
-
-.. py:method:: WeightedTuckerTensorTrain.__sub__(other, squash = True, use_jax = False)

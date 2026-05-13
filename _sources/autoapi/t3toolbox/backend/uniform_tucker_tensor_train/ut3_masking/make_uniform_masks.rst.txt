@@ -1,4 +1,0 @@
-t3toolbox.backend.uniform_tucker_tensor_train.ut3_masking.make_uniform_masks
-============================================================================
-
-.. py:function:: t3toolbox.backend.uniform_tucker_tensor_train.ut3_masking.make_uniform_masks(shape, tucker_ranks, tt_ranks, N, n, r, use_jax = False)
