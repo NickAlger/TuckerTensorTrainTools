@@ -392,8 +392,8 @@
 <div class="toctree-wrapper compound">
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="TuckerTensorTrain">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">TuckerTensorTrain</span></span><a class="headerlink" href="#TuckerTensorTrain" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.</span></span><span class="sig-name descname"><span class="pre">TuckerTensorTrain</span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="Link to this definition">#</a></dt>
 <dd><p>Tucker tensor train with non-uniform (ragged) shape and ranks.</p>
 <p>Tensor network diagram for a TuckerTensorTrain with <code class="docutils literal notranslate"><span class="pre">d</span></code> free indices:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">r0</span>        <span class="n">r1</span>        <span class="n">r2</span>       <span class="n">r</span><span class="p">(</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>          <span class="n">rd</span>
@@ -416,12 +416,12 @@
 </ul>
 <p>Related attributes and methods:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#TuckerTensorTrain.tucker_cores" title="TuckerTensorTrain.tucker_cores"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tucker_cores</span></code></a> Tucker cores.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.tt_cores" title="TuckerTensorTrain.tt_cores"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tt_cores</span></code></a> TT cores.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.data" title="TuckerTensorTrain.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.data</span></code></a> Tuple containing Tucker cores and TT cores.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.core_shapes" title="TuckerTensorTrain.core_shapes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.core_shapes</span></code></a> Shapes of all Tucker and TT cores.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tucker_cores</span></code></a> Tucker cores.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tt_cores</span></code></a> TT cores.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.data" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.data</span></code></a> Tuple containing Tucker cores and TT cores.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.core_shapes</span></code></a> Shapes of all Tucker and TT cores.</p></li>
 <li><p><a class="reference internal" href="TuckerTensorTrain.get_core_shapes.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_core_shapes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.get_core_shapes()</span></code></a> Core shapes of hypothetical TuckerTensorTrain.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.data_size" title="TuckerTensorTrain.data_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.data_size</span></code></a> Summed sizes of all cores.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.data_size" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.data_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.data_size</span></code></a> Summed sizes of all cores.</p></li>
 </ul>
 <p>Example:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -450,12 +450,12 @@ is the number 1. However, it is allowed for these ranks to not be 1, in which ca
 the “1”s in the diagram are vectors of ones.</p>
 <p>Related attributes and methods:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#TuckerTensorTrain.d" title="TuckerTensorTrain.d"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.d</span></code></a> Number of indices.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.shape" title="TuckerTensorTrain.shape"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.shape</span></code></a> Tensor shape.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.tucker_ranks" title="TuckerTensorTrain.tucker_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tucker_ranks</span></code></a> Tucker ranks.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.tt_ranks" title="TuckerTensorTrain.tt_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tt_ranks</span></code></a> TT ranks.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.ranks" title="TuckerTensorTrain.ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.ranks</span></code></a> Tucker and TT ranks.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.structure" title="TuckerTensorTrain.structure"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.structure</span></code></a> Shape, ranks, and stack shape.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.d" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.d"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.d</span></code></a> Number of indices.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.shape</span></code></a> Tensor shape.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tucker_ranks</span></code></a> Tucker ranks.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.tt_ranks</span></code></a> TT ranks.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.ranks</span></code></a> Tucker and TT ranks.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.structure</span></code></a> Shape, ranks, and stack shape.</p></li>
 <li><p><a class="reference internal" href="TuckerTensorTrain.squash.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.squash" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.squash"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.squash()</span></code></a> Make <code class="docutils literal notranslate"><span class="pre">r0=rd=1</span></code>.</p></li>
 </ul>
 <p>Example:</p>
@@ -487,7 +487,7 @@ In this case,</p>
 </div></blockquote>
 <p>Related methods and attributes:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#TuckerTensorTrain.stack_shape" title="TuckerTensorTrain.stack_shape"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.stack_shape</span></code></a> Stack shape for stacked TuckerTensorTrain.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.stack_shape</span></code></a> Stack shape for stacked TuckerTensorTrain.</p></li>
 <li><p><a class="reference internal" href="TuckerTensorTrain.stack.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.stack()</span></code></a> Stack TuckerTensorTrains into TuckerTensorTrain.</p></li>
 <li><p><a class="reference internal" href="TuckerTensorTrain.unstack.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.unstack" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.unstack"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.unstack()</span></code></a> Unstack TuckerTensorTrain into TuckerTensorTrains.</p></li>
 </ul>
@@ -568,9 +568,9 @@ rank deficiency.</p>
 <p>More details on the connecdtion between minimal ranks and unfoldings/matricizations are given in Section 2.3 of <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>Related attributes and methods:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#TuckerTensorTrain.minimal_ranks" title="TuckerTensorTrain.minimal_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.minimal_ranks</span></code></a> Minimal ranks for this TuckerTensorTrain.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.minimal_ranks</span></code></a> Minimal ranks for this TuckerTensorTrain.</p></li>
 <li><p><a class="reference internal" href="TuckerTensorTrain.get_minimal_ranks.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.get_minimal_ranks()</span></code></a> Minimal ranks for hypothetical TuckerTensorTrain.</p></li>
-<li><p><a class="reference internal" href="#TuckerTensorTrain.has_minimal_ranks" title="TuckerTensorTrain.has_minimal_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.has_minimal_ranks</span></code></a> Whether this TuckerTensorTrain has minimal ranks.</p></li>
+<li><p><a class="reference internal" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TuckerTensorTrain.has_minimal_ranks</span></code></a> Whether this TuckerTensorTrain has minimal ranks.</p></li>
 <li><p><a class="reference internal" href="TuckerTensorTrain.t3svd.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.t3svd()</span></code></a> T3SVD produces TuckerTensorTrain with minimal ranks.</p></li>
 </ul>
 <p>Example:</p>
@@ -662,8 +662,8 @@ arXiv preprint arXiv:2603.21141.
 </aside>
 </aside>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="TuckerTensorTrain.tucker_cores">
-<span class="sig-name descname"><span class="pre">tucker_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.tucker_cores" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores">
+<span class="sig-name descname"><span class="pre">tucker_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores" title="Link to this definition">#</a></dt>
 <dd><p>Tucker cores for the TuckerTensorTrain.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">tucker_cores=(B0,</span> <span class="pre">...,</span> <span class="pre">B(d-1))</span></code>.</p></li>
@@ -683,8 +683,8 @@ arXiv preprint arXiv:2603.21141.
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="TuckerTensorTrain.tt_cores">
-<span class="sig-name descname"><span class="pre">tt_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.tt_cores" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores">
+<span class="sig-name descname"><span class="pre">tt_cores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores" title="Link to this definition">#</a></dt>
 <dd><p>TT cores for the TuckerTensorTrain.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">tt_cores=(G0,</span> <span class="pre">...,</span> <span class="pre">G(d-1))</span></code>.</p></li>
@@ -704,8 +704,8 @@ arXiv preprint arXiv:2603.21141.
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.data">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.data" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.data">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">t3toolbox.backend.common.NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.data" title="Link to this definition">#</a></dt>
 <dd><p>Tuple containing the Tucker cores and TT cores. <code class="docutils literal notranslate"><span class="pre">data=(tucker_cores,</span> <span class="pre">tt_cores)</span></code></p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -717,11 +717,16 @@ arXiv preprint arXiv:2603.21141.
 <span class="go">True</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>Tuple</em>[t3toolbox.backend.common.NDArray, Ellipsis], <em>Tuple</em>[t3toolbox.backend.common.NDArray, Ellipsis]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.d">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#TuckerTensorTrain.d" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.d">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.d" title="Link to this definition">#</a></dt>
 <dd><p>Number of indices of the tensor. <code class="docutils literal notranslate"><span class="pre">d=len(tucker_cores)=len(tt_cores)</span></code></p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -738,11 +743,16 @@ arXiv preprint arXiv:2603.21141.
 <span class="go">2</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.stack_shape">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stack_shape</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.stack_shape" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stack_shape</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape" title="Link to this definition">#</a></dt>
 <dd><p>If this object contains multiple stacked T3s with the same structure, this is the shape of the stack.
 If no stacking is used then <code class="docutils literal notranslate"><span class="pre">stack_shape=()</span></code>.</p>
 <ul class="simple">
@@ -769,11 +779,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">(6, 7)</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>int</em>, Ellipsis]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.shape">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">shape</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.shape" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">shape</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape" title="Link to this definition">#</a></dt>
 <dd><p>Shape of the represented dense tensor. <code class="docutils literal notranslate"><span class="pre">shape=(N0,...,N(d-1))</span></code></p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -785,11 +800,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">(14, 15, 16)</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>int</em>, Ellipsis]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.tucker_ranks">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tucker_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.tucker_ranks" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tucker_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks" title="Link to this definition">#</a></dt>
 <dd><p>Tucker ranks. <code class="docutils literal notranslate"><span class="pre">tucker_ranks=(n0,...,n(d-1))</span></code></p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -801,11 +821,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">(4, 5, 6)</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>int</em>, Ellipsis]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.tt_ranks">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tt_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.tt_ranks" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tt_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks" title="Link to this definition">#</a></dt>
 <dd><p>TT ranks. <code class="docutils literal notranslate"><span class="pre">tt_ranks=(r0,...,rd)</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
@@ -816,11 +841,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">(1, 3, 2, 1)</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>int</em>, Ellipsis]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.ranks">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.ranks" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks" title="Link to this definition">#</a></dt>
 <dd><p>Tuple containing Tucker ranks and TT ranks.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ranks</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">=</span> <span class="pre">(tucker_ranks,</span> <span class="pre">tt_ranks)</span></code></p></li>
@@ -837,11 +867,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">((4, 5, 6), (1, 3, 2, 1))</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>Tuple</em>[<em>int</em>, Ellipsis], <em>Tuple</em>[<em>int</em>, Ellipsis]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.structure">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">structure</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.structure" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">structure</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure" title="Link to this definition">#</a></dt>
 <dd><p>Tuple containing tensor shape, Tucker ranks, TT ranks, and stack shape.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">structure</span> <span class="pre">=</span> <span class="pre">(shape,</span> <span class="pre">tucker_ranks,</span> <span class="pre">tt_ranks,</span> <span class="pre">stack_shape)</span></code></p></li>
@@ -860,11 +895,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">((14, 15, 16), (4, 5, 6), (1, 3, 2, 1), ())</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>Tuple</em>[<em>int</em>, Ellipsis], <em>Tuple</em>[<em>int</em>, Ellipsis], <em>Tuple</em>[<em>int</em>, Ellipsis], <em>Tuple</em>[<em>int</em>, Ellipsis]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.core_shapes">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">core_shapes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.core_shapes" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">core_shapes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes" title="Link to this definition">#</a></dt>
 <dd><p>Shapes of the Tucker and TT cores.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cores_shapes</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">=</span> <span class="pre">(tucker_core_shapes,</span> <span class="pre">tt_core_shapes)</span></code>.</p></li>
@@ -882,11 +922,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">(((4, 14), (5, 15), (6, 16)), ((1, 4, 3), (3, 5, 2), (2, 6, 1)))</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>Tuple</em>[<em>Tuple</em>[<em>int</em>, Ellipsis], Ellipsis], <em>Tuple</em>[<em>Tuple</em>[<em>int</em>, Ellipsis], Ellipsis]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.size">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#TuckerTensorTrain.size" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.size">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.size" title="Link to this definition">#</a></dt>
 <dd><p>Size of the dense tensor represented by this TuckerTensorTrain. <code class="docutils literal notranslate"><span class="pre">size=N0*...*N(d-1)</span></code>.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -898,11 +943,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">True</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.data_size">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">data_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#TuckerTensorTrain.data_size" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.data_size">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">data_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.data_size" title="Link to this definition">#</a></dt>
 <dd><p>Sum of the sizes of all Tucker and TT cores.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -914,11 +964,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">True</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.minimal_ranks">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">minimal_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#TuckerTensorTrain.minimal_ranks" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">minimal_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Ranks of the smallest possible TuckerTensorTrain that could represent</dt><dd><p>the same dense tensor as this TuckerTensorTrain.</p>
 </dd>
@@ -950,11 +1005,16 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">((4, 5, 6, 7), (1, 4, 20, 7, 1))</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>Tuple</em>[<em>int</em>, Ellipsis], <em>Tuple</em>[<em>int</em>, Ellipsis]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.has_minimal_ranks">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">has_minimal_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#TuckerTensorTrain.has_minimal_ranks" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">has_minimal_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks" title="Link to this definition">#</a></dt>
 <dd><p>True if this Tucker tensor train’s ranks are minimal, False otherwise.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -982,17 +1042,27 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <span class="go">True</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="TuckerTensorTrain.contains_jax">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">contains_jax</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#TuckerTensorTrain.contains_jax" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.contains_jax">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">contains_jax</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.contains_jax" title="Link to this definition">#</a></dt>
 <dd><p>True if any Tucker or TT cores are jax arrays, False if all Tucker and TT cores are numpy arrays.</p>
 <section id="see-also">
 <h3>See Also:<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h3>
 <p><a class="reference internal" href="TuckerTensorTrain.to_jax.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_jax" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_jax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.to_jax()</span></code></a>
 <a class="reference internal" href="TuckerTensorTrain.to_numpy.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_numpy" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_numpy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.to_numpy()</span></code></a></p>
 </section>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -1063,7 +1133,7 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <td><p>Convert tensor train into Tucker tensor train by using identity matrices for Tucker bases.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="TuckerTensorTrain.to_tensor_train.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_tensor_train" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_tensor_train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_tensor_train</span></code></a>()</p></td>
-<td><p>Convert TuckerTensorTrain to tensor train by contracting Tucker bases with TT cores.</p></td>
+<td><p>Convert this TuckerTensorTrain to a tensor train by contracting Tucker bases with TT cores.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="TuckerTensorTrain.to_vector.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_vector" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_vector</span></code></a>()</p></td>
 <td><p>Converts a TuckerTensorTrain into a 1D vector containing the core entries.</p></td>
@@ -1078,7 +1148,7 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <td><p>Load a Tucker tensor train from a file.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="TuckerTensorTrain.__add__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__add__</span></code></a>(other)</p></td>
-<td><p>Add Tucker tensor trains x and y, yielding a Tucker tensor train x+y with summed ranks.</p></td>
+<td><p>Add Tucker tensor trains x and y, yielding a Tucker tensor train z=x+y with summed ranks.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="TuckerTensorTrain.__mul__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__mul__</span></code></a>(other[, use_jax])</p></td>
 <td><p>Pointwise multiplication of a Tucker tensor train.</p></td>
@@ -1196,23 +1266,23 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain"><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.tucker_cores"><code class="docutils literal notranslate"><span class="pre">tucker_cores</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.tt_cores"><code class="docutils literal notranslate"><span class="pre">tt_cores</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.d"><code class="docutils literal notranslate"><span class="pre">d</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.stack_shape"><code class="docutils literal notranslate"><span class="pre">stack_shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.shape"><code class="docutils literal notranslate"><span class="pre">shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.tucker_ranks"><code class="docutils literal notranslate"><span class="pre">tucker_ranks</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.tt_ranks"><code class="docutils literal notranslate"><span class="pre">tt_ranks</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.ranks"><code class="docutils literal notranslate"><span class="pre">ranks</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.structure"><code class="docutils literal notranslate"><span class="pre">structure</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.core_shapes"><code class="docutils literal notranslate"><span class="pre">core_shapes</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.size"><code class="docutils literal notranslate"><span class="pre">size</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.data_size"><code class="docutils literal notranslate"><span class="pre">data_size</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.minimal_ranks"><code class="docutils literal notranslate"><span class="pre">minimal_ranks</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.has_minimal_ranks"><code class="docutils literal notranslate"><span class="pre">has_minimal_ranks</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TuckerTensorTrain.contains_jax"><code class="docutils literal notranslate"><span class="pre">contains_jax</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain"><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_cores"><code class="docutils literal notranslate"><span class="pre">tucker_cores</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_cores"><code class="docutils literal notranslate"><span class="pre">tt_cores</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.d"><code class="docutils literal notranslate"><span class="pre">d</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.stack_shape"><code class="docutils literal notranslate"><span class="pre">stack_shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.shape"><code class="docutils literal notranslate"><span class="pre">shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tucker_ranks"><code class="docutils literal notranslate"><span class="pre">tucker_ranks</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.tt_ranks"><code class="docutils literal notranslate"><span class="pre">tt_ranks</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.ranks"><code class="docutils literal notranslate"><span class="pre">ranks</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.structure"><code class="docutils literal notranslate"><span class="pre">structure</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.core_shapes"><code class="docutils literal notranslate"><span class="pre">core_shapes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.size"><code class="docutils literal notranslate"><span class="pre">size</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.data_size"><code class="docutils literal notranslate"><span class="pre">data_size</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks"><code class="docutils literal notranslate"><span class="pre">minimal_ranks</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.has_minimal_ranks"><code class="docutils literal notranslate"><span class="pre">has_minimal_ranks</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.contains_jax"><code class="docutils literal notranslate"><span class="pre">contains_jax</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>

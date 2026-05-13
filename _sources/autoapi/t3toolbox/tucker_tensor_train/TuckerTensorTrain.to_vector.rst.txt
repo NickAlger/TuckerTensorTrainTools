@@ -5,6 +5,11 @@ TuckerTensorTrain.to_vector
 
    Converts a TuckerTensorTrain into a 1D vector containing the core entries.
 
+   :returns: The vector of all core entries. ``shape=(self.data_size,)``
+   :rtype: NDArray
+
+   .. seealso:: :py:meth:`.TuckerTensorTrain.from_vector`
+
    .. rubric:: Examples
 
    >>> import numpy as np

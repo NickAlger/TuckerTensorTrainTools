@@ -402,8 +402,8 @@ tensors that are <em>represented</em> by the Tucker tensor trains.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – First Tucker tensor train. shape=(N0,…,N(d-1))</p></li>
-<li><p><strong>y</strong> (<a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – Second Tucker tensor train. shape=(N0,…,N(d-1))</p></li>
+<li><p><strong>x</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – First Tucker tensor train. shape=(N0,…,N(d-1))</p></li>
+<li><p><strong>y</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – Second Tucker tensor train. shape=(N0,…,N(d-1))</p></li>
 <li><p><strong>xnp</strong> – Linear algebra backend. Default: np (numpy)</p></li>
 <li><p><strong>use_orthogonalization</strong> (<em>bool</em>)</p></li>
 </ul>
@@ -424,7 +424,7 @@ tensors that are <em>represented</em> by the Tucker tensor trains.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_shape</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_add</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_scale</span></code>, <a class="reference internal" href="../corewise/corewise_dot.html#t3toolbox.corewise.corewise_dot" title="t3toolbox.corewise.corewise_dot"><code class="xref py py-func docutils literal notranslate"><span class="pre">corewise_dot()</span></code></a></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_shape</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_add</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_scale</span></code>, <a class="reference internal" href="../corewise/corewise_dot.html#t3toolbox.corewise.corewise_dot" title="t3toolbox.corewise.corewise_dot"><code class="xref py py-func docutils literal notranslate"><span class="pre">corewise_dot()</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
 <p>Algorithm contracts the TuckerTensorTrains in a zippering fashion from left to right.</p>

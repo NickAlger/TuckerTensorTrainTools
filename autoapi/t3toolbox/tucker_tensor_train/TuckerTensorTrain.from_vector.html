@@ -396,6 +396,44 @@
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_vector">
 <span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_flat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tucker_ranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tt_ranks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_vector" title="Link to this definition">#</a></dt>
 <dd><p>Constructs a TuckerTensorTrain from a 1D vector containing the core entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_flat</strong> (<em>NDArray</em>) – The flattened vector of core entries. <code class="docutils literal notranslate"><span class="pre">x_flat.shape=(data_size,)</span></code></p></li>
+<li><p><strong>shape</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – Shape of the tensor.</p></li>
+<li><p><strong>tucker_ranks</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – Tucker ranks of the tensor.</p></li>
+<li><p><strong>tt_ranks</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em>) – TT ranks.</p></li>
+<li><p><strong>stack_shape</strong> (<em>Sequence</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Stack shape. Default (<code class="docutils literal notranslate"><span class="pre">stack_shape=()</span></code>): No stacking.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="TuckerTensorTrain.to_vector.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_vector" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_vector"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.to_vector()</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – TuckerTensorTrain constructed from the vector of all core entries.
+<code class="docutils literal notranslate"><span class="pre">T.data_size=len(x_flat)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">T.shape=shape</span></code>, <code class="docutils literal notranslate"><span class="pre">T.tucker_ranks=tucker_ranks</span></code>, <code class="docutils literal notranslate"><span class="pre">T.tt_ranks=tt_ranks</span></code>,
+<code class="docutils literal notranslate"><span class="pre">T.stack_shape=stack_shape</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_flat</strong> (<em>t3toolbox.backend.common.NDArray</em>)</p></li>
+<li><p><strong>shape</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>tucker_ranks</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>tt_ranks</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>stack_shape</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
@@ -407,20 +445,6 @@
 <span class="go">0.0</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x_flat</strong> (<em>t3toolbox.backend.common.NDArray</em>)</p></li>
-<li><p><strong>shape</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>tucker_ranks</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>tt_ranks</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>stack_shape</strong> (<em>collections.abc.Sequence</em><em>[</em><em>int</em><em>]</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

@@ -7,6 +7,25 @@ TuckerTensorTrain.from_vector
 
    Constructs a TuckerTensorTrain from a 1D vector containing the core entries.
 
+   :param x_flat: The flattened vector of core entries. ``x_flat.shape=(data_size,)``
+   :type x_flat: NDArray
+   :param shape: Shape of the tensor.
+   :type shape: Sequence[int]
+   :param tucker_ranks: Tucker ranks of the tensor.
+   :type tucker_ranks: Sequence[int]
+   :param tt_ranks: TT ranks.
+   :type tt_ranks: Sequence[int]
+   :param stack_shape: Stack shape. Default (``stack_shape=()``): No stacking.
+   :type stack_shape: Sequence[int], optional
+
+   .. seealso:: :py:meth:`.TuckerTensorTrain.to_vector`
+
+   :returns: **T** -- TuckerTensorTrain constructed from the vector of all core entries.
+             ``T.data_size=len(x_flat)``,
+             ``T.shape=shape``, ``T.tucker_ranks=tucker_ranks``, ``T.tt_ranks=tt_ranks``,
+             ``T.stack_shape=stack_shape``.
+   :rtype: TuckerTensorTrain
+
    .. rubric:: Examples
 
    >>> import numpy as np

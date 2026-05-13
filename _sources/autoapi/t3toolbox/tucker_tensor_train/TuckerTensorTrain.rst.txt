@@ -52,7 +52,7 @@ TuckerTensorTrain
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.t3svd
    /autoapi/t3toolbox/tucker_tensor_train/TuckerTensorTrain.t3svd_dense
 
-.. py:class:: TuckerTensorTrain
+.. py:class:: t3toolbox.tucker_tensor_train.TuckerTensorTrain
 
    Tucker tensor train with non-uniform (ragged) shape and ranks.
 

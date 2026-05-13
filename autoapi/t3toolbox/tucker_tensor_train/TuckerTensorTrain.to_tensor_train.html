@@ -395,23 +395,30 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_tensor_train">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">to_tensor_train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.to_tensor_train" title="Link to this definition">#</a></dt>
-<dd><p>Convert TuckerTensorTrain to tensor train by contracting Tucker bases with TT cores.</p>
+<dd><p>Convert this TuckerTensorTrain to a tensor train by contracting Tucker bases with TT cores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tt_cores</strong> – Tensor train cores. <code class="docutils literal notranslate"><span class="pre">len(tt_cores)=d</span></code>, <code class="docutils literal notranslate"><span class="pre">tt_cores[ii].shape=stack_shape+(ri,</span> <span class="pre">Ni,</span> <span class="pre">r(i+1))</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Sequence</em>[NDArray]</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="TuckerTensorTrain.from_tensor_train.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_tensor_train" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.from_tensor_train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.from_tensor_train()</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">t3</span><span class="o">.</span><span class="n">TuckerTensorTrain</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">big_tt_cores</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">t3_to_tensor_train</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">big_tt_cores</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_tensor_train</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...aib,...bjc,...ckd-&gt;...ijk&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">big_tt_cores</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x_dense2</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_dense</span> <span class="o">-</span> <span class="n">x_dense2</span><span class="p">))</span>
 <span class="go">2.337172789566996e-12</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>Tuple</em>[t3toolbox.backend.common.NDArray, Ellipsis]</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

@@ -395,13 +395,38 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__" title="Link to this definition">#</a></dt>
-<dd><p>Add Tucker tensor trains x and y, yielding a Tucker tensor train x+y with summed ranks.</p>
-<p>Addition is defined with respect to the dense N0 x … x N(d-1) tensors that
+<dd><p>Add Tucker tensor trains x and y, yielding a Tucker tensor train z=x+y with summed ranks.</p>
+<p>Addition is defined with respect to the dense <code class="docutils literal notranslate"><span class="pre">N0</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">x</span> <span class="pre">N(d-1)</span></code> tensors that
 are <em>represented</em> by the Tucker tensor trains.</p>
 <p>For corewise addition, see <a class="reference internal" href="../corewise/corewise_add.html#t3toolbox.corewise.corewise_add" title="t3toolbox.corewise.corewise_add"><code class="xref py py-func docutils literal notranslate"><span class="pre">t3toolbox.corewise.corewise_add()</span></code></a></p>
-<p>T3 + T3 -&gt; T3
-T3 + dense -&gt; dense
-T3 + scalar -&gt; T3</p>
+<p>Return types are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span> <span class="pre">+</span> <span class="pre">TuckerTensorTrain</span>&#160;&#160; <span class="pre">-&gt;</span> <span class="pre">TuckerTensorTrain</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span> <span class="pre">+</span> <span class="pre">NDArray</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">-&gt;</span> <span class="pre">NDArray</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span> <span class="pre">+</span> <span class="pre">scalar</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">-&gt;</span> <span class="pre">TuckerTensorTrain</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a><em> or </em><em>NDArray</em><em> or </em><em>scalar</em>) – Other tensor to be added to this TuckerTensorTrain.
+If TuckerTensorTrain, requires <code class="docutils literal notranslate"><span class="pre">other.shape=self.shape</span></code> and <code class="docutils literal notranslate"><span class="pre">other.stack_shape=self.stack_shape</span></code>.
+If NDArray, requires <code class="docutils literal notranslate"><span class="pre">other.shape=self.stack_shape+self.shape</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>z</strong> – Sum of this TuckerTensorTrain with other tensor.
+If other is TuckerTensorTrain or scalar, <code class="docutils literal notranslate"><span class="pre">z.shape=self.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">z.stack_shape=self.stack_shape</span></code>.
+If other is NDArray, <code class="docutils literal notranslate"><span class="pre">z.shape=self.stack_shape+self.shape</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a> or NDArray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If shapes and/or stack shapes of self and other are inconsistent.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../corewise/corewise_add.html#t3toolbox.corewise.corewise_add" title="t3toolbox.corewise.corewise_add"><code class="xref py py-func docutils literal notranslate"><span class="pre">t3toolbox.corewise.corewise_add()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__sub__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__sub__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__neg__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__neg__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__mul__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__mul__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.inner.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.inner" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.inner"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.inner()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.norm.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.norm()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.sum.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.sum()</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>

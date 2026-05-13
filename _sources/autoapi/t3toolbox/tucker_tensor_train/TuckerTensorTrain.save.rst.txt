@@ -10,13 +10,11 @@ TuckerTensorTrain.save
                 ``.npz`` extension will be appended to the filename if it is not
                 already there.
    :type file: str or file
-   :param x: The Tucker tensor train to save
-   :type x: TuckerTensorTrain
 
-   :raises ValueError: Error raised if the Tucker tensor train is inconsistent
-   :raises RuntimeError: Error raised if the Tucker tensor train fails to save.
+   :raises ValueError: If the Tucker tensor train is inconsistent
+   :raises RuntimeError: If the Tucker tensor train fails to save.
 
-   .. seealso:: :py:obj:`TuckerTensorTrain`, :py:obj:`t3_load`, :py:obj:`check_t3`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.load`
 
    .. rubric:: Examples
 

@@ -398,18 +398,15 @@
 <dd><p>Save a Tucker tensor train to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file</strong> (<em>str</em><em> or </em><em>file</em>) – Either the filename (string) or an open file (file-like object)
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em><em> or </em><em>file</em>) – Either the filename (string) or an open file (file-like object)
 where the data will be saved. If file is a string or a Path, the
 <code class="docutils literal notranslate"><span class="pre">.npz</span></code> extension will be appended to the filename if it is not
-already there.</p></li>
-<li><p><strong>x</strong> (<a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – The Tucker tensor train to save</p></li>
-</ul>
+already there.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – Error raised if the Tucker tensor train is inconsistent</p></li>
-<li><p><strong>RuntimeError</strong> – Error raised if the Tucker tensor train fails to save.</p></li>
+<li><p><strong>ValueError</strong> – If the Tucker tensor train is inconsistent</p></li>
+<li><p><strong>RuntimeError</strong> – If the Tucker tensor train fails to save.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -418,7 +415,7 @@ already there.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="TuckerTensorTrain.html#TuckerTensorTrain" title="TuckerTensorTrain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_load</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t3</span></code></p>
+<p><a class="reference internal" href="TuckerTensorTrain.load.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.load" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.load()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
