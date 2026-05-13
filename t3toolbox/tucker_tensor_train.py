@@ -53,7 +53,7 @@ class TuckerTensorTrain:
                  |         |                    |
                  | n0      | n1                 | nd
                  |         |                    |
-                 B0        B1                   Bd
+                 B0        B1                   B(d-1)
                  |         |                    |
                  | N0      | N1                 | Nd
                  |         |                    |
@@ -512,6 +512,21 @@ class TuckerTensorTrain:
         Tuple[int, ...],  # tt_core_shapes
     ]:
         """Compute the Tucker and TT core shapes for a Tucker tensor train.
+
+        Parameters
+        ----------
+        shape: Sequence[int]
+            Shape of hypothetical TuckerTensorTrain. ``len(shape)=d``.
+        tucker_ranks: Sequence[int]
+            Tucker ranks of hypothetical TuckerTensorTrain. ``len(tucker_ranks)=d``.
+        tt_ranks: Sequence[int]
+            TT ranks of hypothetical TuckerTensorTrain. ``len(tt_ranks)=d+1``
+
+        Returns
+        -------
+        (tucker_core_shapes, t_core_shapes): Tuple[Tuple[int,...], Tuple[int,...]]
+            Tucker and TT core shapes for hypothetical TuckerTensorTrain with given shape and ranks.
+
 
         Examples
         --------
