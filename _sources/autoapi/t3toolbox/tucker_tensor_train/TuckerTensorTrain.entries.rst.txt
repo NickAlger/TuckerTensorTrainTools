@@ -8,7 +8,10 @@ TuckerTensorTrain.entries
    This is the entry of the N0 x ... x N(d-1) tensor *represented* by the
    Tucker tensor train, even though this dense tensor is never formed.
 
-   :param index: Index array or convertible to ``NDArray`` with ``dtype=int``
+   :param self: Tucker tensor train with ``shape=(N0,...,N(d-1))``
+   :type self: TuckerTensorTrain
+   :param index: Index array or convertible to ``NDArray`` with ``dtype=int`` and
+                 ``shape=(d,)+idx_stack_shape``
    :type index: NDArray
 
    :returns: Array of selected entry or multiple entries
@@ -16,7 +19,7 @@ TuckerTensorTrain.entries
 
    :raises ValueError: If ``len(index)`` is not equal to Tucker tensor train dimension
 
-   .. seealso:: :py:class:`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
+   .. seealso:: :py:class:`.TuckerTensorTrain`
 
    .. rubric:: Examples
 

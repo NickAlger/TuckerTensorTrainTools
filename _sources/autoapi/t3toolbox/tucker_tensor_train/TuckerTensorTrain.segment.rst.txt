@@ -15,7 +15,7 @@ TuckerTensorTrain.segment
 
    :raises ValueError: If ``stop <= start``.
 
-   .. seealso:: :py:method:`.TuckerTensorTrain.concatenate`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.concatenate`
 
    .. rubric:: Examples
 

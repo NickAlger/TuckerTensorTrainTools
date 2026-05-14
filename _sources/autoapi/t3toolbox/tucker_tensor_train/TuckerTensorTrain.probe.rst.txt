@@ -11,9 +11,11 @@ TuckerTensorTrain.probe
    :type ww: Sequence[NDArray]
 
    :returns: Results of contracting ``self`` with the vectors in all but one index for all indices.
-             Sequence of vectors if `ww` elements are vectors, and sequence of ``NDArray``s each
-             with shape `W+(Ni,)`` if ``ww` elements are matrices.
+             Sequence of vectors if ``ww`` elements are vectors, and sequence of ``NDArray``s each
+             with ``elm_shape=W+(Ni,)`` if ``ww`` elements are matrices.
    :rtype: Sequence[NDArray]
+
+   .. seealso:: :py:class:`.TuckerTensorTrain`
 
    .. rubric:: Examples
 

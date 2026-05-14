@@ -15,8 +15,8 @@ TuckerTensorTrain.__sub__
    - ``TuckerTensorTrain - TuckerTensorTrain -> TuckerTensorTrain``
        (self - other).to_dense() = self.to_dense() - other.to_dense()
 
-   - ``TuckerTensorTrain * NDArray -> NDArray``
-       self - other = self.to_dense() *- other
+   - ``TuckerTensorTrain - NDArray -> NDArray``
+       self - other = self.to_dense() - other
 
    - ``TuckerTensorTrain - scalar -> TuckerTensorTrain``
        (self - other).to_dense() = self.to_dense() - other

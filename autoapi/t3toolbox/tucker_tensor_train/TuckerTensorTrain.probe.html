@@ -405,13 +405,17 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Results of contracting <code class="docutils literal notranslate"><span class="pre">self</span></code> with the vectors in all but one index for all indices.
-Sequence of vectors if <cite>ww</cite> elements are vectors, and sequence of <code class="docutils literal notranslate"><span class="pre">NDArray``s</span> <span class="pre">each</span>
-<span class="pre">with</span> <span class="pre">shape</span> <span class="pre">`W+(Ni,)</span></code> if <a href="#id1"><span class="problematic" id="id2">``</span></a>ww` elements are matrices.</p>
+Sequence of vectors if <code class="docutils literal notranslate"><span class="pre">ww</span></code> elements are vectors, and sequence of <code class="docutils literal notranslate"><span class="pre">NDArray``s</span> <span class="pre">each</span>
+<span class="pre">with</span> <span class="pre">``elm_shape=W+(Ni,)</span></code> if <code class="docutils literal notranslate"><span class="pre">ww</span></code> elements are matrices.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>Sequence</em>[NDArray]</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <p>Basic probing example:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>

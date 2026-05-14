@@ -400,7 +400,11 @@
 Tucker tensor train, even though this dense tensor is never formed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>index</strong> (<em>NDArray</em>) – Index array or convertible to <code class="docutils literal notranslate"><span class="pre">NDArray</span></code> with <code class="docutils literal notranslate"><span class="pre">dtype=int</span></code></p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – Tucker tensor train with <code class="docutils literal notranslate"><span class="pre">shape=(N0,...,N(d-1))</span></code></p></li>
+<li><p><strong>index</strong> (<em>NDArray</em>) – Index array or convertible to <code class="docutils literal notranslate"><span class="pre">NDArray</span></code> with <code class="docutils literal notranslate"><span class="pre">dtype=int</span></code> and
+<code class="docutils literal notranslate"><span class="pre">shape=(d,)+idx_stack_shape</span></code></p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Array of selected entry or multiple entries</p>
@@ -414,7 +418,7 @@ Tucker tensor train, even though this dense tensor is never formed.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain</span></code></a></p>
+<p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <p>Compute one entry:</p>

@@ -26,12 +26,11 @@ TuckerTensorTrain.t3svd
              * *Tuple[NDArray,...]* -- Singular values associated with edges between Tucker cores and TT-cores
              * *Tuple[NDArray,...]* -- Singular values associated with edges between adjacent TT-cores
 
-   .. seealso:: :py:obj:`left_svd_3tensor`, :py:obj:`right_svd_3tensor`, :py:obj:`outer_svd_3tensor`, :py:obj:`up_svd_ith_tucker_core`, :py:obj:`left_svd_ith_tt_core`, :py:obj:`right_svd_ith_tt_core`, :py:obj:`up_svd_ith_tt_core`, :py:obj:`down_svd_ith_tt_core`, :py:obj:`truncated_svd`
+   .. seealso:: :py:obj:`..`, :py:obj:`..`, :py:obj:`..`, :py:obj:`..`, :py:obj:`up_svd_ith_tucker_core`, :py:obj:`left_svd_ith_tt_core`, :py:obj:`right_svd_ith_tt_core`, :py:obj:`up_svd_ith_tt_core`, :py:obj:`down_svd_ith_tt_core`, :py:obj:`truncated_svd`, :py:class:`.TuckerTensorTrain`, :py:meth:`.TuckerTensorTrain.t3svd_dense`
 
    .. rubric:: Examples
 
-   T3-SVD with no truncation
-   (NOTE: ranks may decrease to minimal values, but no approximation error):
+   T3-SVD with no truncation (NOTE: ranks may decrease to minimal values):
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3

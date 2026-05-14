@@ -607,10 +607,8 @@ are mathematically defined with respect to the <code class="docutils literal not
 These operations are performed implicitly using Tucker tensor train cores as a computational device,
 because the dense tensors can be extremely large.
 The results faithfully represent what one would have gotten if one performed the operations on the dense tensors.
-E.g.:</p>
-<blockquote>
-<div><p>(x + y).to_dense() = x.to_dense() + y.to_dense()</p>
-</div></blockquote>
+E.g.:
+.. math:: (x + y).to_dense() = x.to_dense() + y.to_dense()</p>
 <p>Adding Tucker tensor trains adds their ranks, and multiplication multiplies their ranks.
 To prevent ranks growing too large when many linear algebra operations are performed in sequence,
 it may be useful to perform truncated T3SVDs between operations
@@ -962,11 +960,9 @@ If no stacking is used then <code class="docutils literal notranslate"><span cla
 <dl class="py property">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">minimal_ranks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.minimal_ranks" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>Ranks of the smallest possible TuckerTensorTrain that could represent</dt><dd><p>the same dense tensor as this TuckerTensorTrain.</p>
-</dd>
-</dl>
-<p>TuckerTensorTrains ranks may be made minimal using T3-SVD.</p>
+<dd><p>Ranks of the smallest possible TuckerTensorTrain that could represent
+the same dense tensor as this TuckerTensorTrain.
+TuckerTensorTrains ranks may be made minimal using T3-SVD.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">minimal_ranks</span> <span class="pre">=</span> <span class="pre">(minimal_tucker_ranks,</span> <span class="pre">minimal_tt_ranks)</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">len(minimal_tucker_ranks)</span> <span class="pre">=</span> <span class="pre">d</span></code></p></li>

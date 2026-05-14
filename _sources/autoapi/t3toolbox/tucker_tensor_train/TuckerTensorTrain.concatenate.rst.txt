@@ -16,7 +16,7 @@ TuckerTensorTrain.concatenate
    :raises ValueError: If segments have incompatible leading and trailing TT ranks.
        I.e., if ``x[ii].tt_ranks[-1] != x[ii+1].tt_ranks[0]``.
 
-   .. seealso:: :py:method:`.TuckerTensorTrain.segment`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.segment`
 
    .. rubric:: Examples
 

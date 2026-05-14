@@ -16,7 +16,7 @@ TuckerTensorTrain.apply
 
    :raises ValueError: Error raised if the provided vectors in vecs are inconsistent with each other or the Tucker tensor train.
 
-   .. seealso:: :py:obj:`TuckerTensorTrain`
+   .. seealso:: :py:class:`.TuckerTensorTrain`, :py:meth:`.TuckerTensorTrain.probe`
 
    .. rubric:: Examples
 

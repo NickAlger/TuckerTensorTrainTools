@@ -205,6 +205,7 @@ TuckerTensorTrain
    Minimal ranks always exist and are unique.
        - Minimal TT ranks are equal to the ranks of ``(N0*...*Ni) x (N(i+1)*...*N(d-1))`` matrix unfoldings.
        - Minimal Tucker ranks are equal to the ranks of ``Ni x (N0*...*N(i-1)*N(i+1)*...*N(d-1))`` matricizations.
+
    More details on the connection between minimal ranks and unfoldings/matricizations are given in Section 2.3 of [1]_.
 
    Example:
@@ -247,7 +248,7 @@ TuckerTensorTrain
    because the dense tensors can be extremely large.
    The results faithfully represent what one would have gotten if one performed the operations on the dense tensors.
    E.g.:
-       (x + y).to_dense() = x.to_dense() + y.to_dense()
+   .. math:: (x + y).to_dense() = x.to_dense() + y.to_dense()
 
    Adding Tucker tensor trains adds their ranks, and multiplication multiplies their ranks.
    To prevent ranks growing too large when many linear algebra operations are performed in sequence,
@@ -551,12 +552,8 @@ TuckerTensorTrain
       :type: Tuple[Tuple[int, Ellipsis], Tuple[int, Ellipsis]]
 
 
-      
-
-
-
       Ranks of the smallest possible TuckerTensorTrain that could represent
-       the same dense tensor as this TuckerTensorTrain.
+      the same dense tensor as this TuckerTensorTrain.
       TuckerTensorTrains ranks may be made minimal using T3-SVD.
 
       - ``minimal_ranks = (minimal_tucker_ranks, minimal_tt_ranks)``
