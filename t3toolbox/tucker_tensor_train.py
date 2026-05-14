@@ -195,6 +195,7 @@ class TuckerTensorTrain:
     Minimal ranks always exist and are unique.
         - Minimal TT ranks are equal to the ranks of ``(N0*...*Ni) x (N(i+1)*...*N(d-1))`` matrix unfoldings.
         - Minimal Tucker ranks are equal to the ranks of ``Ni x (N0*...*N(i-1)*N(i+1)*...*N(d-1))`` matricizations.
+        
     More details on the connection between minimal ranks and unfoldings/matricizations are given in Section 2.3 of [1]_.
 
     Example:
@@ -237,7 +238,7 @@ class TuckerTensorTrain:
     because the dense tensors can be extremely large.
     The results faithfully represent what one would have gotten if one performed the operations on the dense tensors.
     E.g.:
-        (x + y).to_dense() = x.to_dense() + y.to_dense()
+    .. math:: (x + y).to_dense() = x.to_dense() + y.to_dense()
 
     Adding Tucker tensor trains adds their ranks, and multiplication multiplies their ranks.
     To prevent ranks growing too large when many linear algebra operations are performed in sequence,
@@ -612,8 +613,8 @@ class TuckerTensorTrain:
 
     @cached_property
     def minimal_ranks(self) -> Tuple[Tuple[int,...], Tuple[int,...]]:
-        """Ranks of the smallest possible TuckerTensorTrain that could represent
-         the same dense tensor as this TuckerTensorTrain.
+        """Ranks of the smallest possible TuckerTensorTrain that could represent 
+        the same dense tensor as this TuckerTensorTrain. 
         TuckerTensorTrains ranks may be made minimal using T3-SVD.
 
         - ``minimal_ranks = (minimal_tucker_ranks, minimal_tt_ranks)``
@@ -833,7 +834,7 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :py:method:`.TuckerTensorTrain.concatenate`
+        :py:meth:`.TuckerTensorTrain.concatenate`
 
         Examples
         --------
@@ -894,7 +895,7 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :py:method:`.TuckerTensorTrain.segment`
+        :py:meth:`.TuckerTensorTrain.segment`
 
         Examples
         --------
@@ -1943,8 +1944,8 @@ class TuckerTensorTrain:
         return self * (-1.0)
 
     def __sub__(
-            self,
-            other,
+            self: 'TuckerTensorTrain',
+            other: 'TuckerTensorTrain',
     ) -> 'TuckerTensorTrain':
         """Subtract Tucker tensor trains, ``result = self - other``, yielding a Tucker tensor train with summed ranks.
 
@@ -1958,8 +1959,8 @@ class TuckerTensorTrain:
         - ``TuckerTensorTrain - TuckerTensorTrain -> TuckerTensorTrain``
             (self - other).to_dense() = self.to_dense() - other.to_dense()
 
-        - ``TuckerTensorTrain * NDArray -> NDArray``
-            self - other = self.to_dense() *- other
+        - ``TuckerTensorTrain - NDArray -> NDArray``
+            self - other = self.to_dense() - other
 
         - ``TuckerTensorTrain - scalar -> TuckerTensorTrain``
             (self - other).to_dense() = self.to_dense() - other
@@ -2907,7 +2908,10 @@ class TuckerTensorTrain:
     ##########    Entries, Apply, and Probing    ##########
     #######################################################
 
-    def entries(self, index: NDArray) -> NDArray:
+    def entries(
+            self,           # shape=(N0,...,N(d-1))
+            index: NDArray, # shape=(d,)+idx_stack_shape, dtype=int 
+    ) -> NDArray:
         '''Compute an entry (or multiple entries) of a Tucker tensor train.
 
         This is the entry of the N0 x ... x N(d-1) tensor *represented* by the
@@ -2915,8 +2919,11 @@ class TuckerTensorTrain:
 
         Parameters
         ----------
+        self: TuckerTensorTrain
+            Tucker tensor train with ``shape=(N0,...,N(d-1))``
         index: NDArray
-            Index array or convertible to ``NDArray`` with ``dtype=int``
+            Index array or convertible to ``NDArray`` with ``dtype=int`` and 
+            ``shape=(d,)+idx_stack_shape``
 
         Returns
         -------
@@ -2930,7 +2937,7 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :py:class:`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
+        :py:class:`.TuckerTensorTrain`
 
         Examples
         --------
@@ -3036,7 +3043,8 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        TuckerTensorTrain
+        :py:class:`.TuckerTensorTrain`
+        :py:meth:`.TuckerTensorTrain.probe`
 
         Examples
         --------
@@ -3117,9 +3125,13 @@ class TuckerTensorTrain:
         -------
         Sequence[NDArray]
             Results of contracting ``self`` with the vectors in all but one index for all indices.
-            Sequence of vectors if `ww` elements are vectors, and sequence of ``NDArray``s each
-            with shape `W+(Ni,)`` if ``ww` elements are matrices.
+            Sequence of vectors if ``ww`` elements are vectors, and sequence of ``NDArray``s each
+            with ``elm_shape=W+(Ni,)`` if ``ww`` elements are matrices.
 
+        See Also
+        --------
+        :py:class:`.TuckerTensorTrain`
+        
         Examples
         --------
 
@@ -3175,11 +3187,11 @@ class TuckerTensorTrain:
     ##############################################################
 
     def t3svd(
-        self,
-        max_tt_ranks: Sequence[int] = None,     # len=d+1
-        max_tucker_ranks: Sequence[int] = None, # len=d
-        rtol: float = None,
-        atol: float = None,
+            self,
+            max_tt_ranks: Sequence[int] = None,     # len=d+1
+            max_tucker_ranks: Sequence[int] = None, # len=d
+            rtol: float = None,
+            atol: float = None,
     ) -> Tuple[
         'TuckerTensorTrain', # new_x
         Tuple[NDArray,...],  # Tucker singular values, len=d
@@ -3217,9 +3229,10 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        left_svd_3tensor
-        right_svd_3tensor
-        outer_svd_3tensor
+        .. TODO
+        .. left_svd_3tensor # DEPR
+        .. right_svd_3tensor # DEPR
+        .. outer_svd_3tensor # DEPR
         up_svd_ith_tucker_core
         left_svd_ith_tt_core
         right_svd_ith_tt_core
@@ -3227,11 +3240,12 @@ class TuckerTensorTrain:
         down_svd_ith_tt_core
         truncated_svd
 
+        :py:class:`.TuckerTensorTrain`
+        :py:meth:`.TuckerTensorTrain.t3svd_dense`
+
         Examples
         --------
-
-        T3-SVD with no truncation
-        (NOTE: ranks may decrease to minimal values, but no approximation error):
+        T3-SVD with no truncation (NOTE: ranks may decrease to minimal values):
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
@@ -3337,12 +3351,12 @@ class TuckerTensorTrain:
 
     @staticmethod
     def t3svd_dense(
-        T: NDArray,                              # shape=stack_shape+(N1, N2, .., Nd)
-        stack_shape: Sequence[int] = (),
-        max_tucker_ranks: Sequence[int] = None,  # len=d
-        max_tt_ranks: Sequence[int] = None,      # len=d+1
-        rtol: float = None,
-        atol: float = None,
+            T: NDArray,                              # shape=stack_shape+(N1, N2, .., Nd)
+            stack_shape: Sequence[int] = (),
+            max_tucker_ranks: Sequence[int] = None,  # len=d
+            max_tt_ranks: Sequence[int] = None,      # len=d+1
+            rtol: float = None,
+            atol: float = None,
     ) -> Tuple[
         'TuckerTensorTrain',  # Approximation of T by Tucker tensor train
         Tuple[NDArray, ...],  # Tucker singular values, len=d
@@ -3388,9 +3402,9 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :py:class:`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
-        :py:method:`t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd`
-        :py:method:`t3toolbox.tucker_tensor_train.TuckerTensorTrain.get_minimal_ranks`
+        :py:class:`.TuckerTensorTrain`
+        :py:meth:`.TuckerTensorTrain.t3svd`
+        :py:meth:`.TuckerTensorTrain.get_minimal_ranks`
 
         Notes
         -----
