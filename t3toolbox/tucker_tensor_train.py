@@ -2367,7 +2367,7 @@ class TuckerTensorTrain:
         ))
 
     def down_orthogonalize_tucker_cores(
-            self,
+        self,
     ) -> 'TuckerTensorTrain':
         """Orthogonalize Tucker cores upwards, pushing remainders onto TT cores above.
 
@@ -2404,8 +2404,8 @@ class TuckerTensorTrain:
         return TuckerTensorTrain(*ragged_orthogonalization.down_orthogonalize_tucker_cores(self.data))
 
     def up_orthogonalize_tt_cores(
-            self,
-    ):
+        self,
+    ) -> 'TuckerTensorTrain':
         """Outer orthogonalize TT cores, pushing remainders downward onto tucker cores below.
 
         Examples
@@ -2440,9 +2440,9 @@ class TuckerTensorTrain:
         )
 
     def left_orthogonalize_tt_cores(
-            self,
-            return_variation_cores: bool = False,
-    ):
+        self,
+        return_variation_cores: bool = False,
+    ) -> 'TuckerTensorTrain':
         """Left orthogonalize the TT cores, possibly returning variation cores as well.
 
         >>> import numpy as np
@@ -2479,9 +2479,9 @@ class TuckerTensorTrain:
             return TuckerTensorTrain(self.tucker_cores, result)
 
     def right_orthogonalize_tt_cores(
-            self,
-            return_variation_cores: bool = False,
-    ):
+        self,
+        return_variation_cores: bool = False,
+    ) -> 'TuckerTensorTrain':
         """Right orthogonalize the TT cores, possibly returning variation cores as well.
 
         Examples
@@ -2523,14 +2523,30 @@ class TuckerTensorTrain:
     ##########    Entries, Apply, and Probing    ##########
     #######################################################
 
-    def entries(
-            self,
-            index: NDArray,  # or convertible to NDArray. dtype=int
-    ) -> NDArray:
+    def entries(self, index: NDArray) -> NDArray:
         '''Compute an entry (or multiple entries) of a Tucker tensor train.
 
         This is the entry of the N0 x ... x N(d-1) tensor *represented* by the
         Tucker tensor train, even though this dense tensor is never formed.
+
+        Parameters
+        ----------
+        index: NDArray
+            Index array or convertible to ``NDArray`` with ``dtype=int``
+
+        Returns
+        -------
+        NDArray
+            Array of selected entry or multiple entries
+
+        Raises
+        ------
+        ValueError
+            If ``len(index)`` is not equal to Tucker tensor train dimension
+
+        See Also
+        --------
+        :py:class:`t3toolbox.tucker_tensor_train.TuckerTensorTrain`
 
         Examples
         --------
@@ -2540,21 +2556,21 @@ class TuckerTensorTrain:
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (1,3,2,1))
-        >>> index = [9, 4, 7] # get entry (9,4,7)
+        >>> index = [9, 4, 7]
         >>> result = x.entries(index)
         >>> result2 = x.to_dense()[9, 4, 7]
         >>> print(np.abs(result - result2))
         1.3322676295501878e-15
 
-        With stacked index and stacked T3s
+        With stacked index and stacked T3s:
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> choice = np.random.choice
-        >>> stack_shape = (2,3)
-        >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (2,3,2,2), stack_shape)
-        >>> istack_shape = (4,5,1)
-        >>> index = [choice(14, size=istack_shape), choice(15, size=istack_shape), choice(16, size=istack_shape)]
+        >>> t3_stack_shape = (2,3)
+        >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (2,3,2,2), t3_stack_shape)
+        >>> idx_stack_shape = (4,5,1)
+        >>> index = [choice(14, size=idx_stack_shape), choice(15, size=idx_stack_shape), choice(16, size=idx_stack_shape)]
         >>> entries = x.entries(index)
         >>> ii, jj = 1, 2
         >>> ll, mm, nn =  3, 2, 0
@@ -2571,7 +2587,7 @@ class TuckerTensorTrain:
         >>> import jax
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> get_entry_123 = lambda x: x.entries((1,2,3))
-        >>> A = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1)).to_jax() # random 10x10x10 Tucker tensor train
+        >>> A = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1)).to_jax() # Random 10x10x10 Tucker tensor train
         >>> a123 = get_entry_123(A)
         >>> print(a123)
         -1.3764521
@@ -2580,27 +2596,27 @@ class TuckerTensorTrain:
         >>> print(a123_jit)
         -1.3764523
 
-        Example using jax automatic differentiation
-
-        >>> import numpy as np
-        >>> import jax
-        >>> import t3toolbox.tucker_tensor_train as t3
-        >>> import t3toolbox.corewise as cw
-        >>> jax.config.update("jax_enable_x64", True) # enable double precision for finite difference
-        >>> get_entry_123 = lambda x: x.entries((1,2,3))
-        >>> A0 = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1), use_jax=True) # random 10x10x10 Tucker tensor train
-        >>> f0 = get_entry_123(A0)
-        >>> G0 = jax.grad(get_entry_123)(A0) # gradient using automatic differentiation
-        >>> dA = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1), use_jax=True)
-        >>> df = cw.corewise_dot(dA.data, G0.data) # sensitivity in direction dA
-        >>> print(df)
-        -7.418801772515241
-        >>> s = 1e-7
-        >>> A1 = cw.corewise_add(A0.data, cw.corewise_scale(dA.data, s)) # A1 = A0 + s*dA
-        >>> f1 = get_entry_123(t3.TuckerTensorTrain(*A1))
-        >>> df_diff = (f1 - f0) / s # finite difference
-        >>> print(df_diff)
-        -7.418812309825662
+        .. Example using jax automatic differentiation
+           
+           >>> import numpy as np
+           >>> import jax
+           >>> import t3toolbox.tucker_tensor_train as t3
+           >>> import t3toolbox.corewise as cw
+           >>> jax.config.update("jax_enable_x64", True) # Enable double precision for finite difference
+           >>> get_entry_123 = lambda x: x.entries((1,2,3))
+           >>> A0 = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1), use_jax=True) # Random 10x10x10 Tucker tensor train
+           >>> f0 = get_entry_123(A0)
+           >>> G0 = jax.grad(get_entry_123)(A0) # Gradient using automatic differentiation
+           >>> dA = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1), use_jax=True)
+           >>> df = cw.corewise_dot(dA.data, G0.data) # Sensitivity in direction dA
+           >>> print(df)
+           -7.418801772515241
+           >>> s = 1e-7
+           >>> A1 = cw.corewise_add(A0.data, cw.corewise_scale(dA.data, s)) # A1 = A0 + s*dA
+           >>> f1 = get_entry_123(t3.TuckerTensorTrain(*A1))
+           >>> df_diff = (f1 - f0) / s # Finite difference
+           >>> print(df_diff)
+           -7.418812309825662
         '''
         if len(index) != self.d:
             raise ValueError(
@@ -2611,36 +2627,32 @@ class TuckerTensorTrain:
         return entries.tucker_tensor_train_entries(self.data, index)
 
     def apply(
-            self, # shape=(N0,...,N(d-1))
-            vecs: Sequence[NDArray],  # len=d, elm_shape=vecs_stack_shape+(Ni,)
+        self,                     # shape=(N0,...,N(d-1))
+        vecs: Sequence[NDArray],  # len=d, elm_shape=vecs_stack_shape+(Ni,)
     ) -> NDArray:
         '''Contract a Tucker tensor train with vectors in all indices.
 
         Parameters
         ----------
-        x: TuckerTensorTrain
-            Tucker tensor train. shape=(N0,...,N(d-1))
+        self: TuckerTensorTrain
+            Tucker tensor train with ``shape=(N0,...,N(d-1))``
         vecs: Sequence[NDArray]
-            Vectors to contract with indices of x. len=d, elm_shape=stack_shape+(Ni,)
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+            Vectors to contract with indices of ``self``. ``len=d``, ``elm_shape=vec_stack_shape+(Ni,)``
 
         Returns
         -------
         NDArray or scalar
             Result of contracting x with the vectors in all indices.
-            scalar if vecs elements are vectors, NDArray with shape (num_applies,) if vecs elements are matrices.
+            Scalar if vecs elements are vectors, ``NDArray`` with shape ``vec_stack_shape`` if vecs elements are matrices.
 
         Raises
         ------
         ValueError
-            Error raised if the provided vectors in vecs are inconsistent with each other or the Tucker tensor train x.
+            Error raised if the provided vectors in vecs are inconsistent with each other or the Tucker tensor train.
 
         See Also
         --------
         TuckerTensorTrain
-        t3_shape
-        t3_entry
 
         Examples
         --------
@@ -2651,7 +2663,7 @@ class TuckerTensorTrain:
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> x = t3.TuckerTensorTrain.randn((14,15,16), (4,5,6), (2,3,2,1))
         >>> vecs = [np.random.randn(14), np.random.randn(15), np.random.randn(16)]
-        >>> result = x.apply(vecs) # <-- contract x with vecs in all indices
+        >>> result = x.apply(vecs) # Contract x with vecs in all indices
         >>> result2 = np.einsum('ijk,i,j,k', x.to_dense(), vecs[0], vecs[1], vecs[2])
         >>> print(np.abs(result - result2))
         5.229594535194337e-12
@@ -2667,7 +2679,7 @@ class TuckerTensorTrain:
         >>> vecs = [randn(*(vec_stack_shape+(14,))), randn(*(vec_stack_shape+(15,))), randn(*(vec_stack_shape+(16,)))]
         >>> result = x.apply(vecs)
         >>> ii, jj = 1, 2 # T3 stack index
-        >>> ll, mm, nn =  3, 2, 0 # input vectors stack index
+        >>> ll, mm, nn =  3, 2, 0 # Vectors stack index
         >>> result_ij_lmn = result[ii,jj, ll,mm,nn]
         >>> x_ij_dense = x.to_dense()[ii,jj]
         >>> vecs_lmn = [vecs[0][ll,mm,nn], vecs[1][ll,mm,nn], vecs[2][ll,mm,nn]]
@@ -2681,20 +2693,20 @@ class TuckerTensorTrain:
         >>> import jax
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> jax.config.update("jax_enable_x64", True)
-        >>> A = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1)).to_jax() # random 10x10x10 Tucker tensor train
-        >>> apply_A_sym = lambda u: A.apply((u,u,u), use_jax=True) # symmetric apply function
+        >>> A = t3.TuckerTensorTrain.randn((10,10,10),(5,5,5),(1,4,4,1)).to_jax() # Random 10x10x10 Tucker tensor train
+        >>> apply_A_sym = lambda u: A.apply((u,u,u), use_jax=True) # Symmetric apply function
         >>> u0 = np.random.randn(10)
         >>> Auuu0 = apply_A_sym(u0)
-        >>> g0 = jax.grad(apply_A_sym)(u0) # gradient using automatic differentiation
+        >>> g0 = jax.grad(apply_A_sym)(u0) # Gradient using automatic differentiation
         >>> du = np.random.randn(10)
-        >>> dAuuu = np.dot(g0, du) # derivative in direction du
+        >>> dAuuu = np.dot(g0, du) # Derivative in direction du
         >>> print(dAuuu)
         766.5390335764645
         >>> s = 1e-7
         >>> u1 = u0 + s*du
         >>> Auuu1 = apply_A_sym(u1)
-        >>> dAuuu_diff = (Auuu1 - Auuu0) / s # finite difference approximation
-        >>> print(dAuuu_diff) #ths same as dAuuu
+        >>> dAuuu_diff = (Auuu1 - Auuu0) / s # Finite difference approximation
+        >>> print(dAuuu_diff)
         766.5390504030256
         '''
         if len(vecs) != len(self.shape):
@@ -2705,13 +2717,30 @@ class TuckerTensorTrain:
         return apply.tucker_tensor_train_apply(self.data, vecs)
 
     def probe(
-            self,
-            ww: Sequence[NDArray],  # len=d, elm_shape=W+(Ni,)
-    ) -> Sequence[NDArray]:  # zz, len=d, elm_shape=X+W+(Ni,)
+        self,
+        ww: Sequence[NDArray],  # len=d, elm_shape=W+(Ni,)
+    ) -> Sequence[NDArray]:     # zz, len=d, elm_shape=X+W+(Ni,)
         """Probe a TuckerTensorTrain.
+
+        Parameters
+        ----------
+        self: TuckerTensorTrain
+            Tucker tensor train with ``shape=(N0,...,N(d-1))``
+        ww: Sequence[NDArray]
+            Vectors to probe ``self`` with ``len=d``, ``elm_shape=W+(Ni,)``
+
+        Returns
+        -------
+        Sequence[NDArray]
+            Results of contracting ``self`` with the vectors in all but one index for all indices.
+            Sequence of vectors if `ww` elements are vectors, and sequence of ``NDArray``s each
+            with shape `W+(Ni,)`` if ``ww` elements are matrices.
 
         Examples
         --------
+
+        Basic probing example:
+
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
         >>> import t3toolbox.backend.probing as probing
@@ -2729,7 +2758,7 @@ class TuckerTensorTrain:
         >>> print(np.linalg.norm(zz[2] - zz2_true))
         1.8042504599894852e-12
 
-        Probe with stacked vectors and stacked T3s
+        Probe with stacked vectors and stacked T3s:
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
@@ -2762,36 +2791,36 @@ class TuckerTensorTrain:
     ##############################################################
 
     def t3svd(
-            self,
-            max_tt_ranks:       Sequence[int] = None, # len=d+1
-            max_tucker_ranks:   Sequence[int] = None, # len=d
-            rtol: float = None,
-            atol: float = None,
+        self,
+        max_tt_ranks: Sequence[int] = None,     # len=d+1
+        max_tucker_ranks: Sequence[int] = None, # len=d
+        rtol: float = None,
+        atol: float = None,
     ) -> Tuple[
         'TuckerTensorTrain', # new_x
-        Tuple[NDArray,...], # Tucker singular values, len=d
-        Tuple[NDArray,...], # TT singular values, len=d+1
+        Tuple[NDArray,...],  # Tucker singular values, len=d
+        Tuple[NDArray,...],  # TT singular values, len=d+1
     ]:
         '''Compute (truncated) T3-SVD of TuckerTensorTrain.
-
+        
         Parameters
         ----------
         self: TuckerTensorTrain
-            The Tucker tensor train. structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))
-        min_tucker_ranks: Sequence[int]
-            Minimum Tucker ranks for truncation.
-        min_tt_ranks: Sequence[int]
-            Minimum TT-ranks for truncation.
-        max_tucker_ranks: Sequence[int]
-            Maximum Tucker ranks for truncation.
-        max_tt_ranks: Sequence[int]
-            Maximum TT-ranks for truncation.
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+            The Tucker tensor train. ``structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))``
+        max_tt_ranks: Sequence[int], optional
+            Maximum TT-ranks ``ri``, e.g., ``(1,5,5,5,1)``. ``len(max_tt_ranks)=d+1``.
+            Default: no max TT rank truncation (``None``).
+        max_tucker_ranks: Sequence[int], optional
+            Maximum Tucker ranks ``ni``, e.g., ``(5,5,5)``. ``len(max_tucker_ranks)=d``.
+            Default: no max Tucker rank truncation (``None``).
+        rtol: float, optional
+            Relative tolerance for truncation (in the Frobenius norm).
+            Default: no ``rtol`` rank truncation (``None``).
+            Requires ``stack_shape=()``.
+        atol: float, optional
+            Absolute tolerance for truncation (in the Frobenius norm).
+            Default: no ``atol`` rank truncation (``None``).
+            Requires ``stack_shape=()``.
 
         Returns
         -------
@@ -2817,12 +2846,8 @@ class TuckerTensorTrain:
         Examples
         --------
 
-        T3-SVD with no truncation:
-        (ranks may decrease to minimal values, but no approximation error)
-
-        # AIMS:
-        # 1) Show very basic use case example (no truncation or stacking)
-        # 2) Illustrate meaning of ss_tucker and ss_tt: they are singular values of matrix unfoldings, not including extra zeros
+        T3-SVD with no truncation
+        (NOTE: ranks may decrease to minimal values, but no approximation error):
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
@@ -2882,7 +2907,7 @@ class TuckerTensorTrain:
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
-        >>> B0 = np.random.randn(35,40) @ np.diag(1.0 / np.arange(1, 41)**2) # preconditioned indices
+        >>> B0 = np.random.randn(35,40) @ np.diag(1.0 / np.arange(1, 41)**2) # Preconditioned indices
         >>> B1 = np.random.randn(45,50) @ np.diag(1.0 / np.arange(1, 51)**2)
         >>> B2 = np.random.randn(55,60) @ np.diag(1.0 / np.arange(1, 61)**2)
         >>> G0 = np.random.randn(1,35,30)
@@ -2928,12 +2953,12 @@ class TuckerTensorTrain:
 
     @staticmethod
     def t3svd_dense(
-            T: NDArray,  # shape=stack_shape+(N1, N2, .., Nd)
-            stack_shape: Sequence[int] = (),
-            max_tucker_ranks: Sequence[int] = None,  # len=d
-            max_tt_ranks: Sequence[int] = None,  # len=d+1
-            rtol: float = None,
-            atol: float = None,
+        T: NDArray,                              # shape=stack_shape+(N1, N2, .., Nd)
+        stack_shape: Sequence[int] = (),
+        max_tucker_ranks: Sequence[int] = None,  # len=d
+        max_tt_ranks: Sequence[int] = None,      # len=d+1
+        rtol: float = None,
+        atol: float = None,
     ) -> Tuple[
         'TuckerTensorTrain',  # Approximation of T by Tucker tensor train
         Tuple[NDArray, ...],  # Tucker singular values, len=d
@@ -3035,5 +3060,3 @@ if common.has_jax:
         lambda x: (x.data, None),
         lambda aux_data, children: TuckerTensorTrain(*children),
     )
-
-
