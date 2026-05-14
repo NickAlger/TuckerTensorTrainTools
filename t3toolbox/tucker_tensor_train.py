@@ -1728,32 +1728,37 @@ class TuckerTensorTrain:
             self,
             other,
     ):
-        """Add Tucker tensor trains x and y, yielding a Tucker tensor train z=x+y with summed ranks.
+        """Add this TuckerTensorTrains self to other tensor, yielding a tensor ``result = self + other`` with summed ranks.
 
-        Addition is defined with respect to the dense ``N0 x ... x N(d-1)`` tensors that
-        are *represented* by the Tucker tensor trains.
+        Addition is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor that
+        is *represented* by the TuckerTensorTrain.
 
         For corewise addition, see :func:`t3toolbox.corewise.corewise_add`
 
-        Return types are as follows:
+        Allowed types are as follows:
 
-        - ``TuckerTensorTrain + TuckerTensorTrain   -> TuckerTensorTrain``
-        - ``TuckerTensorTrain + NDArray             -> NDArray``
-        - ``TuckerTensorTrain + scalar              -> TuckerTensorTrain``
+        - ``TuckerTensorTrain + TuckerTensorTrain -> TuckerTensorTrain``
+            (self + other).to_dense() = self.to_dense() + other.to_dense()
+
+        - ``TuckerTensorTrain + NDArray -> NDArray``
+            self + other = self.to_dense() + other
+
+        - ``TuckerTensorTrain + scalar -> TuckerTensorTrain``
+            (self + other).to_dense() = self.to_dense() + other * np.ones(self.stack_shape + self.shape)
 
         Parameters
         ----------
         other: TuckerTensorTrain or NDArray or scalar
-            Other tensor to be added to this TuckerTensorTrain.
-            If TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
-            If NDArray, requires ``other.shape=self.stack_shape+self.shape``.
+            Other tensor or scalar to add to this TuckerTensorTrain.
+            If ``other`` is TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
+            If ``other`` is NDArray, requires ``other.shape=self.stack_shape+self.shape``.
 
         Returns
         -------
-        z: TuckerTensorTrain or NDArray
-            Sum of this TuckerTensorTrain with other tensor.
-            If other is TuckerTensorTrain or scalar, ``z.shape=self.shape``, ``z.stack_shape=self.stack_shape``.
-            If other is NDArray, ``z.shape=self.stack_shape+self.shape``.
+        result: TuckerTensorTrain or NDArray
+            Sum of tensors self and other.
+            If ``other`` is TuckerTensorTrain or scalar, ``result.shape=self.shape``, ``result.stack_shape=self.stack_shape``.
+            If other is ``NDArray``, ``result.shape=self.stack_shape+self.shape``.
 
         Raises
         ------
@@ -1762,7 +1767,6 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :func:`t3toolbox.corewise.corewise_add`
         :py:meth:`.TuckerTensorTrain.__sub__`
         :py:meth:`.TuckerTensorTrain.__neg__`
         :py:meth:`.TuckerTensorTrain.__mul__`
@@ -1840,37 +1844,51 @@ class TuckerTensorTrain:
             other,  # scalar
             use_jax: bool = None, # None: automatically decide based on input types
     ):
-        """Pointwise multiplication of a Tucker tensor train.
+        """Elementwise multiplication of a Tucker tensor train by another tensor, ``result = self * other``.
 
-        Scaling is defined with respect to the dense N0 x ... x N(d-1) tensor that
-        is *represented* by the Tucker tensor trains.
+        Multiplication is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor that
+        is *represented* by the TuckerTensorTrain.
 
         For corewise scaling, see :func:`t3toolbox.corewise.corewise_scale`
 
+        Allowed types are as follows:
+
+        - ``TuckerTensorTrain * TuckerTensorTrain -> TuckerTensorTrain``
+            (self * other).to_dense() = self.to_dense() * other.to_dense()
+
+        - ``TuckerTensorTrain * NDArray -> NDArray``
+            self * other = self.to_dense() * other
+
+        - ``TuckerTensorTrain * scalar -> TuckerTensorTrain``
+            (self * other).to_dense() = self.to_dense() * other
+
         Parameters
         ----------
-        x: TuckerTensorTrain
-            Tucker tensor train
-        s: scalar
-            scaling factor
+        other: TuckerTensorTrain or NDArray or scalar
+            Other tensor or scalar to be multiplied this TuckerTensorTrain with.
+            If ``other`` is TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
+            If ``other`` is NDArray, requires ``other.shape=self.stack_shape+self.shape``.
 
         Returns
         -------
-        TuckerTensorTrain
-            Scaled TuckerTensorTrain s*x, with the same structure as x.
+        result: TuckerTensorTrain or NDArray
+            Elementwise multiplication of tensors ``self`` and ``other``.
+            If ``other`` is TuckerTensorTrain or scalar, ``result.shape=self.shape``, ``result.stack_shape=self.stack_shape``.
+            If ``other`` is NDArray, ``result.shape=self.stack_shape+self.shape``.
 
         Raises
         ------
         ValueError
-            - Error raised if the TuckerTensorTrains are internally inconsistent
+            If shapes and/or stack shapes of self and other are inconsistent.
 
         See Also
         --------
-        TuckerTensorTrain
-        t3_add
-        t3_neg
-        t3_sub
-        :func:`~t3toolbox.corewise.corewise_scale`
+        :py:meth:`.TuckerTensorTrain.__add__`
+        :py:meth:`.TuckerTensorTrain.__sub__`
+        :py:meth:`.TuckerTensorTrain.__neg__`
+        :py:meth:`.TuckerTensorTrain.inner`
+        :py:meth:`.TuckerTensorTrain.norm`
+        :py:meth:`.TuckerTensorTrain.sum`
 
         Examples
         --------
@@ -1920,7 +1938,24 @@ class TuckerTensorTrain:
     def __neg__(
             self,
     ) -> 'TuckerTensorTrain':
-        """Scale a Tucker tensor train by -1.
+        """Scale a TuckerTensorTrain by -1. ``result=-self``.
+
+        Negation is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor that
+        is *represented* by the TuckerTensorTrains.
+
+        Returns
+        -------
+        result: TuckerTensorTrain or NDArray
+            Negative of this TuckerTensorTrain satisfying ``result.to_dense() = -self.to_dense()``.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.__add__`
+        :py:meth:`.TuckerTensorTrain.__sub__`
+        :py:meth:`.TuckerTensorTrain.__mul__`
+        :py:meth:`.TuckerTensorTrain.inner`
+        :py:meth:`.TuckerTensorTrain.norm`
+        :py:meth:`.TuckerTensorTrain.sum`
 
         Examples
         --------
@@ -1937,12 +1972,52 @@ class TuckerTensorTrain:
             self,
             other,
     ) -> 'TuckerTensorTrain':
-        """Subtract Tucker tensor trains, x - y, yielding a Tucker tensor train with summed ranks.
+        """Subtract Tucker tensor trains, ``result = self - other``, yielding a Tucker tensor train with summed ranks.
 
-        Subtraction is defined with respect to the dense N0 x ... x N(d-1) tensors that
-        are *represented* by the Tucker tensor trains.
+        Subtraction is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor that
+        is *represented* by this TuckerTensorTrains.
 
         For corewise subtraction, see :func:`t3toolbox.corewise.corewise_sub`
+
+        Allowed types are as follows:
+
+        - ``TuckerTensorTrain - TuckerTensorTrain -> TuckerTensorTrain``
+            (self - other).to_dense() = self.to_dense() - other.to_dense()
+
+        - ``TuckerTensorTrain * NDArray -> NDArray``
+            self - other = self.to_dense() *- other
+
+        - ``TuckerTensorTrain - scalar -> TuckerTensorTrain``
+            (self - other).to_dense() = self.to_dense() - other
+
+        Parameters
+        ----------
+        other: TuckerTensorTrain or NDArray or scalar
+            Other tensor or scalar to be subtracted from this TuckerTensorTrain.
+            If ``other`` is TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
+            If ``other`` is NDArray, requires ``other.shape=self.stack_shape+self.shape``.
+
+        Returns
+        -------
+        result: TuckerTensorTrain or NDArray
+            Difference, ``result = self - other``.
+            If ``other` is TuckerTensorTrain or scalar, ``result.shape=self.shape``, ``result.stack_shape=self.stack_shape``.
+            If ``other`` is NDArray, ``result.shape=self.stack_shape+self.shape``.
+
+        Raises
+        ------
+        ValueError
+            If shapes and/or stack shapes of self and other are inconsistent.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.__add__`
+        :py:meth:`.TuckerTensorTrain.__neg__`
+        :py:meth:`.TuckerTensorTrain.__mul__`
+        :py:meth:`.TuckerTensorTrain.inner`
+        :py:meth:`.TuckerTensorTrain.norm`
+        :py:meth:`.TuckerTensorTrain.sum`
+
         Examples
         --------
         >>> import numpy as np
@@ -1986,44 +2061,49 @@ class TuckerTensorTrain:
             other,
             use_orthogonalization: bool = True,  # for numerical stability
     ):
-        """Compute Hilbert-Schmidt inner product of two Tucker tensor trains.
+        """Compute Hilbert-Schmidt inner product of this TuckerTensorTrain with other tensor, ``result=(self, other)_HS``.
 
-        The Hilbert-Schmidt inner product is defined with respect to the dense N0 x ... x N(d-1)
-        tensors that are *represented* by the Tucker tensor trains.
+        The Hilbert-Schmidt inner product is defined with respect to the dense ``N0 x ... x N(d-1)``
+        tensor *represented* by the TuckerTensorTrain.
 
         For corewise dot product, see :func:`t3toolbox.corewise.corewise_dot`
 
+        Allowed types are as follows:
+
+        - ``other: TuckerTensorTrain``
+            ``self.inner(other) = np.sum(self.to_dense() * other.to_dense())``
+
+        - ``other: NDArray``
+            ``self.inner(other) = np.sum(self.to_dense() * other)``
+
         Parameters
         ----------
-        x: TuckerTensorTrain
-            First Tucker tensor train. shape=(N0,...,N(d-1))
-        y: TuckerTensorTrain
-            Second Tucker tensor train. shape=(N0,...,N(d-1))
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+        other: TuckerTensorTrain
+            Other tensor to take the inner product with. Requires ``other.shape=(N0,...,N(d-1))``.
+        use_orthogonalization: bool, optional
+            If True, orthogonalize tensors before computing inner product (more stable).
+            If False, use simple zippering without orthogonalization (faster, better for automatic differentiation).
+            Default: ``use_orthogonalization=True``.
 
         Returns
         -------
-        scalar
-            Hilbert-Schmidt inner product of Tucker tensor trains, (x, y)_HS.
+        scalar or NDArray
+            Hilbert-Schmidt inner product of Tucker tensor trains, (self, other)_HS.
+            If stacked, ``result.shape=self.stack_shape``. Otherwise, result is scalar.
 
         Raises
         ------
         ValueError
-            - Error raised if either of the TuckerTensorTrains are internally inconsistent
-            - Error raised if the TuckerTensorTrains have different shapes.
+            - Error raised if the TuckerTensorTrains have different shapes and/or stack shapes.
 
         See Also
         --------
-        TuckerTensorTrain
-        t3_shape
-        t3_add
-        t3_scale
-        :func:`~t3toolbox.corewise.corewise_dot`
-
-        Notes
-        -----
-        Algorithm contracts the TuckerTensorTrains in a zippering fashion from left to right.
+        :py:meth:`.TuckerTensorTrain.__add__`
+        :py:meth:`.TuckerTensorTrain.__sub__`
+        :py:meth:`.TuckerTensorTrain.__neg__`
+        :py:meth:`.TuckerTensorTrain.__mul__`
+        :py:meth:`.TuckerTensorTrain.norm`
+        :py:meth:`.TuckerTensorTrain.sum`
 
         Examples
         --------
@@ -2109,36 +2189,36 @@ class TuckerTensorTrain:
             self,
             use_orthogonalization: bool = True, # for numerical stability
     ):
-        """Compute Hilbert-Schmidt (Frobenius) norm of a Tucker tensor train.
+        """Compute Hilbert-Schmidt (Frobenius) norm of this TuckerTensorTrain.
 
-        The Hilbert-Schmidt norm is defined with respect to the dense N0 x ... x N(d-1) tensor
-        that is *represented* by the Tucker tensor trains, even though this dense tensor
-        is not formed during computations.
+        The Hilbert-Schmidt norm is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor
+        that is *represented* by the TuckerTensorTrain.
+
+        ``x.norm() = np.linalg.norm(x.to_dense())``
 
         For corewise norm, see :func:`t3toolbox.corewise.corewise_norm`
 
         Parameters
         ----------
-        x: TuckerTensorTrain
-            First Tucker tensor train. shape=(N0,...,N(d-1))
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+        use_orthogonalization: bool, optional
+            If True, compute norm by orthogonalizing (more stable).
+            If False, compute norm with conventional zippering (faster, more suited for automatic differentiation).
+            Default: ``use_orthogonalization=True``.
 
         Returns
         -------
-        scalar
-            Hilbert-Schmidt (Frobenius) norm of Tucker tensor trains, ||x||_HS
-
-        Raises
-        ------
-        ValueError
-            - Error raised if the TuckerTensorTrain is internally inconsistent
+        result: scalar or NDArray
+            Hilbert-Schmidt (Frobenius) norm of Tucker tensor train, ||x||_HS.
+            If stacked, ``result.shape=self.stack_shape``. Otherwise, result is scalar.
 
         See Also
         --------
-        TuckerTensorTrain
-        t3_dot_t3
-        :func:`t3toolbox.corewise.corewise_norm`
+        :py:meth:`.TuckerTensorTrain.__add__`
+        :py:meth:`.TuckerTensorTrain.__sub__`
+        :py:meth:`.TuckerTensorTrain.__neg__`
+        :py:meth:`.TuckerTensorTrain.__mul__`
+        :py:meth:`.TuckerTensorTrain.inner`
+        :py:meth:`.TuckerTensorTrain.sum`
 
         Examples
         --------
@@ -2168,7 +2248,39 @@ class TuckerTensorTrain:
             self,
             axis=None,
     ):
-        """Sum over axes of TuckerTensorTrain.
+        """Sum over one or more axes of TuckerTensorTrain.
+
+        The sum is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor
+        that is *represented* by the TuckerTensorTrain.
+
+        For corewise norm, see :func:`t3toolbox.corewise.corewise_norm`
+
+        If all axes are summed over, returns NDArray or scalar, depending on whether or not self is stacked.
+        If at least one axis is not summed over, returns TuckerTensorTrain.
+
+        Parameters
+        ----------
+        axis: int or Sequence[int], optional
+            If ``int``, sum over index specified by ``axis`.
+            If ``Sequence[int]``, sum over all indices in ``axis``.
+            If None (default), sum over all axes.
+
+        Returns
+        -------
+        result: scalar or NDArray or TuckerTensorTrain
+            Sum of tensor over specified axes.
+            Case 1a: ``axis`` is None or ``axis`` contains all indices ``1,dots,d`` and self is not stacked: ``result`` is scalar.
+            Case 1b: ``axis`` is None or ``axis`` contains all axes ``1,\dots,d`` and self is stacked: ``result`` is NDArray and ``result.shape=self.stack_shape``.
+            Case 2: ``axis`` is ``int``, or ``axis`` is ``Sequence[int]``, and ``axis`` is missing at least ine index from ``1,...,d``: ``result`` is TuckerTensorTrain.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.__add__`
+        :py:meth:`.TuckerTensorTrain.__sub__`
+        :py:meth:`.TuckerTensorTrain.__neg__`
+        :py:meth:`.TuckerTensorTrain.__mul__`
+        :py:meth:`.TuckerTensorTrain.inner`
+        :py:meth:`.TuckerTensorTrain.norm`
 
         Examples
         --------
