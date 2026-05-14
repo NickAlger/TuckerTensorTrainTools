@@ -1,7 +1,7 @@
 {% if obj.display %}
    {% if is_own_page %}
-{{ obj.id }}
-{{ "=" * obj.id|length }}
+{{ obj.name }}
+{{ "=" * obj.name | length }}
 
 .. py:module:: {{ obj.name }}
 
