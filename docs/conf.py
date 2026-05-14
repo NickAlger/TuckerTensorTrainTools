@@ -15,6 +15,8 @@ extensions = [
     'sphinx.ext.githubpages',
 ]
 
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '_templates/autoapi']
+
 add_module_names = False
 typehints_fully_qualified = False
 python_use_unqualified_type_names = True

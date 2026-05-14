@@ -8,8 +8,8 @@ A Python library for working with Tucker tensor trains (T3).
 ## Installation
 The package is pure python. Dependencies:
 
-* [Numpy](https://numpy.org/install/) (required)
-* [Jax](https://docs.jax.dev/en/latest/installation.html) (optional)
+* [``numpy``](https://numpy.org/install/) (required)
+* [``jax``](https://docs.jax.dev/en/latest/installation.html) (optional)
 
 Install from source::
 
@@ -83,7 +83,7 @@ even though these dense tensors are not formed during computations.
 - Probing tangent vectors
 - Transpose of the tangent vector to probes map
 - Varied-rank and uniform-rank T3s
-- Option to use either [Numpy](https://numpy.org/) or [Jax](https://docs.jax.dev/en/latest/index.html) for linear algebra operations
+- Option to use either [NumPy](https://numpy.org/) or [JAX](https://docs.jax.dev/en/latest/index.html) for linear algebra operations
 
 
 ## Authors
