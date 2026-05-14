@@ -134,7 +134,6 @@ def apply_func_to_leaf_subtrees(
 def stack(
         T,
         axes,
-        use_jax: bool = False,
 ):
     """Stack array-like nested tree structure.
 
@@ -216,6 +215,7 @@ def stack(
     >>> print(stacking.stack(T, ()))
     ()
     """
+    use_jax = tree_contains_jax(T)
     xnp, _, _ = get_backend(False, use_jax)
 
     # 1. Drill down to find the 'template' of the original structure
@@ -433,14 +433,14 @@ def basic_ragged_unstack(
 
 def basic_ragged_stack(
         xx, # Array-like tree of bases
-        use_jax: bool = False,
 ) -> typ.Tuple[
     typ.Tuple[NDArray, ...],
     ...,
 ]:
     """Stack array-like tree of ragged array tuples into single ragged array tuple.
     """
-    xnp,_,_ = get_backend(False, use_jax)
+    use_jax = tree_contains_jax(xx)
+    xnp, _, _ = get_backend(False, use_jax)
 
     num_stacking_axes = tree_depth(xx) - 2
     stacking_axes = tuple(range(num_stacking_axes))
@@ -463,14 +463,14 @@ def basic_uniform_unstack(
 
 def basic_uniform_stack(
         xx, # Array-like tree to be stacked
-        use_jax: bool = False,
 ) -> typ.Tuple[
     NDArray,
     ...,
 ]:
     """Stack array-like tree of uniform array tuples into single ragged array tuple.
     """
-    xnp,_,_ = get_backend(False, use_jax)
+    use_jax = tree_contains_jax(xx)
+    xnp, _, _ = get_backend(False, use_jax)
 
     num_stacking_axes = tree_depth(xx) - 1
     stacking_axes = tuple(range(1, 1+num_stacking_axes))

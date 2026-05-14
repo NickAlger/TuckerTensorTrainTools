@@ -24,6 +24,12 @@ autodoc_typehints = 'description'
 
 html_favicon = 'favicon.ico'
 
+# -- Autodoc2 ----
+
+autodoc2_packages = [
+    "../t3toolbox",
+]
+
 # -- AutoAPI configuration ---------------------------------------------------
 autoapi_dirs = ['../t3toolbox']  # Path to your source code
 autoapi_template_dir = '_templates/autoapi'
@@ -32,6 +38,8 @@ autoapi_type = 'python'
 #autoapi_add_toctree_entry = True
 
 autoapi_own_page_level = 'method'
+
+autoapi_ignore = ["*OLD*.py", "*backend*.py", "*eighted*.py", "*anifold*.py", "*niform*.py", "*basis_variation*"]
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'pydata_sphinx_theme'
