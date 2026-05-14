@@ -5,21 +5,22 @@ TuckerTensorTrain.t3svd
 
    Compute (truncated) T3-SVD of TuckerTensorTrain.
 
-   :param self: The Tucker tensor train. structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))
+   :param self: The Tucker tensor train. ``structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))``
    :type self: TuckerTensorTrain
-   :param min_tucker_ranks: Minimum Tucker ranks for truncation.
-   :type min_tucker_ranks: Sequence[int]
-   :param min_tt_ranks: Minimum TT-ranks for truncation.
-   :type min_tt_ranks: Sequence[int]
-   :param max_tucker_ranks: Maximum Tucker ranks for truncation.
-   :type max_tucker_ranks: Sequence[int]
-   :param max_tt_ranks: Maximum TT-ranks for truncation.
-   :type max_tt_ranks: Sequence[int]
-   :param rtol: Relative tolerance for truncation.
-   :type rtol: float
-   :param atol: Absolute tolerance for truncation.
-   :type atol: float
-   :param xnp: Linear algebra backend. Default: np (numpy)
+   :param max_tt_ranks: Maximum TT-ranks ``ri``, e.g., ``(1,5,5,5,1)``. ``len(max_tt_ranks)=d+1``.
+                        Default: no max TT rank truncation (``None``).
+   :type max_tt_ranks: Sequence[int], optional
+   :param max_tucker_ranks: Maximum Tucker ranks ``ni``, e.g., ``(5,5,5)``. ``len(max_tucker_ranks)=d``.
+                            Default: no max Tucker rank truncation (``None``).
+   :type max_tucker_ranks: Sequence[int], optional
+   :param rtol: Relative tolerance for truncation (in the Frobenius norm).
+                Default: no ``rtol`` rank truncation (``None``).
+                Requires ``stack_shape=()``.
+   :type rtol: float, optional
+   :param atol: Absolute tolerance for truncation (in the Frobenius norm).
+                Default: no ``atol`` rank truncation (``None``).
+                Requires ``stack_shape=()``.
+   :type atol: float, optional
 
    :returns: * *TuckerTensorTrain* -- New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
              * *Tuple[NDArray,...]* -- Singular values associated with edges between Tucker cores and TT-cores
@@ -29,12 +30,8 @@ TuckerTensorTrain.t3svd
 
    .. rubric:: Examples
 
-   T3-SVD with no truncation:
-   (ranks may decrease to minimal values, but no approximation error)
-
-   # AIMS:
-   # 1) Show very basic use case example (no truncation or stacking)
-   # 2) Illustrate meaning of ss_tucker and ss_tt: they are singular values of matrix unfoldings, not including extra zeros
+   T3-SVD with no truncation
+   (NOTE: ranks may decrease to minimal values, but no approximation error):
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3
@@ -94,7 +91,7 @@ TuckerTensorTrain.t3svd
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3
-   >>> B0 = np.random.randn(35,40) @ np.diag(1.0 / np.arange(1, 41)**2) # preconditioned indices
+   >>> B0 = np.random.randn(35,40) @ np.diag(1.0 / np.arange(1, 41)**2) # Preconditioned indices
    >>> B1 = np.random.randn(45,50) @ np.diag(1.0 / np.arange(1, 51)**2)
    >>> B2 = np.random.randn(55,60) @ np.diag(1.0 / np.arange(1, 61)**2)
    >>> G0 = np.random.randn(1,35,30)

@@ -396,7 +396,24 @@
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">probe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ww</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe" title="Link to this definition">#</a></dt>
 <dd><p>Probe a TuckerTensorTrain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – Tucker tensor train with <code class="docutils literal notranslate"><span class="pre">shape=(N0,...,N(d-1))</span></code></p></li>
+<li><p><strong>ww</strong> (<em>Sequence</em><em>[</em><em>NDArray</em><em>]</em>) – Vectors to probe <code class="docutils literal notranslate"><span class="pre">self</span></code> with <code class="docutils literal notranslate"><span class="pre">len=d</span></code>, <code class="docutils literal notranslate"><span class="pre">elm_shape=W+(Ni,)</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Results of contracting <code class="docutils literal notranslate"><span class="pre">self</span></code> with the vectors in all but one index for all indices.
+Sequence of vectors if <cite>ww</cite> elements are vectors, and sequence of <code class="docutils literal notranslate"><span class="pre">NDArray``s</span> <span class="pre">each</span>
+<span class="pre">with</span> <span class="pre">shape</span> <span class="pre">`W+(Ni,)</span></code> if <a href="#id1"><span class="problematic" id="id2">``</span></a>ww` elements are matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Sequence</em>[NDArray]</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
+<p>Basic probing example:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.backend.probing</span> <span class="k">as</span> <span class="nn">probing</span>
@@ -415,7 +432,7 @@
 <span class="go">1.8042504599894852e-12</span>
 </pre></div>
 </div>
-<p>Probe with stacked vectors and stacked T3s</p>
+<p>Probe with stacked vectors and stacked T3s:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">randn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span>
@@ -441,14 +458,6 @@
 <span class="go">1.3936060000339696e-12</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ww</strong> (<em>collections.abc.Sequence</em><em>[</em><em>t3toolbox.backend.common.NDArray</em><em>]</em>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>collections.abc.Sequence[t3toolbox.backend.common.NDArray]</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

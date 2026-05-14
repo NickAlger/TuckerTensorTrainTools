@@ -5,7 +5,19 @@ TuckerTensorTrain.probe
 
    Probe a TuckerTensorTrain.
 
+   :param self: Tucker tensor train with ``shape=(N0,...,N(d-1))``
+   :type self: TuckerTensorTrain
+   :param ww: Vectors to probe ``self`` with ``len=d``, ``elm_shape=W+(Ni,)``
+   :type ww: Sequence[NDArray]
+
+   :returns: Results of contracting ``self`` with the vectors in all but one index for all indices.
+             Sequence of vectors if `ww` elements are vectors, and sequence of ``NDArray``s each
+             with shape `W+(Ni,)`` if ``ww` elements are matrices.
+   :rtype: Sequence[NDArray]
+
    .. rubric:: Examples
+
+   Basic probing example:
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3
@@ -24,7 +36,7 @@ TuckerTensorTrain.probe
    >>> print(np.linalg.norm(zz[2] - zz2_true))
    1.8042504599894852e-12
 
-   Probe with stacked vectors and stacked T3s
+   Probe with stacked vectors and stacked T3s:
 
    >>> import numpy as np
    >>> import t3toolbox.tucker_tensor_train as t3
