@@ -2334,38 +2334,40 @@ class TuckerTensorTrain:
         Parameters
         ----------
         ii: int
-            index of tucker core to SVD
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (r0,r1,...r(d-1),rd))
-        min_rank: int
-            Minimum rank for truncation.
-        min_rank: int
-            Maximum rank for truncation.
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+            index of TT core to SVD
+        min_rank: int, optional
+            Minimum rank for truncation. Default (``None``): no minimum rank.
+        max_rank: int, optional
+            Maximum rank for truncation. Default (``None``): no maximum rank.
+        rtol: float, optional
+            Relative tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``rtol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``rtol=None``.
+        atol: float, optional
+            Absolute tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``atol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``atol=None``.
 
         Returns
         -------
-        new_x: NDArray
-            New TuckerTensorTrain representing the same tensor, but with ith tucker core orthogonal.
-            new_tt_cores[ii].shape = (ri, new_ni, r(i+1))
-            new_tucker_cores[ii].shape = (new_ni, Ni)
-            new_tucker_cores[ii] @ new_tucker_cores[ii].T = identity matrix
-        ss_x: NDArray
-            Singular values of prior ith tucker core. shape=(new_ni,).
+        new_x: TuckerTensorTrain
+            New TuckerTensorTrain representing the same tensor, but with ith tucker core down orthogonal.
+            I.e., ``np.einsum('...io,jo->...ij', B, B) = (stacked) identity matrix``, where ``B=new_x.tucker_cores[ii]``.
+            May have different ith Tucker rank.
+        ss: NDArray
+            Singular values of ith Tucker core.
+            ``ss[ii].shape = new_x.stack_shape + new_x.tucker_ranks[ii]``.
+
+        Raises
+        ------
+        ValueError
+            If this TuckerTensorTrain is stacked and ``rtol`` or ``atol`` are not ``None.
 
         See Also
         --------
-        truncated_svd
-        left_svd_ith_tt_core
-        right_svd_ith_tt_core
-        up_svd_ith_tt_core
-        down_svd_ith_tt_core
-        t3_svd
+        :py:meth:`.TuckerTensorTrain.left_svd_tt_core`
+        :py:meth:`.TuckerTensorTrain.right_svd_tt_core`
+        :py:meth:`.TuckerTensorTrain.up_svd_tt_core`
 
         Examples
         --------
@@ -2400,44 +2402,43 @@ class TuckerTensorTrain:
     ]:
         '''Compute SVD of ith TT-core left unfolding and contract non-orthogonal factor into the TT-core to the right.
 
-        Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
-
         Parameters
         ----------
         ii: int
-            index of TT-core to SVD
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-        min_rank: int
-            Minimum rank for truncation.
-        min_rank: int
-            Maximum rank for truncation.
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
+            index of TT core to SVD
+        min_rank: int, optional
+            Minimum rank for truncation. Default (``None``): no minimum rank.
+        max_rank: int, optional
+            Maximum rank for truncation. Default (``None``): no maximum rank.
+        rtol: float, optional
+            Relative tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``rtol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``rtol=None``.
+        atol: float, optional
+            Absolute tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``atol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``atol=None``.
 
         Returns
         -------
-        new_x: NDArray
+        new_x: TuckerTensorTrain
             New TuckerTensorTrain representing the same tensor, but with ith TT-core orthogonal.
-            new_tt_cores[ii].shape = (ri, ni, new_r(i+1))
-            new_tt_cores[ii+1].shape = (new_r(i+1), n(i+1), r(i+2))
-            einsum('iaj,iak->jk', new_tt_cores[ii], new_tt_cores[ii]) = identity matrix
-        ss_x: NDArray
-            Singular values of prior ith TT-core left unfolding. shape=(new_r(i+1),).
+            I.e., ``einsum('...iaj,...iak->...jk', G, G) = (stacked) identity matrix``, where ``G=new_x.tt_cores[ii]``.
+            May have different (i+1)th TT rank.
+        ss: NDArray
+            Singular values of prior ith TT-core left unfolding.
+            ``ss.shape = new_x.stack_shape + (new_x.tt_ranks[ii+1],)``.
+
+        Raises
+        ------
+        ValueError
+            If this TuckerTensorTrain is stacked and ``rtol`` or ``atol`` are not ``None.
 
         See Also
         --------
-        truncated_svd
-        left_svd_3tensor
-        up_svd_ith_tucker_core
-        right_svd_ith_tt_core
-        up_svd_ith_tt_core
-        down_svd_ith_tt_core
-        t3_svd
+        :py:meth:`.TuckerTensorTrain.down_svd_tucker_core`
+        :py:meth:`.TuckerTensorTrain.right_svd_tt_core`
+        :py:meth:`.TuckerTensorTrain.up_svd_tt_core`
 
         Examples
         --------
@@ -2472,44 +2473,43 @@ class TuckerTensorTrain:
     ]:
         '''Compute SVD of ith TT-core right unfolding and contract non-orthogonal factor into the TT-core to the left.
 
-        Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
-
         Parameters
         ----------
         ii: int
-            index of TT-core to SVD
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-        min_rank: int
-            Minimum rank for truncation.
-        min_rank: int
-            Maximum rank for truncation.
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
-        xnp:
-            Linear algebra core. Default: np (numpy)
+            index of TT core to SVD
+        min_rank: int, optional
+            Minimum rank for truncation. Default (``None``): no minimum rank.
+        max_rank: int, optional
+            Maximum rank for truncation. Default (``None``): no maximum rank.
+        rtol: float, optional
+            Relative tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``rtol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``rtol=None``.
+        atol: float, optional
+            Absolute tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``atol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``atol=None``.
 
         Returns
         -------
-        new_x: NDArray
+        new_x: TuckerTensorTrain
             New TuckerTensorTrain representing the same tensor, but with ith TT-core orthogonal.
-            new_tt_cores[ii].shape = (new_ri, ni, r(i+1))
-            new_tt_cores[ii-1].shape = (r(i-1), n(i-1), new_ri)
-            einsum('iaj,kaj->ik', new_tt_cores[ii], new_tt_cores[ii]) = identity matrix
-        ss_x: NDArray
-            Singular values of prior ith TT-core right unfolding. shape=(new_ri,).
+            I.e., ``einsum('...iaj,...kaj->...ik', G, G) = (stacked) identity matrix``, where ``G=new_tt_cores[ii]``.
+            May have different ith TT rank.
+        ss: NDArray
+            Singular values of prior ith TT-core right unfolding.
+            ``ss.shape = new_x.stack_shape + (new_x.tt_ranks[ii],)``.
+
+        Raises
+        ------
+        ValueError
+            If this TuckerTensorTrain is stacked and ``rtol`` or ``atol`` are not ``None.
 
         See Also
         --------
-        truncated_svd
-        left_svd_3tensor
-        up_svd_ith_tucker_core
-        left_svd_ith_tt_core
-        up_svd_ith_tt_core
-        down_svd_ith_tt_core
-        t3_svd
+        :py:meth:`.TuckerTensorTrain.down_svd_tucker_core`
+        :py:meth:`.TuckerTensorTrain.left_svd_tt_core`
+        :py:meth:`.TuckerTensorTrain.up_svd_tt_core`
 
         Examples
         --------
@@ -2544,42 +2544,37 @@ class TuckerTensorTrain:
     ]:
         '''Compute SVD of ith TT-core right unfolding and contract non-orthogonal factor down into the tucker core below.
 
-        Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
-
         Parameters
         ----------
-        self: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
         ii: int
-            index of TT-core to SVD
-        min_rank: int
-            Minimum rank for truncation.
-        min_rank: int
-            Maximum rank for truncation.
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
+            index of TT core to SVD
+        min_rank: int, optional
+            Minimum rank for truncation. Default (``None``): no minimum rank.
+        max_rank: int, optional
+            Maximum rank for truncation. Default (``None``): no maximum rank.
+        rtol: float, optional
+            Relative tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``rtol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``rtol=None``.
+        atol: float, optional
+            Absolute tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+            Default (``None``): no ``atol`` truncation.
+            If this TuckerTensorTrain is stacked, requires ``atol=None``.
 
         Returns
         -------
-        new_x: NDArray
+        new_x: TuckerTensorTrain
             New TuckerTensorTrain representing the same tensor, but with ith TT-core down orthogonal.
-            new_tt_cores[ii].shape = (ri, new_ni, r(i+1))
-            new_tucker_cores[ii].shape = (new_ni, Ni)
-            einsum('iaj,ibj->ab', new_tt_cores[ii], new_tt_cores[ii]) = identity matrix
-        ss_x: NDArray
-            Singular values of prior ith TT-core down unfolding. shape=(new_ni,).
+            I.e., ``einsum('...iaj,...ibj->...ab', G, G) = (stacked) identity matrix``, where ``G=new_tt_cores[ii]``.
+            May have different ith Tucker rank.
+        ss: NDArray
+            ``ss.shape = new_x.stack_shape + (new_x.tucker_ranks[ii],)``.
 
         See Also
         --------
-        truncated_svd
-        outer_svd_3tensor
-        up_svd_ith_tucker_core
-        left_svd_ith_tt_core
-        right_svd_ith_tt_core
-        up_svd_ith_tt_core
-        t3_svd
+        :py:meth:`.TuckerTensorTrain.down_svd_tucker_core`
+        :py:meth:`.TuckerTensorTrain.left_svd_tt_core`
+        :py:meth:`.TuckerTensorTrain.up_svd_tt_core`
 
         Examples
         --------
@@ -2607,36 +2602,27 @@ class TuckerTensorTrain:
             self,
             ii: int,
     ) -> 'TuckerTensorTrain':
-        '''Orthogonalize all cores in the TuckerTensorTrain except for the ith tucker core.
+        '''Orthogonalize cores in the TuckerTensorTrain relative to the ith Tucker core.
 
-        Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
-
-        Orthogonal is done relative to the ith tucker core:
-            - ith tucker core is not orthogonalized
-            - All other tucker cores are orthogonalized.
-            - TT-cores to the left are left orthogonalized.
-            - TT-core directly above is outer orthogonalized.
-            - TT-cores to the right are right orthogonalized.
+        - ith Tucker core is not orthogonalized
+        - All other Tucker cores are down orthogonalized.
+        - TT-cores to the left are left orthogonalized.
+        - TT-core directly above is up orthogonalized.
+        - TT-cores to the right are right orthogonalized.
 
         Parameters
         ----------
         ii: int
             index of tucker core that is not orthogonalized
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
 
         Returns
         -------
-        new_x: NDArray
-            New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith tucker core.
+        TuckerTensorTrain
+            New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith Tucker core.
 
         See Also
         --------
-        up_svd_ith_tucker_core
-        left_svd_ith_tt_core
-        right_svd_ith_tt_core
-        up_svd_ith_tt_core
-        down_svd_ith_tt_core
+        :py:meth:`.TuckerTensorTrain.orthogonalize_relative_to_tt_core`
 
         Examples
         --------
@@ -2674,45 +2660,26 @@ class TuckerTensorTrain:
             self,
             ii: int,
     ) -> 'TuckerTensorTrain':
-        '''Orthogonalize all cores in the TuckerTensorTrain except for the ith TT-core.
+        '''Orthogonalize cores in the TuckerTensorTrain relative to the ith TT-core.
 
-        Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
-
-        Orthogonal is done relative to the ith TT-core:
-            - All Tucker cores are orthogonalized.
-            - TT-cores to the left are left orthogonalized.
-            - ith TT-core is not orthogonalized.
-            - TT-cores to the right are right orthogonalized.
+        - All Tucker cores are down orthogonalized.
+        - TT-cores to the left are left orthogonalized.
+        - ith TT-core is not orthogonalized.
+        - TT-cores to the right are right orthogonalized.
 
         Parameters
         ----------
         ii: int
             index of TT-core that is not orthogonalized
-        x: TuckerTensorTrain
-            The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-        min_rank: int
-            Minimum rank for truncation.
-        min_rank: int
-            Maximum rank for truncation.
-        rtol: float
-            Relative tolerance for truncation.
-        atol: float
-            Absolute tolerance for truncation.
-        xnp:
-            Linear algebra backend. Default: np (numpy)
-
-        See Also
-        --------
-        up_svd_ith_tucker_core
-        left_svd_ith_tt_core
-        right_svd_ith_tt_core
-        up_svd_ith_tt_core
-        down_svd_ith_tt_core
 
         Returns
         -------
-        new_x: NDArray
+        TuckerTensorTrain
             New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith TT-core.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.orthogonalize_relative_to_tucker_core`
 
         Examples
         --------
@@ -2754,7 +2721,18 @@ class TuckerTensorTrain:
     def down_orthogonalize_tucker_cores(
         self,
     ) -> 'TuckerTensorTrain':
-        """Orthogonalize Tucker cores upwards, pushing remainders onto TT cores above.
+        """Orthogonalize Tucker cores downwards, pushing remainders onto TT cores above.
+
+        Returns
+        -------
+        TuckerTensorTrain
+            New TuckerTensorTrain representing the same tensor, but with all Tucker cores down orthogonal.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.up_orthogonalize_tt_cores`
+        :py:meth:`.TuckerTensorTrain.left_orthogonalize_tt_cores`
+        :py:meth:`.TuckerTensorTrain.right_orthogonalize_tt_cores`
 
         Examples
         --------
@@ -2791,7 +2769,18 @@ class TuckerTensorTrain:
     def up_orthogonalize_tt_cores(
         self,
     ) -> 'TuckerTensorTrain':
-        """Outer orthogonalize TT cores, pushing remainders downward onto tucker cores below.
+        """Up orthogonalize TT cores, pushing remainders onto Tucker cores below.
+
+        Returns
+        -------
+        TuckerTensorTrain
+            New TuckerTensorTrain representing the same tensor, but with all TT cores up orthogonal.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.down_orthogonalize_tucker_cores`
+        :py:meth:`.TuckerTensorTrain.left_orthogonalize_tt_cores`
+        :py:meth:`.TuckerTensorTrain.right_orthogonalize_tt_cores`
 
         Examples
         --------
@@ -2829,6 +2818,28 @@ class TuckerTensorTrain:
         return_variation_cores: bool = False,
     ) -> 'TuckerTensorTrain':
         """Left orthogonalize the TT cores, possibly returning variation cores as well.
+
+        Parameters
+        ----------
+        return_variation_cores: bool, optional
+            If True, also return each TT core just before it is orthogonalized. Default: ``return_variation_cores=False``.
+            Used to construct variation cores when converting a TuckerTensorTrain to basis-variation format.
+
+        Returns
+        -------
+        new_x: TuckerTensorTrain
+            New TuckerTensorTrain representing the same tensor, but with all TT cores left orthogonal.
+        var_cores: Tuple[NDArray,...], optional
+            TT cores just before they are orthogonalized. Only returned if ``return_variation_cores=True``.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.down_orthogonalize_tucker_cores`
+        :py:meth:`.TuckerTensorTrain.up_orthogonalize_tt_cores`
+        :py:meth:`.TuckerTensorTrain.right_orthogonalize_tt_cores`
+
+        Examples
+        --------
 
         >>> import numpy as np
         >>> import t3toolbox.tucker_tensor_train as t3
@@ -2868,6 +2879,25 @@ class TuckerTensorTrain:
         return_variation_cores: bool = False,
     ) -> 'TuckerTensorTrain':
         """Right orthogonalize the TT cores, possibly returning variation cores as well.
+
+        Parameters
+        ----------
+        return_variation_cores: bool, optional
+            If True, also return each TT core just before it is orthogonalized. Default: ``return_variation_cores=False``.
+            Used to construct variation cores when converting a TuckerTensorTrain to basis-variation format.
+
+        Returns
+        -------
+        new_x: TuckerTensorTrain
+            New TuckerTensorTrain representing the same tensor, but with all TT cores right orthogonal.
+        var_cores: Tuple[NDArray,...], optional
+            TT cores just before they are orthogonalized. Only returned if ``return_variation_cores=True``.
+
+        See Also
+        --------
+        :py:meth:`.TuckerTensorTrain.down_orthogonalize_tucker_cores`
+        :py:meth:`.TuckerTensorTrain.up_orthogonalize_tt_cores`
+        :py:meth:`.TuckerTensorTrain.left_orthogonalize_tt_cores`
 
         Examples
         --------
