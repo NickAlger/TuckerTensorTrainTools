@@ -10,13 +10,13 @@ TuckerTensorTrain.apply
    :param vecs: Vectors to contract with indices of ``self``. ``len=d``, ``elm_shape=vec_stack_shape+(Ni,)``
    :type vecs: Sequence[NDArray]
 
-   :returns: Result of contracting x with the vectors in all indices.
-             Scalar if vecs elements are vectors, ``NDArray`` with shape ``vec_stack_shape`` if vecs elements are matrices.
+   :returns: Result of contracting ``self`` with the vectors in all indices.
+             Scalar if ``vecs`` elements are vectors, ``NDArray`` with shape ``vec_stack_shape`` if ``vecs`` elements are matrices.
    :rtype: NDArray or scalar
 
-   :raises ValueError: Error raised if the provided vectors in vecs are inconsistent with each other or the Tucker tensor train.
+   :raises ValueError: Error raised if the provided vectors in ``vecs`` are inconsistent with each other or the Tucker tensor train.
 
-   .. seealso:: :py:class:`.TuckerTensorTrain`, :py:meth:`.TuckerTensorTrain.probe`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.entries`, :py:meth:`.TuckerTensorTrain.probe`
 
    .. rubric:: Examples
 

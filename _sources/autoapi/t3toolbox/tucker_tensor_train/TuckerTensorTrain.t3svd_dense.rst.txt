@@ -5,7 +5,7 @@ TuckerTensorTrain.t3svd_dense
    :staticmethod:
 
 
-   Compute ``TuckerTensorTrain`` representation or approximation of a dense tensor.
+   Compute :py:class:`.TuckerTensorTrain` representation or approximation of a dense tensor.
 
    :param T: The dense tensor. ``shape = stack_shape + (N0, ..., N(d-1))``
    :type T: NDArray
@@ -33,7 +33,7 @@ TuckerTensorTrain.t3svd_dense
    :raises ValueError: If ``stack_shape`` is not empty and ``rtol`` or ``atol`` are supplied.
        (Cannot use tolerances with stacking)
 
-   .. seealso:: :py:class:`.TuckerTensorTrain`, :py:meth:`.TuckerTensorTrain.t3svd`, :py:meth:`.TuckerTensorTrain.get_minimal_ranks`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.t3svd`, :py:meth:`.TuckerTensorTrain.get_minimal_ranks`
 
    .. rubric:: Notes
 

@@ -404,19 +404,19 @@
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Result of contracting x with the vectors in all indices.
-Scalar if vecs elements are vectors, <code class="docutils literal notranslate"><span class="pre">NDArray</span></code> with shape <code class="docutils literal notranslate"><span class="pre">vec_stack_shape</span></code> if vecs elements are matrices.</p>
+<dd class="field-even"><p>Result of contracting <code class="docutils literal notranslate"><span class="pre">self</span></code> with the vectors in all indices.
+Scalar if <code class="docutils literal notranslate"><span class="pre">vecs</span></code> elements are vectors, <code class="docutils literal notranslate"><span class="pre">NDArray</span></code> with shape <code class="docutils literal notranslate"><span class="pre">vec_stack_shape</span></code> if <code class="docutils literal notranslate"><span class="pre">vecs</span></code> elements are matrices.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>NDArray or scalar</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – Error raised if the provided vectors in vecs are inconsistent with each other or the Tucker tensor train.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – Error raised if the provided vectors in <code class="docutils literal notranslate"><span class="pre">vecs</span></code> are inconsistent with each other or the Tucker tensor train.</p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">TuckerTensorTrain</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.probe.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.probe()</span></code></a></p>
+<p><a class="reference internal" href="TuckerTensorTrain.entries.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.entries" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.entries"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.entries()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.probe.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.probe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.probe()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <p>Apply to one set of vectors:</p>

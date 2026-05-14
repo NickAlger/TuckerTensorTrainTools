@@ -5,7 +5,7 @@ TuckerTensorTrain.entries
 
    Compute an entry (or multiple entries) of a Tucker tensor train.
 
-   This is the entry of the N0 x ... x N(d-1) tensor *represented* by the
+   This is the entry of the ``N0 x ... x N(d-1)`` tensor *represented* by the
    Tucker tensor train, even though this dense tensor is never formed.
 
    :param self: Tucker tensor train with ``shape=(N0,...,N(d-1))``
@@ -14,12 +14,12 @@ TuckerTensorTrain.entries
                  ``shape=(d,)+idx_stack_shape``
    :type index: NDArray
 
-   :returns: Array of selected entry or multiple entries
-   :rtype: NDArray
+   :returns: Array of selected entry or multiple entries with ``shape=idx_stack_shape``
+   :rtype: :py:class:`.NDArray`
 
    :raises ValueError: If ``len(index)`` is not equal to Tucker tensor train dimension
 
-   .. seealso:: :py:class:`.TuckerTensorTrain`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.apply`, :py:meth:`.TuckerTensorTrain.probe`
 
    .. rubric:: Examples
 

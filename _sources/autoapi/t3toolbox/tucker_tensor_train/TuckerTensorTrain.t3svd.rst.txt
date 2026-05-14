@@ -3,7 +3,7 @@ TuckerTensorTrain.t3svd
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.t3svd(max_tt_ranks = None, max_tucker_ranks = None, rtol = None, atol = None)
 
-   Compute (truncated) T3-SVD of TuckerTensorTrain.
+   Compute (truncated) T3-SVD of Tucker tensor train.
 
    :param self: The Tucker tensor train. ``structure=((N0,...,N(d-1)), (n0,...,n(d-1)), (1,r1,...r(d-1),1))``
    :type self: TuckerTensorTrain
@@ -22,11 +22,11 @@ TuckerTensorTrain.t3svd
                 Requires ``stack_shape=()``.
    :type atol: float, optional
 
-   :returns: * *TuckerTensorTrain* -- New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
-             * *Tuple[NDArray,...]* -- Singular values associated with edges between Tucker cores and TT-cores
-             * *Tuple[NDArray,...]* -- Singular values associated with edges between adjacent TT-cores
+   :returns: * :py:class:`TuckerTensorTrain` -- New Tucker tensor train representing the same tensor (or a truncated version), but with modified cores
+             * Tuple[:py:class:`NDArray`,...] -- Singular values associated with edges between Tucker cores and TT cores
+             * **Tuple[** (py:class:`NDArray,...]) -- Singular values associated with edges between adjacent TT cores
 
-   .. seealso:: :py:obj:`..`, :py:obj:`..`, :py:obj:`..`, :py:obj:`..`, :py:obj:`up_svd_ith_tucker_core`, :py:obj:`left_svd_ith_tt_core`, :py:obj:`right_svd_ith_tt_core`, :py:obj:`up_svd_ith_tt_core`, :py:obj:`down_svd_ith_tt_core`, :py:obj:`truncated_svd`, :py:class:`.TuckerTensorTrain`, :py:meth:`.TuckerTensorTrain.t3svd_dense`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.t3svd_dense`, :py:meth:`.TuckerTensorTrain.get_minimal_ranks`
 
    .. rubric:: Examples
 
