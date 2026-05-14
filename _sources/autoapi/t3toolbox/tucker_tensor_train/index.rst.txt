@@ -1,5 +1,6 @@
-t3toolbox.tucker_tensor_train
-=============================
+tucker_tensor_train
+===================
+
 
 .. py:module:: t3toolbox.tucker_tensor_train
 

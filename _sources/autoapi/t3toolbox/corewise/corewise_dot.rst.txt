@@ -1,5 +1,5 @@
-t3toolbox.corewise.corewise_dot
-===============================
+corewise_dot
+============
 
 .. py:function:: t3toolbox.corewise.corewise_dot(X, Y, use_jax = False)
 

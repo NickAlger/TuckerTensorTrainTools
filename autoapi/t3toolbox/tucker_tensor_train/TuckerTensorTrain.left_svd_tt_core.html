@@ -254,19 +254,19 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">t3toolbox</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../corewise/index.html">t3toolbox.corewise</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_add.html">t3toolbox.corewise.corewise_add</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_sub.html">t3toolbox.corewise.corewise_sub</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_scale.html">t3toolbox.corewise.corewise_scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_neg.html">t3toolbox.corewise.corewise_neg</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_dot.html">t3toolbox.corewise.corewise_dot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_norm.html">t3toolbox.corewise.corewise_norm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_err.html">t3toolbox.corewise.corewise_err</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_relerr.html">t3toolbox.corewise.corewise_relerr</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_logical_not.html">t3toolbox.corewise.corewise_logical_not</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corewise/index.html">corewise</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_add.html">corewise_add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_sub.html">corewise_sub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_scale.html">corewise_scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_neg.html">corewise_neg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_dot.html">corewise_dot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_norm.html">corewise_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_err.html">corewise_err</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_relerr.html">corewise_relerr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_logical_not.html">corewise_logical_not</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">t3toolbox.tucker_tensor_train</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">tucker_tensor_train</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="TuckerTensorTrain.html">TuckerTensorTrain</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_core_shapes.html">TuckerTensorTrain.get_core_shapes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_minimal_ranks.html">TuckerTensorTrain.get_minimal_ranks</a></li>
@@ -368,7 +368,7 @@
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">t3toolbox</a></li>
     
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">t3toolbox.tucker_tensor_train</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">tucker_tensor_train</a></li>
     
     
     <li class="breadcrumb-item"><a href="TuckerTensorTrain.html" class="nav-link">TuckerTensorTrain</a></li>
@@ -396,37 +396,40 @@
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.left_svd_tt_core">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">left_svd_tt_core</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.left_svd_tt_core" title="Link to this definition">#</a></dt>
 <dd><p>Compute SVD of ith TT-core left unfolding and contract non-orthogonal factor into the TT-core to the right.</p>
-<p>Stacking not supported: the truncated ranks vary based on this T3’s numerical properties.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ii</strong> (<em>int</em>) – index of TT-core to SVD</p></li>
-<li><p><strong>x</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>) – The Tucker tensor train. structure=((N1,…,Nd), (n1,…,nd), (1,r1,…r(d-1),1))</p></li>
-<li><p><strong>min_rank</strong> (<em>int</em>) – Minimum rank for truncation.</p></li>
-<li><p><strong>min_rank</strong> – Maximum rank for truncation.</p></li>
-<li><p><strong>rtol</strong> (<em>float</em>) – Relative tolerance for truncation.</p></li>
-<li><p><strong>atol</strong> (<em>float</em>) – Absolute tolerance for truncation.</p></li>
-<li><p><strong>xnp</strong> – Linear algebra backend. Default: np (numpy)</p></li>
-<li><p><strong>max_rank</strong> (<em>int</em>)</p></li>
+<li><p><strong>ii</strong> (<em>int</em>) – index of TT core to SVD</p></li>
+<li><p><strong>min_rank</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum rank for truncation. Default (<code class="docutils literal notranslate"><span class="pre">None</span></code>): no minimum rank.</p></li>
+<li><p><strong>max_rank</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum rank for truncation. Default (<code class="docutils literal notranslate"><span class="pre">None</span></code>): no maximum rank.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em><em>, </em><em>optional</em>) – Relative tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+Default (<code class="docutils literal notranslate"><span class="pre">None</span></code>): no <code class="docutils literal notranslate"><span class="pre">rtol</span></code> truncation.
+If this TuckerTensorTrain is stacked, requires <code class="docutils literal notranslate"><span class="pre">rtol=None</span></code>.</p></li>
+<li><p><strong>atol</strong> (<em>float</em><em>, </em><em>optional</em>) – Absolute tolerance for truncation (in Hilbert-Schmidt/Frobenius norm).
+Default (<code class="docutils literal notranslate"><span class="pre">None</span></code>): no <code class="docutils literal notranslate"><span class="pre">atol</span></code> truncation.
+If this TuckerTensorTrain is stacked, requires <code class="docutils literal notranslate"><span class="pre">atol=None</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>new_x</strong> (<em>NDArray</em>) – New TuckerTensorTrain representing the same tensor, but with ith TT-core orthogonal.
-new_tt_cores[ii].shape = (ri, ni, new_r(i+1))
-new_tt_cores[ii+1].shape = (new_r(i+1), n(i+1), r(i+2))
-einsum(‘iaj,iak-&gt;jk’, new_tt_cores[ii], new_tt_cores[ii]) = identity matrix</p></li>
-<li><p><strong>ss_x</strong> (<em>NDArray</em>) – Singular values of prior ith TT-core left unfolding. shape=(new_r(i+1),).</p></li>
+<li><p><strong>new_x</strong> (<em>TuckerTensorTrain</em>) – New TuckerTensorTrain representing the same tensor, but with ith TT-core orthogonal.
+I.e., <code class="docutils literal notranslate"><span class="pre">einsum('...iaj,...iak-&gt;...jk',</span> <span class="pre">G,</span> <span class="pre">G)</span> <span class="pre">=</span> <span class="pre">(stacked)</span> <span class="pre">identity</span> <span class="pre">matrix</span></code>, where <code class="docutils literal notranslate"><span class="pre">G=new_x.tt_cores[ii]</span></code>.
+May have different (i+1)th TT rank.</p></li>
+<li><p><strong>ss</strong> (<em>NDArray</em>) – Singular values of prior ith TT-core left unfolding.
+<code class="docutils literal notranslate"><span class="pre">ss.shape</span> <span class="pre">=</span> <span class="pre">new_x.stack_shape</span> <span class="pre">+</span> <span class="pre">(new_x.tt_ranks[ii+1],)</span></code>.</p></li>
 </ul>
 </p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>Tuple</em>[<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>, t3toolbox.backend.common.NDArray]</p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If this TuckerTensorTrain is stacked and <code class="docutils literal notranslate"><span class="pre">rtol</span></code> or <code class="docutils literal notranslate"><span class="pre">atol</span></code> are not <a href="#id1"><span class="problematic" id="id2">``</span></a>None.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple</em>[<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a>, t3toolbox.backend.common.NDArray]</p>
 </dd>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncated_svd</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">left_svd_3tensor</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">up_svd_ith_tucker_core</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">right_svd_ith_tt_core</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">up_svd_ith_tt_core</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">down_svd_ith_tt_core</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t3_svd</span></code></p>
+<p><a class="reference internal" href="TuckerTensorTrain.down_svd_tucker_core.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_svd_tucker_core" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_svd_tucker_core"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.down_svd_tucker_core()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.right_svd_tt_core.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.right_svd_tt_core" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.right_svd_tt_core"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.right_svd_tt_core()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.up_svd_tt_core.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_svd_tt_core"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.up_svd_tt_core()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>

@@ -1,5 +1,5 @@
-t3toolbox.corewise.corewise_neg
-===============================
+corewise_neg
+============
 
 .. py:function:: t3toolbox.corewise.corewise_neg(X)
 

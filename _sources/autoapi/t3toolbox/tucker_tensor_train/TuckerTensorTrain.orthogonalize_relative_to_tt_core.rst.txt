@@ -3,34 +3,20 @@ TuckerTensorTrain.orthogonalize_relative_to_tt_core
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.orthogonalize_relative_to_tt_core(ii)
 
-   Orthogonalize all cores in the TuckerTensorTrain except for the ith TT-core.
+   Orthogonalize cores in the TuckerTensorTrain relative to the ith TT-core.
 
-   Stacking not supported: the truncated ranks vary based on this T3's numerical properties.
-
-   Orthogonal is done relative to the ith TT-core:
-       - All Tucker cores are orthogonalized.
-       - TT-cores to the left are left orthogonalized.
-       - ith TT-core is not orthogonalized.
-       - TT-cores to the right are right orthogonalized.
+   - All Tucker cores are down orthogonalized.
+   - TT-cores to the left are left orthogonalized.
+   - ith TT-core is not orthogonalized.
+   - TT-cores to the right are right orthogonalized.
 
    :param ii: index of TT-core that is not orthogonalized
    :type ii: int
-   :param x: The Tucker tensor train. structure=((N1,...,Nd), (n1,...,nd), (1,r1,...r(d-1),1))
-   :type x: TuckerTensorTrain
-   :param min_rank: Minimum rank for truncation.
-   :type min_rank: int
-   :param min_rank: Maximum rank for truncation.
-   :type min_rank: int
-   :param rtol: Relative tolerance for truncation.
-   :type rtol: float
-   :param atol: Absolute tolerance for truncation.
-   :type atol: float
-   :param xnp: Linear algebra backend. Default: np (numpy)
 
-   .. seealso:: :py:obj:`up_svd_ith_tucker_core`, :py:obj:`left_svd_ith_tt_core`, :py:obj:`right_svd_ith_tt_core`, :py:obj:`up_svd_ith_tt_core`, :py:obj:`down_svd_ith_tt_core`
+   :returns: New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith TT-core.
+   :rtype: TuckerTensorTrain
 
-   :returns: **new_x** -- New TuckerTensorTrain representing the same tensor, but orthogonalized relative to the ith TT-core.
-   :rtype: NDArray
+   .. seealso:: :py:meth:`.TuckerTensorTrain.orthogonalize_relative_to_tucker_core`
 
    .. rubric:: Examples
 

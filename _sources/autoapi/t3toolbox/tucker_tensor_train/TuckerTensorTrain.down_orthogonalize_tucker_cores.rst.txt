@@ -3,7 +3,12 @@ TuckerTensorTrain.down_orthogonalize_tucker_cores
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_orthogonalize_tucker_cores()
 
-   Orthogonalize Tucker cores upwards, pushing remainders onto TT cores above.
+   Orthogonalize Tucker cores downwards, pushing remainders onto TT cores above.
+
+   :returns: New TuckerTensorTrain representing the same tensor, but with all Tucker cores down orthogonal.
+   :rtype: TuckerTensorTrain
+
+   .. seealso:: :py:meth:`.TuckerTensorTrain.up_orthogonalize_tt_cores`, :py:meth:`.TuckerTensorTrain.left_orthogonalize_tt_cores`, :py:meth:`.TuckerTensorTrain.right_orthogonalize_tt_cores`
 
    .. rubric:: Examples
 

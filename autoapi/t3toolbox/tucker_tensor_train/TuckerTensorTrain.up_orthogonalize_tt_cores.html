@@ -254,19 +254,19 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">t3toolbox</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../corewise/index.html">t3toolbox.corewise</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_add.html">t3toolbox.corewise.corewise_add</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_sub.html">t3toolbox.corewise.corewise_sub</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_scale.html">t3toolbox.corewise.corewise_scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_neg.html">t3toolbox.corewise.corewise_neg</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_dot.html">t3toolbox.corewise.corewise_dot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_norm.html">t3toolbox.corewise.corewise_norm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_err.html">t3toolbox.corewise.corewise_err</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_relerr.html">t3toolbox.corewise.corewise_relerr</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_logical_not.html">t3toolbox.corewise.corewise_logical_not</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corewise/index.html">corewise</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_add.html">corewise_add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_sub.html">corewise_sub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_scale.html">corewise_scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_neg.html">corewise_neg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_dot.html">corewise_dot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_norm.html">corewise_norm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_err.html">corewise_err</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_relerr.html">corewise_relerr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corewise/corewise_logical_not.html">corewise_logical_not</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">t3toolbox.tucker_tensor_train</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">tucker_tensor_train</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="TuckerTensorTrain.html">TuckerTensorTrain</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_core_shapes.html">TuckerTensorTrain.get_core_shapes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="TuckerTensorTrain.get_minimal_ranks.html">TuckerTensorTrain.get_minimal_ranks</a></li>
@@ -368,7 +368,7 @@
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">t3toolbox</a></li>
     
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">t3toolbox.tucker_tensor_train</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">tucker_tensor_train</a></li>
     
     
     <li class="breadcrumb-item"><a href="TuckerTensorTrain.html" class="nav-link">TuckerTensorTrain</a></li>
@@ -395,7 +395,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_orthogonalize_tt_cores">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">up_orthogonalize_tt_cores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.up_orthogonalize_tt_cores" title="Link to this definition">#</a></dt>
-<dd><p>Outer orthogonalize TT cores, pushing remainders downward onto tucker cores below.</p>
+<dd><p>Up orthogonalize TT cores, pushing remainders onto Tucker cores below.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>New TuckerTensorTrain representing the same tensor, but with all TT cores up orthogonal.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="TuckerTensorTrain.down_orthogonalize_tucker_cores.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_orthogonalize_tucker_cores" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.down_orthogonalize_tucker_cores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.down_orthogonalize_tucker_cores()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.left_orthogonalize_tt_cores.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.left_orthogonalize_tt_cores" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.left_orthogonalize_tt_cores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.left_orthogonalize_tt_cores()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.right_orthogonalize_tt_cores.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.right_orthogonalize_tt_cores" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.right_orthogonalize_tt_cores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.right_orthogonalize_tt_cores()</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
@@ -424,11 +436,6 @@
 <span class="go">4.0492695830155885e-15</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

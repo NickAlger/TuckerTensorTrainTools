@@ -1,5 +1,5 @@
-t3toolbox.corewise.corewise_add
-===============================
+corewise_add
+============
 
 .. py:function:: t3toolbox.corewise.corewise_add(X, Y)
 

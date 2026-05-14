@@ -1,5 +1,6 @@
-t3toolbox.corewise
-==================
+corewise
+========
+
 
 .. py:module:: t3toolbox.corewise
 

@@ -5,6 +5,15 @@ TuckerTensorTrain.right_orthogonalize_tt_cores
 
    Right orthogonalize the TT cores, possibly returning variation cores as well.
 
+   :param return_variation_cores: If True, also return each TT core just before it is orthogonalized. Default: ``return_variation_cores=False``.
+                                  Used to construct variation cores when converting a TuckerTensorTrain to basis-variation format.
+   :type return_variation_cores: bool, optional
+
+   :returns: * **new_x** (*TuckerTensorTrain*) -- New TuckerTensorTrain representing the same tensor, but with all TT cores right orthogonal.
+             * **var_cores** (*Tuple[NDArray,...], optional*) -- TT cores just before they are orthogonalized. Only returned if ``return_variation_cores=True``.
+
+   .. seealso:: :py:meth:`.TuckerTensorTrain.down_orthogonalize_tucker_cores`, :py:meth:`.TuckerTensorTrain.up_orthogonalize_tt_cores`, :py:meth:`.TuckerTensorTrain.left_orthogonalize_tt_cores`
+
    .. rubric:: Examples
 
    >>> import numpy as np

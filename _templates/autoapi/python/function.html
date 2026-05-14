@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Submodules &#8212; T3Toolbox 0.1 documentation</title>
+    <title>&lt;no title&gt; &#8212; T3Toolbox 0.1 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
     <script src="../../../_static/documentation_options.js?v=2709fde1"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_templates/autoapi/python/module';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_templates/autoapi/python/function';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -275,7 +275,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Submodules</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
   </ul>
 </nav>
 </div>
@@ -296,98 +296,32 @@
 <dt>{% if obj.display %}</dt><dd><p>{% if is_own_page %}</p>
 </dd>
 </dl>
-<p>{{ obj.short_name }}
-{{ “=” * obj.short_name | length }}</p>
-<p>{{ obj.docstring|indent(3) }}</p>
+<p>{{ obj.name }}
+{{ “=” * obj.name | length }}</p>
 <blockquote>
 <div><p>{% endif %}</p>
-<dl class="simple">
-<dt>{% block submodules %}</dt><dd><p>{% set visible_subpackages = obj.subpackages|selectattr(“display”)|list %}
-{% set visible_submodules = obj.submodules|selectattr(“display”)|list %}
-{% set visible_submodules = (visible_subpackages + visible_submodules)|sort %}
-{% if visible_submodules %}</p>
-</dd>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">{%</span> <span class="pre">if</span> <span class="pre">is_own_page</span> <span class="pre">%}{{</span> <span class="pre">obj.id</span> <span class="pre">}}{%</span> <span class="pre">else</span> <span class="pre">%}{{</span> <span class="pre">obj.short_name</span> <span class="pre">}}{%</span> <span class="pre">endif</span> <span class="pre">%}({{</span> <span class="pre">obj.args</span> <span class="pre">}}){%</span> <span class="pre">if</span> <span class="pre">obj.return_annotation</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">none</span> <span class="pre">%}</span> <span class="pre">-&gt;</span> <span class="pre">{{</span> <span class="pre">obj.return_annotation</span> <span class="pre">}}{%</span> <span class="pre">endif</span> <span class="pre">%}</span></span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">{%</span> <span class="pre">for</span> <span class="pre">(args,</span> <span class="pre">return_annotation)</span> <span class="pre">in</span> <span class="pre">obj.overloads</span> <span class="pre">%}</span></span></dt>
+<dd><blockquote>
+<div><p>{%+ if is_own_page %}{{ obj.id }}{% else %}{{ obj.short_name }}{% endif %}({{ args }}){% if return_annotation is not none %} -&gt; {{ return_annotation }}{% endif %}</p>
+</div></blockquote>
+<p>{% endfor %}
+{% for property in obj.properties %}</p>
+<dl class="field-list simple">
+<dt class="field-odd">{{ property }}<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
 </dl>
-</div></blockquote>
-<section id="submodules">
-<h1>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-</section>
-<section id="attributes">
-<h1>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>{% if “attribute” in own_page_types %}</p>
-</div></blockquote>
-<div class="toctree-wrapper compound">
-</div>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
-<tbody>
-</tbody>
-</table>
-</div>
-</section>
-<section id="exceptions">
-<h1>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>{% if “exception” in own_page_types %}</p>
-</div></blockquote>
-<div class="toctree-wrapper compound">
-</div>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
-<tbody>
-</tbody>
-</table>
-</div>
-</section>
-<section id="classes">
-<h1>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>{% if “class” in own_page_types %}</p>
-</div></blockquote>
-<div class="toctree-wrapper compound">
-</div>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
-<tbody>
-</tbody>
-</table>
-</div>
-</section>
-<section id="functions">
-<h1>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>{% if “function” in own_page_types %}</p>
-</div></blockquote>
-<div class="toctree-wrapper compound">
-</div>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
-<tbody>
-</tbody>
-</table>
-</div>
-<p>{{ obj.type|title }} Contents
-{{ “-” * obj.type|length }}———</p>
-<blockquote>
-<div><p>{% for obj_item in this_page_children %}</p>
-</div></blockquote>
-<dl>
-<dt>{{ obj_item.render()|indent(0) }}</dt><dd><blockquote>
-<div><blockquote>
-<div><blockquote>
-<div><blockquote>
-<div><p>{% endfor %}</p>
-</div></blockquote>
+<p>{% endfor %}</p>
+<p>{% if obj.docstring %}</p>
+<p>{{ obj.docstring|indent(3) }}
+{% endif %}</p>
+</dd></dl>
+
 <p>{% endif %}</p>
-</div></blockquote>
-<p>{% endif %}</p>
-</div></blockquote>
-<p>{% endblock %}</p>
-</div></blockquote>
-<p>{% else %}</p>
-</dd>
-</dl>
-<p>{% endif %}</p>
-</section>
 
 
                 </article>
@@ -417,12 +351,7 @@
     <i class="fa-solid fa-list"></i> On this page
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Submodules</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exceptions">Exceptions</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+    <ul class="simple pst-show_toc_level nav section-nav flex-column">
 </ul>
 
   </nav></div>
@@ -430,7 +359,7 @@
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../../../_sources/_templates/autoapi/python/module.rst.txt">
+    <a href="../../../_sources/_templates/autoapi/python/function.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

@@ -1,5 +1,5 @@
-t3toolbox.corewise.corewise_scale
-=================================
+corewise_scale
+==============
 
 .. py:function:: t3toolbox.corewise.corewise_scale(X, s)
 

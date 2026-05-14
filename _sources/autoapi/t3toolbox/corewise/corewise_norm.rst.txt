@@ -1,5 +1,5 @@
-t3toolbox.corewise.corewise_norm
-================================
+corewise_norm
+=============
 
 .. py:function:: t3toolbox.corewise.corewise_norm(X, use_jax = False)
 
