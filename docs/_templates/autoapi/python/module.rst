@@ -1,9 +1,10 @@
 {% if obj.display %}
    {% if is_own_page %}
-{{ obj.name }}
-{{ "=" * obj.name | length }}
+{{ obj.short_name }}
+{{ "=" * obj.short_name | length }}
 
-.. py:module:: {{ obj.name }}
+
+.. py:module:: {{ obj.id }}
 
       {% if obj.docstring %}
 .. autoapi-nested-parse::
