@@ -3,7 +3,15 @@ TuckerTensorTrain.__neg__
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__()
 
-   Scale a Tucker tensor train by -1.
+   Scale a TuckerTensorTrain by -1. ``result=-self``.
+
+   Negation is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor that
+   is *represented* by the TuckerTensorTrains.
+
+   :returns: **result** -- Negative of this TuckerTensorTrain satisfying ``result.to_dense() = -self.to_dense()``.
+   :rtype: TuckerTensorTrain or NDArray
+
+   .. seealso:: :py:meth:`.TuckerTensorTrain.__add__`, :py:meth:`.TuckerTensorTrain.__sub__`, :py:meth:`.TuckerTensorTrain.__mul__`, :py:meth:`.TuckerTensorTrain.inner`, :py:meth:`.TuckerTensorTrain.norm`, :py:meth:`.TuckerTensorTrain.sum`
 
    .. rubric:: Examples
 

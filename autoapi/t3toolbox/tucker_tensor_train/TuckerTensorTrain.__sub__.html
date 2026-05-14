@@ -395,11 +395,51 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__" title="Link to this definition">#</a></dt>
-<dd><p>Subtract Tucker tensor trains, x - y, yielding a Tucker tensor train with summed ranks.</p>
-<p>Subtraction is defined with respect to the dense N0 x … x N(d-1) tensors that
-are <em>represented</em> by the Tucker tensor trains.</p>
-<p>For corewise subtraction, see <a class="reference internal" href="../corewise/corewise_sub.html#t3toolbox.corewise.corewise_sub" title="t3toolbox.corewise.corewise_sub"><code class="xref py py-func docutils literal notranslate"><span class="pre">t3toolbox.corewise.corewise_sub()</span></code></a>
-.. rubric:: Examples</p>
+<dd><p>Subtract Tucker tensor trains, <code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">self</span> <span class="pre">-</span> <span class="pre">other</span></code>, yielding a Tucker tensor train with summed ranks.</p>
+<p>Subtraction is defined with respect to the dense <code class="docutils literal notranslate"><span class="pre">N0</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">x</span> <span class="pre">N(d-1)</span></code> tensor that
+is <em>represented</em> by this TuckerTensorTrains.</p>
+<p>For corewise subtraction, see <a class="reference internal" href="../corewise/corewise_sub.html#t3toolbox.corewise.corewise_sub" title="t3toolbox.corewise.corewise_sub"><code class="xref py py-func docutils literal notranslate"><span class="pre">t3toolbox.corewise.corewise_sub()</span></code></a></p>
+<p>Allowed types are as follows:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span> <span class="pre">-</span> <span class="pre">TuckerTensorTrain</span> <span class="pre">-&gt;</span> <span class="pre">TuckerTensorTrain</span></code></dt><dd><p>(self - other).to_dense() = self.to_dense() - other.to_dense()</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span> <span class="pre">*</span> <span class="pre">NDArray</span> <span class="pre">-&gt;</span> <span class="pre">NDArray</span></code></dt><dd><p>self - other = self.to_dense() <a href="#id1"><span class="problematic" id="id2">*</span></a>- other</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">TuckerTensorTrain</span> <span class="pre">-</span> <span class="pre">scalar</span> <span class="pre">-&gt;</span> <span class="pre">TuckerTensorTrain</span></code></dt><dd><p>(self - other).to_dense() = self.to_dense() - other</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a><em> or </em><em>NDArray</em><em> or </em><em>scalar</em>) – Other tensor or scalar to be subtracted from this TuckerTensorTrain.
+If <code class="docutils literal notranslate"><span class="pre">other</span></code> is TuckerTensorTrain, requires <code class="docutils literal notranslate"><span class="pre">other.shape=self.shape</span></code> and <code class="docutils literal notranslate"><span class="pre">other.stack_shape=self.stack_shape</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">other</span></code> is NDArray, requires <code class="docutils literal notranslate"><span class="pre">other.shape=self.stack_shape+self.shape</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong> – Difference, <code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">self</span> <span class="pre">-</span> <span class="pre">other</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">other`</span> <span class="pre">is</span> <span class="pre">TuckerTensorTrain</span> <span class="pre">or</span> <span class="pre">scalar,</span> <span class="pre">``result.shape=self.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">result.stack_shape=self.stack_shape</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">other</span></code> is NDArray, <code class="docutils literal notranslate"><span class="pre">result.shape=self.stack_shape+self.shape</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a> or NDArray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If shapes and/or stack shapes of self and other are inconsistent.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="TuckerTensorTrain.__add__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__add__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__neg__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__neg__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__mul__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__mul__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.inner.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.inner" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.inner"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.inner()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.norm.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.norm()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.sum.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.sum()</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">t3</span><span class="o">.</span><span class="n">TuckerTensorTrain</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
@@ -435,11 +475,6 @@ are <em>represented</em> by the Tucker tensor trains.</p>
 <span class="go">((14, 15, 16), (5, 6, 7), (2, 4, 3, 2), ())</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

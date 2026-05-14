@@ -3,7 +3,28 @@ TuckerTensorTrain.sum
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum(axis=None)
 
-   Sum over axes of TuckerTensorTrain.
+   Sum over one or more axes of TuckerTensorTrain.
+
+   The sum is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor
+   that is *represented* by the TuckerTensorTrain.
+
+   For corewise norm, see :func:`t3toolbox.corewise.corewise_norm`
+
+   If all axes are summed over, returns NDArray or scalar, depending on whether or not self is stacked.
+   If at least one axis is not summed over, returns TuckerTensorTrain.
+
+   :param axis: If ``int``, sum over index specified by ``axis`.
+                If ``Sequence[int]``, sum over all indices in ``axis``.
+                If None (default), sum over all axes.
+   :type axis: int or Sequence[int], optional
+
+   :returns: **result** -- Sum of tensor over specified axes.
+             Case 1a: ``axis`` is None or ``axis`` contains all indices ``1,dots,d`` and self is not stacked: ``result`` is scalar.
+             Case 1b: ``axis`` is None or ``axis`` contains all axes ``1,\dots,d`` and self is stacked: ``result`` is NDArray and ``result.shape=self.stack_shape``.
+             Case 2: ``axis`` is ``int``, or ``axis`` is ``Sequence[int]``, and ``axis`` is missing at least ine index from ``1,...,d``: ``result`` is TuckerTensorTrain.
+   :rtype: scalar or NDArray or TuckerTensorTrain
+
+   .. seealso:: :py:meth:`.TuckerTensorTrain.__add__`, :py:meth:`.TuckerTensorTrain.__sub__`, :py:meth:`.TuckerTensorTrain.__neg__`, :py:meth:`.TuckerTensorTrain.__mul__`, :py:meth:`.TuckerTensorTrain.inner`, :py:meth:`.TuckerTensorTrain.norm`
 
    .. rubric:: Examples
 

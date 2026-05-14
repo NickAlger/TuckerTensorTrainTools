@@ -395,7 +395,21 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__">
 <span class="sig-prename descclassname"><span class="pre">t3toolbox.tucker_tensor_train.TuckerTensorTrain.</span></span><span class="sig-name descname"><span class="pre">__neg__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__neg__" title="Link to this definition">#</a></dt>
-<dd><p>Scale a Tucker tensor train by -1.</p>
+<dd><p>Scale a TuckerTensorTrain by -1. <code class="docutils literal notranslate"><span class="pre">result=-self</span></code>.</p>
+<p>Negation is defined with respect to the dense <code class="docutils literal notranslate"><span class="pre">N0</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">x</span> <span class="pre">N(d-1)</span></code> tensor that
+is <em>represented</em> by the TuckerTensorTrains.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>result</strong> – Negative of this TuckerTensorTrain satisfying <code class="docutils literal notranslate"><span class="pre">result.to_dense()</span> <span class="pre">=</span> <span class="pre">-self.to_dense()</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a> or NDArray</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="TuckerTensorTrain.__add__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__add__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__sub__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__sub__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__sub__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.__mul__.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.__mul__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.__mul__()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.inner.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.inner" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.inner"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.inner()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.norm.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.norm()</span></code></a>, <a class="reference internal" href="TuckerTensorTrain.sum.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain.sum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TuckerTensorTrain.sum()</span></code></a></p>
+</div>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">t3toolbox.tucker_tensor_train</span> <span class="k">as</span> <span class="nn">t3</span>
@@ -405,11 +419,6 @@
 <span class="go">0.0</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="TuckerTensorTrain.html#t3toolbox.tucker_tensor_train.TuckerTensorTrain" title="t3toolbox.tucker_tensor_train.TuckerTensorTrain"><em>TuckerTensorTrain</em></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>

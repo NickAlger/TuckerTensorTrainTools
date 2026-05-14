@@ -3,24 +3,25 @@ TuckerTensorTrain.norm
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.norm(use_orthogonalization = True)
 
-   Compute Hilbert-Schmidt (Frobenius) norm of a Tucker tensor train.
+   Compute Hilbert-Schmidt (Frobenius) norm of this TuckerTensorTrain.
 
-   The Hilbert-Schmidt norm is defined with respect to the dense N0 x ... x N(d-1) tensor
-   that is *represented* by the Tucker tensor trains, even though this dense tensor
-   is not formed during computations.
+   The Hilbert-Schmidt norm is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor
+   that is *represented* by the TuckerTensorTrain.
+
+   ``x.norm() = np.linalg.norm(x.to_dense())``
 
    For corewise norm, see :func:`t3toolbox.corewise.corewise_norm`
 
-   :param x: First Tucker tensor train. shape=(N0,...,N(d-1))
-   :type x: TuckerTensorTrain
-   :param xnp: Linear algebra backend. Default: np (numpy)
+   :param use_orthogonalization: If True, compute norm by orthogonalizing (more stable).
+                                 If False, compute norm with conventional zippering (faster, more suited for automatic differentiation).
+                                 Default: ``use_orthogonalization=True``.
+   :type use_orthogonalization: bool, optional
 
-   :returns: Hilbert-Schmidt (Frobenius) norm of Tucker tensor trains, ||x||_HS
-   :rtype: scalar
+   :returns: **result** -- Hilbert-Schmidt (Frobenius) norm of Tucker tensor train, ||x||_HS.
+             If stacked, ``result.shape=self.stack_shape``. Otherwise, result is scalar.
+   :rtype: scalar or NDArray
 
-   :raises ValueError: - Error raised if the TuckerTensorTrain is internally inconsistent
-
-   .. seealso:: :py:obj:`TuckerTensorTrain`, :py:obj:`t3_dot_t3`, :func:`t3toolbox.corewise.corewise_norm`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.__add__`, :py:meth:`.TuckerTensorTrain.__sub__`, :py:meth:`.TuckerTensorTrain.__neg__`, :py:meth:`.TuckerTensorTrain.__mul__`, :py:meth:`.TuckerTensorTrain.inner`, :py:meth:`.TuckerTensorTrain.sum`
 
    .. rubric:: Examples
 

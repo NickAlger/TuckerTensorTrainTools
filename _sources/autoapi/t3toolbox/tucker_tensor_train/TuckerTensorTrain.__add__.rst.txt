@@ -3,32 +3,37 @@ TuckerTensorTrain.__add__
 
 .. py:method:: t3toolbox.tucker_tensor_train.TuckerTensorTrain.__add__(other)
 
-   Add Tucker tensor trains x and y, yielding a Tucker tensor train z=x+y with summed ranks.
+   Add this TuckerTensorTrains self to other tensor, yielding a tensor ``result = self + other`` with summed ranks.
 
-   Addition is defined with respect to the dense ``N0 x ... x N(d-1)`` tensors that
-   are *represented* by the Tucker tensor trains.
+   Addition is defined with respect to the dense ``N0 x ... x N(d-1)`` tensor that
+   is *represented* by the TuckerTensorTrain.
 
    For corewise addition, see :func:`t3toolbox.corewise.corewise_add`
 
-   Return types are as follows:
+   Allowed types are as follows:
 
-   - ``TuckerTensorTrain + TuckerTensorTrain   -> TuckerTensorTrain``
-   - ``TuckerTensorTrain + NDArray             -> NDArray``
-   - ``TuckerTensorTrain + scalar              -> TuckerTensorTrain``
+   - ``TuckerTensorTrain + TuckerTensorTrain -> TuckerTensorTrain``
+       (self + other).to_dense() = self.to_dense() + other.to_dense()
 
-   :param other: Other tensor to be added to this TuckerTensorTrain.
-                 If TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
-                 If NDArray, requires ``other.shape=self.stack_shape+self.shape``.
+   - ``TuckerTensorTrain + NDArray -> NDArray``
+       self + other = self.to_dense() + other
+
+   - ``TuckerTensorTrain + scalar -> TuckerTensorTrain``
+       (self + other).to_dense() = self.to_dense() + other * np.ones(self.stack_shape + self.shape)
+
+   :param other: Other tensor or scalar to add to this TuckerTensorTrain.
+                 If ``other`` is TuckerTensorTrain, requires ``other.shape=self.shape`` and ``other.stack_shape=self.stack_shape``.
+                 If ``other`` is NDArray, requires ``other.shape=self.stack_shape+self.shape``.
    :type other: TuckerTensorTrain or NDArray or scalar
 
-   :returns: **z** -- Sum of this TuckerTensorTrain with other tensor.
-             If other is TuckerTensorTrain or scalar, ``z.shape=self.shape``, ``z.stack_shape=self.stack_shape``.
-             If other is NDArray, ``z.shape=self.stack_shape+self.shape``.
+   :returns: **result** -- Sum of tensors self and other.
+             If ``other`` is TuckerTensorTrain or scalar, ``result.shape=self.shape``, ``result.stack_shape=self.stack_shape``.
+             If other is ``NDArray``, ``result.shape=self.stack_shape+self.shape``.
    :rtype: TuckerTensorTrain or NDArray
 
    :raises ValueError: If shapes and/or stack shapes of self and other are inconsistent.
 
-   .. seealso:: :func:`t3toolbox.corewise.corewise_add`, :py:meth:`.TuckerTensorTrain.__sub__`, :py:meth:`.TuckerTensorTrain.__neg__`, :py:meth:`.TuckerTensorTrain.__mul__`, :py:meth:`.TuckerTensorTrain.inner`, :py:meth:`.TuckerTensorTrain.norm`, :py:meth:`.TuckerTensorTrain.sum`
+   .. seealso:: :py:meth:`.TuckerTensorTrain.__sub__`, :py:meth:`.TuckerTensorTrain.__neg__`, :py:meth:`.TuckerTensorTrain.__mul__`, :py:meth:`.TuckerTensorTrain.inner`, :py:meth:`.TuckerTensorTrain.norm`, :py:meth:`.TuckerTensorTrain.sum`
 
    .. rubric:: Examples
 
