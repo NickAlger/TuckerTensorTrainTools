@@ -195,7 +195,7 @@ class TuckerTensorTrain:
     Minimal ranks always exist and are unique.
         - Minimal TT ranks are equal to the ranks of ``(N0*...*Ni) x (N(i+1)*...*N(d-1))`` matrix unfoldings.
         - Minimal Tucker ranks are equal to the ranks of ``Ni x (N0*...*N(i-1)*N(i+1)*...*N(d-1))`` matricizations.
-        
+
     More details on the connection between minimal ranks and unfoldings/matricizations are given in Section 2.3 of [1]_.
 
     Example:
@@ -2944,7 +2944,7 @@ class TuckerTensorTrain:
     ) -> NDArray:
         '''Compute an entry (or multiple entries) of a Tucker tensor train.
 
-        This is the entry of the N0 x ... x N(d-1) tensor *represented* by the
+        This is the entry of the ``N0 x ... x N(d-1)`` tensor *represented* by the
         Tucker tensor train, even though this dense tensor is never formed.
 
         Parameters
@@ -2957,8 +2957,8 @@ class TuckerTensorTrain:
 
         Returns
         -------
-        NDArray
-            Array of selected entry or multiple entries
+        :py:class:`.NDArray`
+            Array of selected entry or multiple entries with ``shape=idx_stack_shape``
 
         Raises
         ------
@@ -2967,7 +2967,8 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :py:class:`.TuckerTensorTrain`
+        :py:meth:`.TuckerTensorTrain.apply`
+        :py:meth:`.TuckerTensorTrain.probe`
 
         Examples
         --------
@@ -3063,17 +3064,17 @@ class TuckerTensorTrain:
         Returns
         -------
         NDArray or scalar
-            Result of contracting x with the vectors in all indices.
-            Scalar if vecs elements are vectors, ``NDArray`` with shape ``vec_stack_shape`` if vecs elements are matrices.
+            Result of contracting ``self`` with the vectors in all indices.
+            Scalar if ``vecs`` elements are vectors, ``NDArray`` with shape ``vec_stack_shape`` if ``vecs`` elements are matrices.
 
         Raises
         ------
         ValueError
-            Error raised if the provided vectors in vecs are inconsistent with each other or the Tucker tensor train.
+            Error raised if the provided vectors in ``vecs`` are inconsistent with each other or the Tucker tensor train.
 
         See Also
         --------
-        :py:class:`.TuckerTensorTrain`
+        :py:meth:`.TuckerTensorTrain.entries`
         :py:meth:`.TuckerTensorTrain.probe`
 
         Examples
@@ -3153,15 +3154,16 @@ class TuckerTensorTrain:
 
         Returns
         -------
-        Sequence[NDArray]
+        Sequence[:py:class:`NDArray`]
             Results of contracting ``self`` with the vectors in all but one index for all indices.
             Sequence of vectors if ``ww`` elements are vectors, and sequence of ``NDArray``s each
             with ``elm_shape=W+(Ni,)`` if ``ww`` elements are matrices.
-
+        
         See Also
         --------
-        :py:class:`.TuckerTensorTrain`
-        
+        :py:meth:`.TuckerTensorTrain.entries`
+        :py:meth:`.TuckerTensorTrain.apply`
+
         Examples
         --------
 
@@ -3217,7 +3219,7 @@ class TuckerTensorTrain:
     ##############################################################
 
     def t3svd(
-            self,
+            self: 'TuckerTensorTrain',
             max_tt_ranks: Sequence[int] = None,     # len=d+1
             max_tucker_ranks: Sequence[int] = None, # len=d
             rtol: float = None,
@@ -3227,7 +3229,7 @@ class TuckerTensorTrain:
         Tuple[NDArray,...],  # Tucker singular values, len=d
         Tuple[NDArray,...],  # TT singular values, len=d+1
     ]:
-        '''Compute (truncated) T3-SVD of TuckerTensorTrain.
+        '''Compute (truncated) T3-SVD of Tucker tensor train.
         
         Parameters
         ----------
@@ -3250,28 +3252,17 @@ class TuckerTensorTrain:
 
         Returns
         -------
-        TuckerTensorTrain
-            New TuckerTensorTrain representing the same tensor (or a truncated version), but with modified cores
-        Tuple[NDArray,...]
-            Singular values associated with edges between Tucker cores and TT-cores
-        Tuple[NDArray,...]
-            Singular values associated with edges between adjacent TT-cores
+        :py:class:`TuckerTensorTrain`
+            New Tucker tensor train representing the same tensor (or a truncated version), but with modified cores
+        Tuple[:py:class:`NDArray`,...]
+            Singular values associated with edges between Tucker cores and TT cores
+        Tuple[:py:class:`NDArray,...]
+            Singular values associated with edges between adjacent TT cores
 
         See Also
         --------
-        .. TODO
-        .. left_svd_3tensor # DEPR
-        .. right_svd_3tensor # DEPR
-        .. outer_svd_3tensor # DEPR
-        up_svd_ith_tucker_core
-        left_svd_ith_tt_core
-        right_svd_ith_tt_core
-        up_svd_ith_tt_core
-        down_svd_ith_tt_core
-        truncated_svd
-
-        :py:class:`.TuckerTensorTrain`
         :py:meth:`.TuckerTensorTrain.t3svd_dense`
+        :py:meth:`.TuckerTensorTrain.get_minimal_ranks`
 
         Examples
         --------
@@ -3392,7 +3383,7 @@ class TuckerTensorTrain:
         Tuple[NDArray, ...],  # Tucker singular values, len=d
         Tuple[NDArray, ...],  # TT singular values, len=d+1
     ]:
-        '''Compute ``TuckerTensorTrain`` representation or approximation of a dense tensor.
+        '''Compute :py:class:`.TuckerTensorTrain` representation or approximation of a dense tensor.
 
         Parameters
         ----------
@@ -3432,7 +3423,6 @@ class TuckerTensorTrain:
 
         See Also
         --------
-        :py:class:`.TuckerTensorTrain`
         :py:meth:`.TuckerTensorTrain.t3svd`
         :py:meth:`.TuckerTensorTrain.get_minimal_ranks`
 
