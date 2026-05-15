@@ -6,8 +6,8 @@ import numpy as np
 import typing as typ
 
 import t3toolbox.backend.contractions as contractions
-import t3toolbox.backend.tucker_tensor_train.t3_operations as ragged_ops
-import t3toolbox.backend.uniform_tucker_tensor_train.ut3_operations as uniform_ops
+import t3toolbox.backend.t3_operations as ragged_ops
+import t3toolbox.backend.ut3_operations as uniform_ops
 from t3toolbox.backend.common import *
 
 __all__ = [

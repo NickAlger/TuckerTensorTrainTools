@@ -6,7 +6,7 @@ import numpy as np
 import typing as typ
 
 import t3toolbox.backend.stacking as stacking
-import t3toolbox.backend.uniform_tucker_tensor_train.ut3_masking as ut3_masking
+import t3toolbox.backend.ut3_masking as ut3_masking
 from t3toolbox.backend.common import *
 
 __all__ = [

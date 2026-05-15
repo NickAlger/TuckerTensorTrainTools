@@ -5,7 +5,7 @@
 import numpy as np
 import typing as typ
 
-import t3toolbox.backend.tucker_tensor_train.t3_operations as t3_ops
+import t3toolbox.backend.t3_operations as t3_ops
 from t3toolbox.backend.common import *
 
 __all__ = [

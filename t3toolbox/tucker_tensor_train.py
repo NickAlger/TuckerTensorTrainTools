@@ -15,12 +15,12 @@ import t3toolbox.backend.probing as probing
 import t3toolbox.backend.apply as apply
 import t3toolbox.backend.entries as entries
 import t3toolbox.backend.ranks as ranks
-import t3toolbox.backend.tucker_tensor_train.dense_t3svd as dense_t3svd
+import t3toolbox.backend.dense_t3svd as dense_t3svd
 import t3toolbox.backend.orthogonalization as orth
-import t3toolbox.backend.tucker_tensor_train.t3_operations as ragged_operations
-import t3toolbox.backend.tucker_tensor_train.t3_orthogonalization as ragged_orthogonalization
-import t3toolbox.backend.tucker_tensor_train.t3_linalg as ragged_linalg
-import t3toolbox.backend.tucker_tensor_train.t3_svd as ragged_t3svd
+import t3toolbox.backend.t3_operations as ragged_operations
+import t3toolbox.backend.t3_orthogonalization as ragged_orthogonalization
+import t3toolbox.backend.t3_linalg as ragged_linalg
+import t3toolbox.backend.t3_svd as ragged_t3svd
 
 import t3toolbox.backend.common as common
 from t3toolbox.backend.common import NDArray
